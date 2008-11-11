@@ -1,0 +1,18 @@
+<xflow name="case_or">
+    <nodes>
+        <node id="StartNode" type="Start"/>
+        <node id="proc1" type="Process"/>
+        <node id="proc2" type="Process"/>
+        <node id="proc3" type="Process"/>
+        <node id="OrNode" type="Or"/>
+        <node id="EndNode" type="End"/>
+    </nodes>
+    <transitions>
+        <transition from="StartNode" to="proc1"/>
+        <transition from="StartNode" to="proc2"/>
+        <transition from="proc1" to="OrNode"/>
+        <transition from="proc2" to="OrNode"/>
+        <transition from="OrNode" to="proc3"/>
+        <transition from="proc3" to="EndNode"/>
+    </transitions>
+</xflow>
