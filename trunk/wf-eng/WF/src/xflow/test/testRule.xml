@@ -1,0 +1,31 @@
+ <xflow name="SimpleWorkflow">
+    <nodes>
+        <node id="StartNode" type="Start"/>
+        <node id="P1" type="Process"/>
+        <node id="P2" type="Process"/>
+        <node id="P3" type="Process"/>
+	<node id="P4" type="Process"/>
+        <node id="P5" type="Process"/>
+        <node id="P6" type="Container"/>
+        <node id="AND" type="And"/> 
+        <node id="EndNode" type="End"/>
+    </nodes>
+    <transitions>
+        <transition from="StartNode" to="P1"/>
+        <transition from="P1" to="P2"/>
+        <transition from="P2" to="P3">
+            <rule>[intValue &lt; 10]</rule>
+        </transition>
+        <transition from="P2" to="P4">
+            <rule>[intValue &gt;= 10]</rule>
+        </transition>
+        <transition from="P3" to="AND"/>
+        <transition from="P4" to="AND"/>
+        <transition from="AND" to="P5"/>
+        <transition from="P5" to="EndNode"/>
+        <transition from="AND" to="P6"/>
+        <transition from="P6" to="EndNode"/>
+        <transition from="AND" to="EndNode"/>
+    </transitions>
+</xflow>
+

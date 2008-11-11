@@ -1,0 +1,206 @@
+<project name="xflow" default="build" basedir=".">
+    <typedef resource="dependencies.properties" />
+    <property file="build.properties"/>
+    <property name="app.name"       value="xflow" />
+    <property name="build.dir"      value="build/classes" />
+    <property name="test.classes.dir"      value="build/test_classes" />
+    <property name="conf.dir"       value="./conf" />
+    <property name="src.dir"        value="src" />
+    <property name="properties-file" value="database.properties" />
+    <property file="${properties-file}"/>
+
+  <property name="repositoryList" value="http://kgionline.com/maven/repository/, http://www.ibiblio.org/maven/" />
+
+    <path id="xflow.classpath">
+        <fileset dir="${jboss.home}/client" includes="*.jar"/>
+        <fileset dir="${jboss.home}/server/default/lib" includes="*.jar" />
+		<fileset dir="lib/" includes="*.jar" />
+    </path>
+
+    <target name="gather-runtime-libraries" description="Gather runtime libraries to copy on server">
+      <copy todir="build/rt-libraries" flatten="true" >
+        <fileset dir="${jboss.home}/server/default/lib" includes="*.jar" />
+        <fileset refid="rt.classpath.files" />
+      </copy>
+    </target>
+
+
+    <!-- ********************************************************************** -->
+    <!-- Clean the class files                                                  -->
+    <!-- ********************************************************************** -->
+    <target name="clean">
+
+        <delete dir="build" />
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="build/test_classes"/>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Compile package                                                     -->
+    <!-- =================================================================== -->
+    <target name="compile">
+        <javac srcdir="${src.dir}" destdir="${build.dir}" debug="on">
+            <classpath refid="xflow.classpath" />
+            <include name="**/*.java"/>
+            <exclude name="examples/**"/>
+            <exclude name="${jboss.home}/**"/>
+            <exclude name="axis/**"/>
+            <exclude name="**/jsp/**"/>
+        </javac>
+        <javac srcdir="tests" destdir="build/test_classes" debug="on">
+            <classpath >
+               <pathelement location="${build.dir}"/>
+               <path refid="xflow.classpath"/>
+            </classpath>
+            <include name="**/*.java"/>
+        </javac>
+      <copy todir="${build.dir}" >
+        <fileset dir="${src.dir}" includes="**/*.gif,**/*.jpg,**/*.png,**/*.properties,**/*.xml"/>
+        <fileset dir="${conf.dir}" includes="*.properties,*.xml"/>
+      </copy>
+      <!-- enforce file copying in case we just build for different db -->
+      <copy todir="${build.dir}/xflow/server/controller" overwrite="true" >
+        <fileset dir="${conf.dir}/${database}" includes="*.properties,*.xml"/>
+      </copy>
+      <copy tofile="${build.dir}/xflow/server/controller/sqlmap.properties"
+         file="${properties-file}" overwrite="true" 
+        />
+    </target>
+
+    <!-- ********************************************************************* -->
+    <!-- Build xflow web services                                              -->
+    <!-- ********************************************************************* -->
+    <target name="webservices" depends="compile">
+        <mkdir dir="${build.dir}/WEB-INF"/>
+        <mkdir dir="${build.dir}/WEB-INF/classes"/>
+        <copy  todir="${build.dir}/WEB-INF">
+            <fileset dir="${src.dir}/xflow/webservice"
+                includes="*.xml,*.wsdd"
+            />
+        </copy>
+        <copy  todir="${build.dir}/WEB-INF/classes">
+            <fileset dir="${build.dir}" 
+                includes="xflow/webservice/**"
+            />
+        </copy>
+
+        <jar jarfile="${build.dir}/axis.war">
+            <fileset dir="${build.dir}" includes="WEB-INF/**"/>
+        </jar>
+    </target>
+
+    <!-- ********************************************************************* -->
+    <!-- Build xflow core                                                      -->
+    <!-- ********************************************************************* -->
+    <target name="xflow-ejb-jar" depends="xflow-jar" description="Build Xflow ejb jar" >
+       <jar jarfile="build/xflow-ejb.jar">
+          <metainf dir="${src.dir}/xflow/server/controller" includes="*.xml"/>
+          <fileset dir="${build.dir}" includes="xflow/**,kgi/server/**"
+                                      excludes="xflow/webservice/**, xflow/client/**"/>
+          <fileset dir="${test.classes.dir}" includes="xflow/**/*.class" />
+          <!--<fileset dir="${basedir}" includes="lib/*.jar"/>-->
+          <!--<metainf dir="${conf.dir}" includes="xflow.properties"/>-->
+           <fileset dir="${conf.dir}" includes="xflow.properties"/>
+       </jar>
+    </target>
+
+    <target name="javadoc">
+      <javadoc  sourcepath="${src.dir}"
+                packagenames="xflow.*"
+                destdir="doc/api" classpathref="xflow.classpath" >
+
+      </javadoc>
+    </target>
+
+    <target name="build" depends="xflow-ejb-jar,javadoc,arc" description="Build everything" />
+
+     <target name="xflow-jar" depends="clean,compile" description="Build Xflow core" >
+         <jar jarfile="build/xflow.jar">
+           <fileset dir="${build.dir}" includes="xflow/**,kgi/server/**"
+                                        excludes="xflow/webservice/**"/>
+            <metainf dir="${conf.dir}" includes="xflow.properties"/>
+         </jar>
+      </target>
+
+
+
+
+    <target name="deploy">
+      <unzip dest="${jboss.home}/server/${server}/deploy/xflow/xflow.jar" src="build/xflow-ejb.jar"/>
+      <touch file="${jboss.home}/server/${server}/deploy/xflow/xflow.jar/META-INF/ejb-jar.xml"/>
+    </target>
+
+    <target name="recreate-database" description="Recreate Database">
+         <property file="conf/xflow.properties" />
+         <echo message="${DBDRIVER} url=${DBURL} userid=${DBUSER} password=${DBPASSWORD}" /> 
+         <!--sql classpathref="xflow.classpath"    onerror="continue" autocommit="true"
+             driver="${DBDRIVER}" url="${DBURL}" userid="${DBUSER}" password="${DBPASSWORD}" src="${conf.dir}/${database}/drop_db.${database}.sql"/ -->
+         <sql classpathref="xflow.classpath"    onerror="continue" autocommit="true"
+             driver="${DBDRIVER}" url="${DBURL}" userid="${DBUSER}" password="${DBPASSWORD}" src="${conf.dir}/${database}/create_db.${database}.sql"/>
+    </target>
+
+  <target name="start_ui">
+    <java classname="xflow.client.XFlowAdminUI" fork="true" >
+        <classpath>
+          <pathelement location="${conf.dir}"/>
+          <pathelement location="${build.dir}"/>
+          <path refid="xflow.classpath"/>
+          <fileset dir="${jboss.home}">
+            <include name="lib/*.jar"/>
+            <include name="server/all/lib/jbo*.jar"/>
+          </fileset>
+        </classpath>
+    </java>
+  </target>
+
+  <target name="arc" description="Make source code archive">
+    <tstamp >
+      <format pattern="yyyy-MM-dd" property="day" />
+    </tstamp>
+    <mkdir dir="temp"/>
+    <jar file="build/${day}-xflow-src.jar" update="true" >
+      <fileset dir="." includes="*.properties, *.xml,conf/**, src/**, tests/**,doc/**, lib/jax*.jar, lib/sax*.jar"/>
+
+    </jar>
+  </target>
+
+
+  <target name="test" depends="compile" description="Run XFlow2 tests, suply -Dremote=yes if want to run tests against remote server" >
+    <property name="remote" value="no"/>
+    <java classname="junit.textui.TestRunner" >
+      <classpath>
+          <pathelement location="conf"/>
+          <pathelement location="tests"/>
+          <pathelement location="build/test_classes"/>
+          <pathelement location="${build.dir}"/>
+          <path refid="xflow.classpath"/>
+        </classpath>
+      <arg line="xflow.server.AllTests"   />
+      <sysproperty key="remote" value="${remote}"/>  
+    </java>
+  </target>
+  
+  <target name="testAll" depends="compile" >
+    <property name="reports.tests" value="build/tests/reports" />
+    <mkdir dir="${reports.tests}"/>
+    <junit fork="true">
+        <classpath>
+          <pathelement location="conf"/>
+          <pathelement location="tests"/>
+          <pathelement location="build/test_classes"/>
+          <pathelement location="${build.dir}"/>
+          <path refid="xflow.classpath"/>
+        </classpath>
+
+        <formatter type="xml"/>
+
+
+       <batchtest fork="yes" todir="${reports.tests}">
+        <fileset dir="tests">
+          <include name="**/*OrTest.java"/>
+        </fileset>
+      </batchtest>
+    </junit>
+  </target>
+
+</project>
