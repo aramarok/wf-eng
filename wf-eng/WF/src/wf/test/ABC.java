@@ -57,7 +57,7 @@
 
 package wf.test;
 
-import java.io.*;
+import java.io.Serializable;
 
     public class ABC implements Serializable {
 

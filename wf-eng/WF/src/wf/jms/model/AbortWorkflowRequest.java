@@ -56,11 +56,6 @@
  */
 package wf.jms.model;
 
-import java.util.*;
-
-import wf.client.auth.*;
-import wf.server.controller.*;
-import xflow.common.*;
 
 public class AbortWorkflowRequest extends Request {
 

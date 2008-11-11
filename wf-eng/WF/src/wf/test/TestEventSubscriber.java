@@ -58,14 +58,15 @@
 
 package wf.test;
 
-import java.util.*;
-import java.beans.EventHandler;
-import java.io.*;
-import javax.jms.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
+import javax.jms.JMSException;
 
 import wf.exceptions.XflowException;
-import wf.jms.*;
-import xflow.common.*;
+import wf.jms.EventsHandler;
 
 public class TestEventSubscriber {
 

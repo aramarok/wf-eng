@@ -58,11 +58,9 @@
 
 package wf.test;
 
-import wf.client.*;
-import wf.client.auth.*;
+import wf.client.WorkflowManager;
+import wf.client.auth.User;
 import wf.exceptions.XflowException;
-import wf.util.*;
-import xflow.common.*;
 
 public class TestSetVar {
 

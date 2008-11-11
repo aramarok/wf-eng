@@ -58,14 +58,15 @@
 
 package wf.test;
 
-import java.util.*;
-import java.io.*;
-import javax.jms.*;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageListener;
+import javax.jms.TextMessage;
 
 import wf.cfg.XflowConfig;
 import wf.exceptions.XflowException;
-import wf.jms.*;
-import xflow.common.*;
+import wf.jms.JMSSubscriber;
+import wf.jms.JMSTopicConnection;
 
 public class TestJMSSubscriber implements MessageListener {
 

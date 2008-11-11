@@ -56,18 +56,17 @@
  */
 package wf.xml;
 
-import org.apache.axis.MessageContext;
+import java.io.StringWriter;
+
 import org.apache.axis.Constants;
+import org.apache.axis.MessageContext;
 import org.apache.axis.client.AxisClient;
 import org.apache.axis.configuration.NullProvider;
-import org.apache.axis.encoding.SerializationContext;
 import org.apache.axis.message.SOAPBodyElement;
 import org.apache.axis.message.SOAPEnvelope;
 import org.apache.axis.message.SOAPHeaderElement;
 import org.apache.axis.utils.Mapping;
 import org.apache.axis.utils.XMLUtils;
-
-import java.io.StringWriter;
 
 public class XflowSoapEnvelope {
 

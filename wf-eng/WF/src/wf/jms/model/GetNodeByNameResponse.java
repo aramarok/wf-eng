@@ -57,10 +57,7 @@
 
 package wf.jms.model;
 
-import java.util.*;
-
 import wf.model.Node;
-import xflow.common.*;
 
 public class GetNodeByNameResponse extends Response {
 

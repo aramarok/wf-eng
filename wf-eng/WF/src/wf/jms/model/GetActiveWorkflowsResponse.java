@@ -56,10 +56,9 @@
 */
 package wf.jms.model;
 
-import java.util.*;
+import java.util.List;
 
 import wf.model.WorkflowState;
-import xflow.common.*;
 
 public class GetActiveWorkflowsResponse extends Response {
   /**

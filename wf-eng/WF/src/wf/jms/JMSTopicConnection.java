@@ -56,14 +56,21 @@
 */
 package wf.jms;
 
-import java.util.*;
-import java.io.*;
-import javax.jms.*;
-import javax.naming.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Hashtable;
+import java.util.Properties;
+
+import javax.jms.JMSException;
+import javax.jms.TopicConnection;
+import javax.jms.TopicConnectionFactory;
+import javax.naming.InitialContext;
+
 import org.apache.log4j.Logger;
 
 import wf.cfg.XflowConfig;
-import xflow.common.*;
 
 public class JMSTopicConnection {
 

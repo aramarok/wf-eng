@@ -62,10 +62,6 @@ import wf.exceptions.XflowException;
 import wf.jms.EventsPublisher;
 import wf.model.WorkItem;
 
-import java.lang.Integer;
-
-import javax.jms.JMSException;
-
 public class TestEventPublisher {
 
   public static void main (String[] args) {

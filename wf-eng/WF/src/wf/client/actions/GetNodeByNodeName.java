@@ -58,14 +58,12 @@
 
 package wf.client.actions;
 
-import java.io.*;
-import java.util.*;
+import java.util.List;
 
-import wf.client.*;
-import wf.client.auth.*;
+import wf.client.WorkflowManager;
+import wf.client.auth.User;
 import wf.model.Destination;
 import wf.model.Node;
-import xflow.common.*;
 
 /**
  *  Gets a node in a workflow model by node name.

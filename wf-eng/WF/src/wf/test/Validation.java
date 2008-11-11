@@ -56,12 +56,13 @@
  */
 package wf.test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 import wf.exceptions.XflowException;
 import wf.model.DirectedGraph;
 import wf.xml.XflowXMLParser;
-import xflow.common.*;
 
 /**
  * @author xzma

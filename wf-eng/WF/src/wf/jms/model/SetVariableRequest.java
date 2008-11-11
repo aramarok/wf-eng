@@ -57,10 +57,6 @@
 
 package wf.jms.model;
 
-import java.util.*;
-
-import wf.server.controller.*;
-import xflow.common.*;
 
 public class SetVariableRequest extends Request {
 

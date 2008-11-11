@@ -58,10 +58,9 @@
 
 package wf.client.actions;
 
-import wf.client.*;
-import wf.client.auth.*;
+import wf.client.WorkflowManager;
+import wf.client.auth.User;
 import wf.exceptions.XflowException;
-import xflow.common.*;
 
 /**
  *  Gets workflow variable in a workflow instance.

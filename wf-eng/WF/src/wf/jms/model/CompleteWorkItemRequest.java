@@ -56,11 +56,7 @@
  */
 package wf.jms.model;
 
-import java.util.*;
-
 import wf.model.WorkItem;
-import wf.server.controller.*;
-import xflow.common.*;
 
 public class CompleteWorkItemRequest extends WorkflowProcessRequest {
 

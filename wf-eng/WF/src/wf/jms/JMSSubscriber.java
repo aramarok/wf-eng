@@ -56,15 +56,16 @@
  */
 package wf.jms;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
-import javax.jms.*;
-import javax.naming.*;
+import javax.jms.MessageListener;
+import javax.jms.Topic;
+import javax.jms.TopicConnection;
+import javax.jms.TopicSession;
+import javax.jms.TopicSubscriber;
+import javax.naming.InitialContext;
+
 import org.apache.log4j.Logger;
 
 import wf.exceptions.XflowException;
-import xflow.common.*;
 
 public class JMSSubscriber {
 

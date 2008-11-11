@@ -56,7 +56,6 @@
  */
 package wf.client;
 import wf.model.WorkItem;
-import xflow.common.*;
 
 /* 
  *  This is implemented by workflow processes that require asynchronous

@@ -58,12 +58,13 @@
 
 package wf.client.actions;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 
-import wf.client.*;
-import wf.client.auth.*;
+import wf.client.WorkflowManager;
+import wf.client.auth.User;
 import wf.exceptions.XflowException;
-import xflow.common.*;
 
 /**
  *  Deploys a workflow model in the server. The model is a .xflow file 
