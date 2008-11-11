@@ -56,20 +56,37 @@
 */
 package wf.client;
 
-import java.util.*;
-import java.io.*;
-import javax.jms.*;
+import java.io.ByteArrayInputStream;
+import java.io.ObjectInputStream;
+import java.util.List;
 
-import wf.cfg.XflowConfig;
-import wf.client.auth.*;
-import wf.exceptions.XflowException;
-import wf.jms.*;
-import wf.jms.model.*;
-import wf.model.WorkItem;
-import wf.util.*;
-import xflow.common.*;
+import javax.jms.BytesMessage;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageListener;
 
 import org.apache.log4j.Logger;
+
+import wf.cfg.XflowConfig;
+import wf.client.auth.User;
+import wf.exceptions.XflowException;
+import wf.jms.JMSSubscriber;
+import wf.jms.JMSTopicConnection;
+import wf.jms.SynchQueueMessaging;
+import wf.jms.model.CompleteWorkItemRequest;
+import wf.jms.model.CompleteWorkItemResponse;
+import wf.jms.model.GetNextWorkItemRequest;
+import wf.jms.model.GetNextWorkItemResponse;
+import wf.jms.model.GetWorkItemRequest;
+import wf.jms.model.GetWorkItemResponse;
+import wf.jms.model.GetWorkItemsRequest;
+import wf.jms.model.GetWorkItemsResponse;
+import wf.jms.model.Request;
+import wf.jms.model.Response;
+import wf.jms.model.ValidateProcessRequest;
+import wf.jms.model.ValidateProcessResponse;
+import wf.model.WorkItem;
+import wf.util.Util;
 
 /**
  *  A WorkflowProcess receives work items from the XFlow system and

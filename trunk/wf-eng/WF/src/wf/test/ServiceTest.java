@@ -58,12 +58,12 @@
 
 package wf.test;
 
+import javax.xml.rpc.ParameterMode;
+
 import org.apache.axis.client.Call;
 import org.apache.axis.client.Service;
 import org.apache.axis.encoding.XMLType;
 import org.apache.axis.utils.Options;
-
-import javax.xml.rpc.ParameterMode;
 
 public class ServiceTest {
    public static void main(String [] args) throws Exception {

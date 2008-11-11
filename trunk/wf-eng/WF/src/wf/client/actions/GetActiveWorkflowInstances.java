@@ -58,13 +58,11 @@
 
 package wf.client.actions;
 
-import java.io.*;
-import java.util.*;
+import java.util.List;
 
-import wf.client.*;
-import wf.client.auth.*;
+import wf.client.WorkflowManager;
+import wf.client.auth.User;
 import wf.model.WorkflowState;
-import xflow.common.*;
 
 /**
  *  Gets all active/running workflow instances. Prints the results to STDOUT

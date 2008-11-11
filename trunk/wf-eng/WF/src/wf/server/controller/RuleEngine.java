@@ -57,18 +57,19 @@
 
 package wf.server.controller;
 
-import java.util.*;
-import java.util.regex.*;
-import java.io.*;
+import java.io.IOException;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import wf.exceptions.XflowException;
-import wf.model.WorkItem;
-import xflow.common.*;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.log4j.Logger;
 import org.jaxen.JaxenException;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
+import wf.exceptions.XflowException;
+import wf.model.WorkItem;
 
 public class RuleEngine {
 

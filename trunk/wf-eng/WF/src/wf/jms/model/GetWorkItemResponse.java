@@ -57,10 +57,7 @@
 
 package wf.jms.model;
 
-import java.util.*;
-
 import wf.model.WorkItem;
-import xflow.common.*;
 
 public class GetWorkItemResponse extends Response {
 

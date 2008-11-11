@@ -56,8 +56,6 @@
  */
 package wf.jms.model;
 
-import java.util.*;
-import xflow.common.*;
 
 public class AbortWorkflowResponse extends Response {
 

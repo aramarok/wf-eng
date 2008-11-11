@@ -57,8 +57,6 @@
 
 package wf.jms.model;
 
-import java.util.*;
-import xflow.common.*;
 
 public abstract class WorkflowProcessRequest extends Request {
 

@@ -57,7 +57,6 @@
 
 package wf.jms.model;
 
-import java.util.*;
 
 
 public class GetWorkItemsRequest extends WorkflowProcessRequest {

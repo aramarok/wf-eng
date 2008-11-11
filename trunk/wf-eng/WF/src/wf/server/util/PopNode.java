@@ -56,8 +56,6 @@
  */
 package wf.server.util;
 
-import java.util.*;
-import xflow.common.*;
 
 public class PopNode {
     public int    gid;

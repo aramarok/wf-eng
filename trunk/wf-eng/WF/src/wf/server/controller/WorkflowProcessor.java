@@ -57,6 +57,18 @@
 
 package wf.server.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.log4j.Logger;
 import org.jaxen.JaxenException;
 import org.xml.sax.SAXException;
@@ -74,14 +86,6 @@ import wf.model.WorkflowModel;
 import wf.model.WorkflowState;
 import wf.server.util.PopNode;
 import wf.xml.XflowXMLParser;
-import xflow.common.*;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.IOException;
-import java.util.*;
-import java.sql.SQLException;
 
 public class WorkflowProcessor {
 

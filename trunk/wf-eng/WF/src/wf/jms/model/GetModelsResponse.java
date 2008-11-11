@@ -57,10 +57,9 @@
 
 package wf.jms.model;
 
-import java.util.*;
+import java.util.List;
 
 import wf.model.WorkflowModel;
-import xflow.common.*;
 
 public class GetModelsResponse extends Response {
     /**

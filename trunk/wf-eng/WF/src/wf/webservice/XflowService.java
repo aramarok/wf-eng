@@ -57,13 +57,15 @@
 
 package wf.webservice;
 
-import wf.client.*;
-import wf.client.auth.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import wf.client.WorkflowManager;
+import wf.client.WorkflowProcess;
+import wf.client.auth.User;
 import wf.exceptions.XflowException;
 import wf.model.WorkItem;
 import wf.model.WorkflowState;
-import xflow.common.*;
-import java.util.*;
 
 public class XflowService {
  

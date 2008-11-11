@@ -58,13 +58,15 @@
 
 package wf.test;
 
-import java.util.*;
-import java.io.*;
-import javax.jms.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.jms.JMSException;
 
 import wf.exceptions.XflowException;
-import wf.jms.*;
-import xflow.common.*;
+import wf.jms.JMSPublisher;
+import wf.jms.JMSTopicConnection;
+import wf.jms.MessageProperty;
 
 public class TestJMSPublisher {
 

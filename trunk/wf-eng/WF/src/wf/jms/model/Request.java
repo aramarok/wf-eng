@@ -57,11 +57,9 @@
 
 package wf.jms.model;
 
-import java.util.*;
-import java.io.*;
+import java.io.Serializable;
 
-import wf.client.auth.*;
-import xflow.common.*;
+import wf.client.auth.User;
 
 public abstract class Request implements Serializable {
 

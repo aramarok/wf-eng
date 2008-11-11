@@ -56,16 +56,17 @@
  */
 package wf.test;
 
-import java.net.*;
-import java.io.*;
-import javax.jms.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
-import wf.client.*;
-import wf.client.auth.*;
+import javax.jms.JMSException;
+
+import wf.client.InboxMessageListener;
+import wf.client.WorkflowProcess;
+import wf.client.auth.User;
 import wf.exceptions.XflowException;
-import wf.jms.*;
+import wf.jms.JMSTopicConnection;
 import wf.model.WorkItem;
-import xflow.common.*;
 
 public class ProcAgent implements InboxMessageListener {
 

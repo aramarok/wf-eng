@@ -57,17 +57,21 @@
 
 package wf.xml;
 
-import org.w3c.dom.*;
-import org.xml.sax.*;
-import javax.xml.parsers.*;
-import java.util.*;
-import java.text.*;
-import java.io.*;
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.StringTokenizer;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import wf.exceptions.XflowException;
 import wf.model.DirectedGraph;
-import wf.util.*;
-import xflow.common.*;
 
 public class GraphXMLParser {
 

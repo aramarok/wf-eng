@@ -58,16 +58,15 @@
 
 package wf.client.actions;
 
-import java.net.*;
-import java.io.*;
-import javax.jms.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
-import wf.client.*;
-import wf.client.auth.*;
+import javax.jms.JMSException;
+
+import wf.client.WorkflowProcess;
+import wf.client.auth.User;
 import wf.exceptions.XflowException;
-import wf.jms.*;
 import wf.model.WorkItem;
-import xflow.common.*;
 
 /**
  *  Gets the next work item (if available) from an inbox.
