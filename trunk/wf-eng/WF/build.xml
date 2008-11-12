@@ -4,7 +4,8 @@
     <property name="test.classes.dir"	value="build/test_classes" />
     <property name="conf.dir"			value="./conf" />
 	<property name="db.dir"				value="${conf.dir}/db" />
-	<property name="ant_build.dir"			value="${conf.dir}/ant_build" />
+	<property name="ant_build.dir"		value="${conf.dir}/ant_build" />
+	<property name="jboss_cfg.dir"		value="${conf.dir}/jboss-cfg" />
     <property name="src.dir"        	value="src" />
     <property name="properties-file"	value="${db.dir}/database.properties" />
 	<property file="${ant_build.dir}/build.properties" />
@@ -17,18 +18,10 @@
 		<fileset dir="lib/" includes="*.jar" />
     </path>
 
-    <target name="gather-runtime-libraries" description="Gather runtime libraries to copy on server">
-      <copy todir="build/rt-libraries" flatten="true" >
-        <fileset dir="${jboss.home}/server/default/lib" includes="*.jar" />
-      </copy>
-    </target>
-
-
     <!-- ********************************************************************** -->
     <!-- Clean the class files                                                  -->
     <!-- ********************************************************************** -->
     <target name="clean">
-
         <delete dir="build" />
         <mkdir dir="${build.dir}"/>
         <mkdir dir="build/test_classes"/>
@@ -67,7 +60,7 @@
     </target>
 
     <!-- ********************************************************************* -->
-    <!-- Build wf web services                                              -->
+    <!-- Build wf web services                                           	   -->
     <!-- ********************************************************************* -->
     <target name="webservices" depends="compile">
         <mkdir dir="${build.dir}/WEB-INF"/>
@@ -89,7 +82,7 @@
     </target>
 
     <!-- ********************************************************************* -->
-    <!-- Build xflow core                                                      -->
+    <!-- Build wf core                                                  	   -->
     <!-- ********************************************************************* -->
     <target name="wf-ejb-jar" depends="wf-jar" description="Build wf ejb jar" >
        <jar jarfile="build/wf-ejb.jar">
@@ -103,32 +96,40 @@
        </jar>
     </target>
 
+    <!-- ********************************************************************* -->
+    <!-- Generate wf javadoc                                               	   -->
+    <!-- ********************************************************************* -->
     <target name="javadoc">
       <javadoc  sourcepath="${src.dir}"
                 packagenames="wf.*"
                 destdir="doc/api" classpathref="wf.classpath" >
-
       </javadoc>
     </target>
 
+	<!-- ********************************************************************* -->
+    <!-- Build (default)                                               		   -->
+    <!-- ********************************************************************* -->
     <target name="build" depends="wf-ejb-jar,javadoc,arc" description="Build everything" />
 
-     <target name="wf-jar" depends="clean,compile" description="Build wf core" >
-         <jar jarfile="build/wf.jar">
-           <fileset dir="${build.dir}" includes="wf/**,kgi/server/**"
+	
+	<target name="wf-jar" depends="clean,compile" description="Build wf core" >
+		<jar jarfile="build/wf.jar">
+			<fileset dir="${build.dir}" includes="wf/**,kgi/server/**"
                                         excludes="wf/webservice/**"/>
             <metainf dir="${conf.dir}" includes="xflow.properties"/>
-         </jar>
-      </target>
+		</jar>
+	</target>
 
 
+	<target name="deploy" depends="wf-ejb-jar">
+		<unzip dest="${jboss.home}/server/${server}/deploy/wf/wf.jar" src="build/wf-ejb.jar"/>
+		<touch file="${jboss.home}/server/${server}/deploy/wf/wf.jar/META-INF/ejb-jar.xml"/>
+		<copy todir="${jboss.home}/server/${server}/deploy/jms">
+			<fileset dir="${jboss_cfg.dir}" includes="*.xml" />
+		</copy>
+	</target>
 
-
-    <target name="deploy">
-      <unzip dest="${jboss.home}/server/${server}/deploy/wf/wf.jar" src="build/wf-ejb.jar"/>
-      <touch file="${jboss.home}/server/${server}/deploy/wf/wf.jar/META-INF/ejb-jar.xml"/>
-    </target>
-
+	
     <target name="recreate-database" description="Recreate Database">
          <property file="conf/xflow.properties" />
          <echo message="${DBDRIVER} url=${DBURL} userid=${DBUSER} password=${DBPASSWORD}" /> 
@@ -138,6 +139,7 @@
              driver="${DBDRIVER}" url="${DBURL}" userid="${DBUSER}" password="${DBPASSWORD}" src="${db.dir}/${database}/create_db.${database}.sql"/>
     </target>
 
+	
   <target name="start_ui">
     <java classname="wf.client.XFlowAdminUI" fork="true" >
         <classpath>
@@ -152,6 +154,7 @@
     </java>
   </target>
 
+	
   <target name="arc" description="Make source code archive">
     <tstamp >
       <format pattern="yyyy-MM-dd" property="day" />
@@ -159,7 +162,6 @@
     <mkdir dir="temp"/>
     <jar file="build/${day}-wf-src.jar" update="true" >
       <fileset dir="." includes="*.properties, *.xml,conf/**, src/**, tests/**,doc/**, lib/jax*.jar, lib/sax*.jar"/>
-
     </jar>
   </target>
 
@@ -179,27 +181,25 @@
     </java>
   </target>
   
-  <target name="testAll" depends="compile" >
-    <property name="reports.tests" value="build/tests/reports" />
-    <mkdir dir="${reports.tests}"/>
-    <junit fork="true">
-        <classpath>
-          <pathelement location="conf"/>
-          <pathelement location="tests"/>
-          <pathelement location="build/test_classes"/>
-          <pathelement location="${build.dir}"/>
-          <path refid="wf.classpath"/>
-        </classpath>
-
-        <formatter type="xml"/>
-
-
-       <batchtest fork="yes" todir="${reports.tests}">
-        <fileset dir="tests">
-          <include name="**/*OrTest.java"/>
-        </fileset>
-      </batchtest>
-    </junit>
-  </target>
+	
+	<target name="testAll" depends="compile" >
+		<property name="reports.tests" value="build/tests/reports" />
+		<mkdir dir="${reports.tests}"/>
+		<junit fork="true">
+			<classpath>
+				<pathelement location="conf"/>
+				<pathelement location="tests"/>
+				<pathelement location="build/test_classes"/>
+				<pathelement location="${build.dir}"/>
+				<path refid="wf.classpath"/>
+			</classpath>
+			<formatter type="xml"/>
+			<batchtest fork="yes" todir="${reports.tests}">
+				<fileset dir="tests">
+					<include name="**/*OrTest.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
 
 </project>
