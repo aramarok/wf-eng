@@ -11,11 +11,7 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.Hashtable;
 
-/**
- * User: kosta
- * Date: Jul 8, 2004
- * Time: 8:22:29 PM
- */
+
 public class DirectedGraphP {
 
   private static Logger log = Logger.getLogger(DirectedGraphP.class);
@@ -31,8 +27,6 @@ public class DirectedGraphP {
       destination.setGraphId( gid );
       Node rootNode = new Node(rootNodeId);
       destination.setRootNode( rootNode );
-      // Expands the rootNode - this recursively loads all nodes
-      // of the graph
       rootNode.expand();
       return destination;
     } catch (Throwable c) {

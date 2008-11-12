@@ -8,11 +8,7 @@ import wf.server.controller.WorkflowProcessor;
 
 import java.util.List;
 
-/**
- * User: kosta
- * Date: Jul 24, 2004
- * Time: 1:23:44 PM
- */
+
 public class GetActiveWorkflowsRequestHandler implements RequestHandler{
 
   public Response handle(Request r) {

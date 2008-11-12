@@ -8,11 +8,7 @@ import wf.model.WorkflowState;
 import wf.server.controller.RequestHandler;
 import wf.server.controller.WorkflowProcessor;
 
-/**
- * User: kosta
- * Date: Jul 18, 2004
- * Time: 5:04:43 PM
- */
+
 public class GetWorkflowStateRequestHandler implements RequestHandler {
 
   public Response handle(Request r) {

@@ -9,11 +9,7 @@ import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
-/**
- * User: kosta
- * Date: Jul 18, 2004
- * Time: 3:16:19 PM
- */
+
 public class RequestHandlerFactory {
 
   private static Logger log = Logger.getLogger( RequestHandlerFactory.class );

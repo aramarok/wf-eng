@@ -1,59 +1,4 @@
-/*
-* ====================================================================
-*
-* XFLOW - Process Management System
-* Copyright (C) 2003 Rob Tan
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions
-* are met:
-*
-* 1. Redistributions of source code must retain the above copyright
-*    notice, this list of conditions, and the following disclaimer.
-*
-* 2. Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions, and the disclaimer that follows
-*    these conditions in the documentation and/or other materials
-*    provided with the distribution.
-*
-* 3. The name "XFlow" must not be used to endorse or promote products
-*    derived from this software without prior written permission.  For
-*    written permission, please contact rcktan@yahoo.com
-*
-* 4. Products derived from this software may not be called "XFlow", nor
-*    may "XFlow" appear in their name, without prior written permission
-*    from the XFlow Project Management (rcktan@yahoo.com)
-*
-* In addition, we request (but do not require) that you include in the
-* end-user documentation provided with the redistribution and/or in the
-* software itself an acknowledgement equivalent to the following:
-*     "This product includes software developed by the
-*      XFlow Project (http://xflow.sourceforge.net/)."
-* Alternatively, the acknowledgment may be graphical using the logos
-* available at http://xflow.sourceforge.net/
-*
-* THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-* OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED.  IN NO EVENT SHALL THE XFLOW AUTHORS OR THE PROJECT
-* CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-* SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-* LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
-* USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
-* OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-* SUCH DAMAGE.
-*
-* ====================================================================
-* This software consists of voluntary contributions made by many
-* individuals on behalf of the XFlow Project and was originally
-* created by Rob Tan (rcktan@yahoo.com)
-* For more information on the XFlow Project, please see:
-*           <http://xflow.sourceforge.net/>.
-* ====================================================================
-*/
+
 
 package wf.server.controller;
 
@@ -138,18 +83,10 @@ public class WorkflowProcessor {
 
 
   void init() throws SQLException {
-    // Load all active workflows
     activeWorkflows = workflowP.getActiveWorkflows();
-    // Load all suspended workflows
     suspendedWorkflows = workflowP.getSuspendedWorkflows();
-    // Start timeout thread -- disable timeout handling for now
-    //new TimeoutDetector().start();
 
   }
-
-  //
-  // Workflow model-oriented services
-  //
 
   public  void deployModel (String xml, String type, String user) throws XflowException {
 
@@ -170,7 +107,6 @@ public class WorkflowProcessor {
 
       String modelName = dg.getName();
       int graphId = dg.getGraphId();
-      //Node startNode = dg.getRootNode();
       log.info ("Saved model: " + modelName);
       log.info ("graphId is: " + graphId);
       graphsByGraphId.put (new Integer(graphId), dg);
@@ -187,11 +123,7 @@ public class WorkflowProcessor {
     }
   }
 
-  /**
-   *
-   * @return list of {@link WorkflowModel WorkflowModel}
-   * @throws SQLException
-   */
+  
   public  List getModels () throws SQLException {
     return workflowP.getModels();
   }
@@ -235,17 +167,10 @@ public class WorkflowProcessor {
     return node;
   }
 
-
-  //
-  // Workflow-oriented services
-  //
-
   public  Integer startWorkflow (String workflowName, int version, WorkItem witem, String initiator)
       throws XflowException, SQLException, JaxenException, IOException, ParserConfigurationException, SAXException {
     Integer workflowId = null;
     DirectedGraph dg = getGraphByNameAndVersion (workflowName, version);
-
-    // Save the work item to db
     log.info ("Saving workitem: " + witem);
     Persistence.getWorkItemP().saveDB(witem);
 
@@ -280,10 +205,7 @@ public class WorkflowProcessor {
 
     Integer workflowId = null;
     DirectedGraph dg = getGraphByNameAndVersion (workflowName, version);
-
-    // First we must clone the work item to be associated with new workflow instance
     WorkItem clonedWItem = _witem.makeCopy();
-    // Save the cloned work item to db
     log.info ("Saving cloned workitem: " + clonedWItem);
     Persistence.getWorkItemP().saveDB(clonedWItem);
     log.info ("Cloned workitem: " + clonedWItem);
@@ -451,14 +373,8 @@ public class WorkflowProcessor {
     return v;
   }
 
-  //
-  // Process-oriented services
-  //
-
   public  void completeWorkItem (String workflowName, int workflowVersion,  String processName, WorkItem witem)
       throws XflowException, SQLException, JaxenException, IOException, ParserConfigurationException, SAXException {
-
-    // Begin Validation
     log.info ("In CompleteWorkItem.");
     log.info ("workflowName: " + workflowName);
     log.info ("processName: " + processName);
@@ -479,8 +395,7 @@ public class WorkflowProcessor {
     Integer key = wfId;
 
     if (! activeWorkflows.contains(key) ) {
-      //throw new XflowException ("Cannot complete work item. Workflow instance is not active");
-      return; // This is an OK situation - the wf may have ended in the case where there are parallel flows.
+      return;
     }
 
     if (suspendedWorkflows.contains(key) ) {
@@ -500,8 +415,6 @@ public class WorkflowProcessor {
 
 
     log.info ("workflow ID: " + wfId);
-
-    // End Validation
 
     log.info ("Work Item passed validation. Now attempting to complete work item");
 
@@ -525,10 +438,6 @@ public class WorkflowProcessor {
   public  WorkItem getWorkItem (Integer wid, String procName) throws XflowException, SQLException {
     return Persistence.getWorkItemP().getWorkItem(wid, procName);
   }
-
-  //
-  //  Auxiliary Methods
-  //
 
   private  DirectedGraph getGraphByGraphId (int gid) throws XflowException {
     DirectedGraph dg = (DirectedGraph)graphsByGraphId.get(new Integer(gid));
@@ -584,16 +493,11 @@ public class WorkflowProcessor {
     log.info ("graphId: " + graphId);
     log.info ("startNode: " + endNode);
     log.info ("endNode: " + endNode);
-
-    // If container does not have any destinations -- we spawn a new workflow thread
     if (containerNode.getDestinations().size() == 0) {
       log.info ("Starting containee workflow: " + containee + " version: " + containeeVersion);
       startContaineeWorkflow (containee, containeeVersion, witem, "System", wfId);
     } else {
-      // Otherwise, execute containee workflow in the current thread
-      // Push to process stack
       processStack.push (wfId, gid, containerNode, endNode);
-      // Transition from start node
       transitionFromStartNode (containeeGid, containee, containeeVersion, startNode, witem);
     }
   }
@@ -621,14 +525,10 @@ public class WorkflowProcessor {
 
     log.info ("Transitioning from: " + fromNode.getNodeId() + " " + fromNode.getName());
     log.info ("From node has: " + destv.size() + " destinations");
-
-    // Place workitem in destination nodes inbox
     for (int i = 0; i < destv.size(); i++) {
       wf.model.Destination dest = (wf.model.Destination)destv.get(i);
 
       log.debug ("Processing destination " + i);
-
-      // Evaluate rule
       if (!evaluateRule (witem, dest.rule)) {
         log.info ("This destination's rule evaluated to false. Not going there");
         continue;
@@ -639,18 +539,11 @@ public class WorkflowProcessor {
 
       log.debug ("This destination node is: " + node.getNodeId() + " " + node.getName());
       log.debug ("This destination node type is: " + node.getNodeType());
-
-      // End nodes don't have inboxes -- so just remove from previous inbox and mark workflow
-      // as completed.
       if (nodeType.equals(Node.END)) {
 
         log.info ("Processing END node");
         inboxP.removeWorkItem(gid, processName, witem);
-
-        // Unwind if necessary
         PopNode popNode = processStack.pop (workflowId.intValue(), node);
-
-        // Mark workflow ended only if we didn't unwind.
         if (popNode == null) {
           int thisVersion = -1;
           if (workflowVersion == -1) {
@@ -662,15 +555,12 @@ public class WorkflowProcessor {
           workflowP.setCompleted (workflowId);
 
           try {
-            // Publish workflow completed event
             eventsPublisher.publishWorkflowCompletedEvent (workflowName, thisVersion,  workflowId, "system");
           } catch (XflowException e) {
             log.warn ("Failed to publish event");
           }
         } else {
           log.info ("Transitioning to unwoundNode's destinations.");
-
-          // Transition to popped node's destination(s)
           int cGid = popNode.gid;
           int cNodeId = popNode.nodeId;
           log.info ("cGid = " + cGid + " cNodeId = " + cNodeId);
@@ -688,18 +578,12 @@ public class WorkflowProcessor {
 
       String nextProcessName = node.getName();
       String nextProcessType = node.getNodeType();
-
-      // Handle Or node
       if (nextProcessType.equals(Node.OR)) {
 
         log.info ("Processing OR node");
-        // Has there been a prior transition to this OR node? If yes,
-        // don't do anything.
         if (orTransitionHasOccurred(workflowId, node.getNodeId())) {
           continue;
         }
-
-        // Record the Or transition
         recordOrTransition (workflowId, node.getNodeId());
 
         List orDest = node.getDestinations();
@@ -712,7 +596,6 @@ public class WorkflowProcessor {
         }else{
           throw new XflowException( "Next node is not process!!");
         }
-        // Handle And node
       } else if (nextProcessType.equals(Node.AND)) {
         log.info ("Processing AND node");
         int destNodeId = node.getNodeId();
@@ -730,7 +613,6 @@ public class WorkflowProcessor {
         log.info ("Transitioning to: " + nextProcessName);
         transitionTo (gid, workflowName, workflowId, workflowVersion, processName, nextProcessName, witem);
       } else if (nextProcessType.equals(Node.CONTAINER)) {
-        // This is a container for another workflow
         log.info ("Processing CONTAINER node");
         processContainer(gid, node, witem);
       }
@@ -740,33 +622,21 @@ public class WorkflowProcessor {
   private  void transitionFromStartNode (int gid, String workflowName, int workflowVersion,
                                          Node startNode, WorkItem witem)
       throws XflowException, JaxenException, IOException, ParserConfigurationException, SAXException {
-
-    // Get the destinations from start node
     List destv = startNode.getDestinations();
-
-    // Place workitem in destination nodes inbox
     for (int i = 0; i < destv.size(); i++) {
       wf.model.Destination dest = (wf.model.Destination)destv.get(i);
-
-      // Evaluate rule
       if (!evaluateRule (witem, dest.rule)) {
         continue;
       }
 
       Node node = dest.node;
       String nodeType = node.getNodeType();
-
-      // End nodes don't have inboxes -- so ignore
       if (nodeType.equals(Node.END)) {
         continue;
       }
       String procName = node.getName();
       log.info ("Adding workitem to inbox for proc: " + procName);
-
-      // Add the work item to the process's inbox
       inboxP.addWorkItem (gid, workflowName, procName, witem);
-
-      // Send notification to destination
       log.info ("Transition From Start Node");
       log.info ("Sending inbox notification:");
       log.info ("   workflowName: " + workflowName);
@@ -789,8 +659,6 @@ public class WorkflowProcessor {
     log.info ("   workflowName: " + workflowName);
     log.info ("   procName: " + nextProcessName);
     log.info ("   witem: " + witem.getId());
-
-    // Send notification to destination
     sendInboxNotification (workflowName, nextProcessName, witem);
 
     try {

@@ -8,11 +8,7 @@ import wf.model.WorkItem;
 import wf.server.controller.RequestHandler;
 import wf.server.controller.WorkflowProcessor;
 
-/**
- * User: kosta
- * Date: Jul 18, 2004
- * Time: 4:12:14 PM
- */
+
 public class GetNextWorkItemRequestHandler implements RequestHandler {
 
   public Response handle(Request r) {

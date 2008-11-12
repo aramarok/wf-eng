@@ -2,13 +2,7 @@ package wf.server.controller;
 
 import wf.jms.model.*;
 
-/**
- * Silly wrapper that makes API more clear and simplifies SOAP connectivity
- *
- * User: kosta
- * Date: Jul 24, 2004
- * Time: 3:33:39 PM
- */
+
 public class WorkflowEngineWrapper {
 
   WorkflowEngine workflowEngine;

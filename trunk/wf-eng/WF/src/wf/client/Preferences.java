@@ -8,12 +8,7 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Properties;
 
-/**
- * Created because jdk's 1.4.2_04 preferences package does not work properly on Linux
- * User: kosta
- * Date: May 24, 2004
- * Time: 8:00:32 PM
- */
+
 public class Preferences {
 
   private static Map preferences = new Hashtable();
