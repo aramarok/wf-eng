@@ -13,7 +13,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="uploadWfMI">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.openide.explorer.propertysheet.editors.IconEditor">
-                  <Image iconType="3" name="/xflow/client/manager/icon/open.gif"/>
+                  <Image iconType="3" name="/wf/client/manager/icon/open.gif"/>
                 </Property>
                 <Property name="mnemonic" type="int" value="117"/>
                 <Property name="text" type="java.lang.String" value="Upload WF definition"/>
@@ -25,7 +25,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="removeWfMI">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.openide.explorer.propertysheet.editors.IconEditor">
-                  <Image iconType="3" name="/xflow/client/manager/icon/delete.gif"/>
+                  <Image iconType="3" name="/wf/client/manager/icon/delete.gif"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Remove Definition"/>
               </Properties>
@@ -36,7 +36,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="refreshListMI">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.openide.explorer.propertysheet.editors.IconEditor">
-                  <Image iconType="3" name="/xflow/client/manager/icon/refresh.gif"/>
+                  <Image iconType="3" name="/wf/client/manager/icon/refresh.gif"/>
                 </Property>
                 <Property name="mnemonic" type="int" value="114"/>
                 <Property name="text" type="java.lang.String" value="Refresh List"/>
@@ -50,7 +50,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.openide.explorer.propertysheet.editors.IconEditor">
-              <Image iconType="3" name="/xflow/client/manager/icon/refresh.gif"/>
+              <Image iconType="3" name="/wf/client/manager/icon/refresh.gif"/>
             </Property>
             <Property name="mnemonic" type="int" value="114"/>
             <Property name="text" type="java.lang.String" value="Refresh"/>
