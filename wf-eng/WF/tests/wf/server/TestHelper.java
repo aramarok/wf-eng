@@ -1,6 +1,6 @@
-package xflow.server;
+package wf.server;
 
-import xflow.server.controller.WorkflowEngine;
+import wf.server.controller.WorkflowEngine;
 
 /**
  * User: kosta

@@ -1,4 +1,4 @@
-package xflow.server.case_condition;
+package wf.server.case_condition;
 
 import java.io.Serializable;
 

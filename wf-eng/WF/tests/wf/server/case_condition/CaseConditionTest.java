@@ -1,9 +1,9 @@
-package xflow.server.case_condition;
-
-import xflow.server.controller.AbstractServerTestCase;
-import xflow.protocol.GetNextWorkItemResponse;
+package wf.server.case_condition;
 
 import java.io.IOException;
+
+import wf.jms.model.GetNextWorkItemResponse;
+import wf.server.controller.AbstractServerTestCase;
 
 /**
  * User: kosta

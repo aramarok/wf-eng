@@ -1,6 +1,6 @@
-package xflow;
+package wf;
 
-import xflow.security.User;
+import wf.client.auth.User;
 
 /**
  * User: kosta

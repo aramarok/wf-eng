@@ -1,13 +1,19 @@
-package xflow.server.case1;
-
-import xflow.common.WorkItem;
-import xflow.common.WorkflowState;
-import xflow.protocol.*;
-import xflow.server.controller.AbstractServerTestCase;
-import xflow.TestConfig;
+package wf.server.case1;
 
 import java.io.IOException;
 import java.util.List;
+
+import wf.TestConfig;
+import wf.jms.model.GetActiveWorkflowsRequest;
+import wf.jms.model.GetActiveWorkflowsResponse;
+import wf.jms.model.GetNextWorkItemResponse;
+import wf.jms.model.GetVariableRequest;
+import wf.jms.model.GetVariableResponse;
+import wf.jms.model.SetVariableRequest;
+import wf.jms.model.SetVariableResponse;
+import wf.model.WorkItem;
+import wf.model.WorkflowState;
+import wf.server.controller.AbstractServerTestCase;
 
 /**
  * User: kosta

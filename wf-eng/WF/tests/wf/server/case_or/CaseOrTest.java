@@ -1,10 +1,10 @@
-package xflow.server.case_or;
-
-import xflow.protocol.*;
-import xflow.server.controller.AbstractServerTestCase;
-import xflow.common.WorkItem;
+package wf.server.case_or;
 
 import java.io.IOException;
+
+import wf.jms.model.GetNextWorkItemResponse;
+import wf.model.WorkItem;
+import wf.server.controller.AbstractServerTestCase;
 
 /**
  * User: kosta
