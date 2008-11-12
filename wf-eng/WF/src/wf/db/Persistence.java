@@ -67,7 +67,7 @@ public class Persistence {
   }
 
   private static  SqlMapClient initSQLSqlMap() throws IOException {
-    String resource =  "xflow/server/controller/sqlmap.xml" ;
+    String resource =  "wf/server/controller/sqlmap.xml" ;
     Reader reader = Resources.getResourceAsReader (resource);
     SqlMapClient sqlMap = SqlMapClientBuilder.buildSqlMapClient(reader);
     return sqlMap;

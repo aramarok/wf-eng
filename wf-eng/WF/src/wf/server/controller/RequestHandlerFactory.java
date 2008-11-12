@@ -35,7 +35,7 @@ public class RequestHandlerFactory {
       log.debug( "Try to instantiate handler for " + className );
     }
     String baseName = className.substring( className.lastIndexOf('.') + 1 );
-    String handlerName = "xflow.server.controller.handler." + baseName + "Handler";
+    String handlerName = "wf.server.controller.handler." + baseName + "Handler";
     try {
       Class handlerClass = getClass().getClassLoader().loadClass( handlerName );
       register( requestClass, handlerClass );

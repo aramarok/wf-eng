@@ -7,7 +7,7 @@
 
 <sqlMapConfig>
 
-  <properties resource="xflow/server/controller/sqlmap.properties"/>
+  <properties resource="wf/server/controller/sqlmap.properties"/>
 
   <!--
     The Settings element configures SqlMap settings such as (in order):
@@ -54,10 +54,10 @@
   <!-- Identify all SQL Map XML files to be loaded by this
        SQL map.  Notice the paths are relative to the classpath. -->
 
-  <sqlMap resource="xflow/server/controller/WorkflowP.xml"/>
-  <sqlMap resource="xflow/server/controller/WorkItemP.xml"/>
-  <sqlMap resource="xflow/server/controller/DirectedGraphP.xml"/>
-  <sqlMap resource="xflow/server/controller/InboxP.xml"/>
-  <sqlMap resource="xflow/server/controller/WaitingP.xml"/>
+  <sqlMap resource="wf/server/controller/WorkflowP.xml"/>
+  <sqlMap resource="wf/server/controller/WorkItemP.xml"/>
+  <sqlMap resource="wf/server/controller/DirectedGraphP.xml"/>
+  <sqlMap resource="wf/server/controller/InboxP.xml"/>
+  <sqlMap resource="wf/server/controller/WaitingP.xml"/>
 
 </sqlMapConfig>
