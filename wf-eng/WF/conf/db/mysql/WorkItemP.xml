@@ -40,7 +40,7 @@
      values ( #workitemId# , #workflowName# , #procName# , #name# , #valueStr# )
   </insert>
 
-  <select id="selectInboxRecordsForProcess" resultClass="xflow.server.controller.InboxRec">
+  <select id="selectInboxRecordsForProcess" resultClass="wf.server.controller.InboxRec">
     select *
     from inbox i
     where i.procName = #processName#
@@ -48,7 +48,7 @@
      order by i.timeStarted
   </select>
 
-  <select id="selectWorkItemRec" resultClass="xflow.server.controller.WorkItemRec">
+  <select id="selectWorkItemRec" resultClass="wf.server.controller.WorkItemRec">
     select * from workitem where workitemId = #value#
   </select>
 
