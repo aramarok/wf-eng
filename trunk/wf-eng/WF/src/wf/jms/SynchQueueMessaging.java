@@ -78,6 +78,10 @@ public class SynchQueueMessaging {
 
     m.setJMSReplyTo(receiveQueue);
     sender.send(m);
+    
+    System.out.println("Receiver = " + receiver);
+    System.out.println("Sender = " + sender);
+    
     Message msg = receiver.receive(5000);
     Response response = null;
     if (msg != null) {

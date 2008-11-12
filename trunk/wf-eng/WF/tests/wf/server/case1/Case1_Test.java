@@ -35,7 +35,7 @@ public class Case1_Test extends AbstractServerTestCase{
   }
 
   public void testDeployWF() throws IOException {
-    deployWF( MODEL_NAME, "tests/xflow/server/case1/case1.xf.xml" );
+    deployWF( MODEL_NAME, "tests/wf/server/case1/case1.xf.xml" );
   }
 
   public void testStartWF() throws IOException {

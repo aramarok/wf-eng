@@ -24,7 +24,7 @@ public class CaseConditionTest extends AbstractServerTestCase{
   }
 
   public void testDeployWF() throws IOException {
-    deployWF( MODEL_NAME, "tests/xflow/server/case_condition/case_condition.xf.xml" );
+    deployWF( MODEL_NAME, "tests/wf/server/case_condition/case_condition.xf.xml" );
   }
 
 
