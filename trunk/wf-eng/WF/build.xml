@@ -12,6 +12,9 @@
 	<property file="${ant_build.dir}/${user.name}.properties" />
 	<property file="${properties-file}" />
 
+	<target name="clean.build.and.deploy" depends="wf-ejb-jar, deploy">
+		</target>
+	
 	<path id="wf.classpath">
 		<fileset dir="${jboss.home}/client" includes="*.jar" />
 		<fileset dir="${jboss.home}/server/default/lib" includes="*.jar" />
@@ -81,7 +84,7 @@
 	<target name="wf-ejb-jar" depends="wf-jar" description="Build wf ejb jar">
 		<jar jarfile="build/wf-ejb.jar">
 			<metainf dir="${src.dir}/wf/server/controller" includes="*.xml" />
-			<fileset dir="${build.dir}" includes="wf/**,kgi/server/**" excludes="wf/webservice/**, wf/client/**" />
+			<fileset dir="${build.dir}" includes="wf/**,kgi/server/**" excludes="wf/webservice/**" />
 			<fileset dir="${test.classes.dir}" includes="wf/**/*.class" />
 			<!--<fileset dir="${basedir}" includes="lib/*.jar"/>-->
 			<!--<metainf dir="${conf.dir}" includes="xflow.properties"/>-->
@@ -100,7 +103,7 @@
 	<!-- ********************************************************************* -->
 	<!-- Build (default)                                               		   -->
 	<!-- ********************************************************************* -->
-	<target name="build" depends="wf-ejb-jar,javadoc,arc" description="Build everything" />
+	<target name="build" depends="wf-ejb-jar,arc" description="Build everything" />
 
 
 	<target name="wf-jar" depends="clean,compile" description="Build wf core">
