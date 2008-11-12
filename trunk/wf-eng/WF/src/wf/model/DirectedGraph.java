@@ -56,15 +56,17 @@
 */
 package wf.model;
 
-import java.sql.*;
-import java.util.*;
-import java.io.*;
+import java.io.Serializable;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import wf.db.Persistence;
 import wf.exceptions.XflowException;
 import wf.server.controller.DirectedGraphP;
 import wf.server.controller.IBatisWork;
-import wf.util.*;
+import wf.util.Util;
 import wf.xml.XflowGraphSerializer;
 
 import com.ibatis.sqlmap.client.SqlMapClient;

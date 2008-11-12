@@ -1,9 +1,12 @@
 package wf.client;
 
-import java.util.Map;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.Properties;
-import java.io.*;
 
 /**
  * Created because jdk's 1.4.2_04 preferences package does not work properly on Linux

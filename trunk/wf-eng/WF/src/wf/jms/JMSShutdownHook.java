@@ -56,8 +56,6 @@
  */
 package wf.jms;
 
-import java.lang.*;
-import javax.jms.*;
 
 public class JMSShutdownHook extends Thread {
 

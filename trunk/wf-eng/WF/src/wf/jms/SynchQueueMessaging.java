@@ -56,14 +56,27 @@
  */
 package wf.jms;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+import javax.jms.BytesMessage;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Queue;
+import javax.jms.QueueConnection;
+import javax.jms.QueueConnectionFactory;
+import javax.jms.QueueReceiver;
+import javax.jms.QueueSender;
+import javax.jms.QueueSession;
+import javax.naming.InitialContext;
+
 import wf.cfg.XflowConfig;
 import wf.exceptions.XflowException;
 import wf.jms.model.Request;
 import wf.jms.model.Response;
-
-import javax.naming.InitialContext;
-import javax.jms.*;
-import java.io.*;
 
 
 public class SynchQueueMessaging {

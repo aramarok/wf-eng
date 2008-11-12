@@ -57,8 +57,11 @@
 
 package wf.db;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 public class ConnectionPool {
 

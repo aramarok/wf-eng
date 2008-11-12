@@ -56,8 +56,13 @@
 */
 package wf.model;
 
-import java.util.*;
-import java.io.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  *  This class represents the workflow's state - its variables and participant process states

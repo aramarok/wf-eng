@@ -56,16 +56,45 @@
 */
 package wf.client;
 
+import java.util.List;
+
 import wf.client.auth.User;
 import wf.exceptions.XflowException;
 import wf.jms.SynchQueueMessaging;
-import wf.jms.model.*;
+import wf.jms.model.AbortWorkflowRequest;
+import wf.jms.model.AbortWorkflowResponse;
+import wf.jms.model.DeployModelRequest;
+import wf.jms.model.DeployModelResponse;
+import wf.jms.model.GetActiveWorkflowsRequest;
+import wf.jms.model.GetActiveWorkflowsResponse;
+import wf.jms.model.GetAllWorkflowsRequest;
+import wf.jms.model.GetAllWorkflowsResponse;
+import wf.jms.model.GetModelsRequest;
+import wf.jms.model.GetModelsResponse;
+import wf.jms.model.GetNodeByNameRequest;
+import wf.jms.model.GetNodeByNameResponse;
+import wf.jms.model.GetProcessNodesRequest;
+import wf.jms.model.GetProcessNodesResponse;
+import wf.jms.model.GetVariableRequest;
+import wf.jms.model.GetVariableResponse;
+import wf.jms.model.GetWorkflowStateRequest;
+import wf.jms.model.GetWorkflowStateResponse;
+import wf.jms.model.GetWorkflowsByNameRequest;
+import wf.jms.model.GetWorkflowsByNameResponse;
+import wf.jms.model.Request;
+import wf.jms.model.Response;
+import wf.jms.model.ResumeWorkflowRequest;
+import wf.jms.model.ResumeWorkflowResponse;
+import wf.jms.model.SetVariableRequest;
+import wf.jms.model.SetVariableResponse;
+import wf.jms.model.StartWorkflowRequest;
+import wf.jms.model.StartWorkflowResponse;
+import wf.jms.model.SuspendWorkflowRequest;
+import wf.jms.model.SuspendWorkflowResponse;
 import wf.model.Node;
 import wf.model.WorkItem;
 import wf.model.WorkflowState;
 import wf.util.Util;
-
-import java.util.List;
 
 /**
  *  WorkflowManager contains all workflow administrative functions.

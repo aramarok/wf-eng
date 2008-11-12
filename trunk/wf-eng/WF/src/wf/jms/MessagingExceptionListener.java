@@ -56,9 +56,9 @@
  */
 package wf.jms;
 
-import java.util.*;
-import java.io.*;
-import javax.jms.*;
+import javax.jms.ExceptionListener;
+import javax.jms.JMSException;
+
 import org.apache.log4j.Logger;
 
 public class MessagingExceptionListener implements ExceptionListener {
