@@ -8,11 +8,7 @@ import wf.server.case_and.CaseAndTest;
 import wf.server.case_condition.CaseConditionTest;
 import wf.server.case_or.CaseOrTest;
 
-/**
- * User: kosta
- * Date: Jul 18, 2004
- * Time: 2:13:50 PM
- */
+
 public class AllTests extends TestSuite{
 
   static public junit.framework.Test suite() {

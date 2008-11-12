@@ -6,11 +6,7 @@ import wf.jms.model.GetNextWorkItemResponse;
 import wf.model.WorkItem;
 import wf.server.controller.AbstractServerTestCase;
 
-/**
- * User: kosta
- * Date: Jul 11, 2004
- * Time: 8:09:49 PM
- */
+
 public class CaseOrTest extends AbstractServerTestCase{
 
   public static final String MODEL_NAME = "case_or";

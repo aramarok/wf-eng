@@ -1,10 +1,6 @@
 package kgi;
 
-/**
- * User: kosta
- * Date: Jul 12, 2004
- * Time: 9:55:45 PM
- */
+
 public class Test {
 
   public static class T2 extends Thread{

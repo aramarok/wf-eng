@@ -15,11 +15,7 @@ import wf.model.WorkItem;
 import wf.model.WorkflowState;
 import wf.server.controller.AbstractServerTestCase;
 
-/**
- * User: kosta
- * Date: Jun 28, 2004
- * Time: 12:27:08 AM
- */
+
 public class Case1_Test extends AbstractServerTestCase{
 
   public static final String MODEL_NAME = "case1";

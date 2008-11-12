@@ -30,11 +30,7 @@ import wf.model.WorkItem;
 import wf.model.WorkflowModel;
 import wf.util.Util;
 
-/**
- * User: kosta
- * Date: Jul 11, 2004
- * Time: 7:07:57 PM
- */
+
 public class AbstractServerTestCase extends TestCase {
 
   static Object guard = new Object();

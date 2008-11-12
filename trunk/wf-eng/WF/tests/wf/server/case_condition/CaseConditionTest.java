@@ -5,11 +5,7 @@ import java.io.IOException;
 import wf.jms.model.GetNextWorkItemResponse;
 import wf.server.controller.AbstractServerTestCase;
 
-/**
- * User: kosta
- * Date: Jul 20, 2004
- * Time: 9:02:35 PM
- */
+
 public class CaseConditionTest extends AbstractServerTestCase{
 
   public static final String MODEL_NAME = "case_condition";
