@@ -56,13 +56,20 @@
 */
 package wf.jms;
 
+import java.util.List;
+
+import javax.jms.BytesMessage;
+import javax.jms.Message;
+import javax.jms.TextMessage;
+import javax.jms.Topic;
+import javax.jms.TopicConnection;
+import javax.jms.TopicPublisher;
+import javax.jms.TopicSession;
+import javax.naming.InitialContext;
+
 import org.apache.log4j.Logger;
 
 import wf.exceptions.XflowException;
-
-import javax.jms.*;
-import javax.naming.InitialContext;
-import java.util.List;
 
 public class JMSPublisher {
 

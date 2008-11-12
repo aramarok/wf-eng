@@ -56,18 +56,26 @@
  */
 package wf.jms;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.StringReader;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
 
-import org.w3c.dom.*;
-import org.xml.sax.InputSource;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageListener;
+import javax.jms.TextMessage;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
-import javax.jms.*;
-import javax.naming.*;
-import javax.sql.*;
-import javax.xml.parsers.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import wf.cfg.XflowConfig;
 import wf.db.Db;

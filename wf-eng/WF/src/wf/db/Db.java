@@ -56,8 +56,8 @@
  */
 package wf.db;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.util.Properties;
 
 public class Db {
 

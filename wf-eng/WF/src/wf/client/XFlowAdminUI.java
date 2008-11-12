@@ -6,9 +6,10 @@
 
 package wf.client;
 
-import javax.swing.*;
-import java.util.List;
 import java.io.IOException;
+import java.util.List;
+
+import javax.swing.JFrame;
 
 import wf.client.auth.User;
 import wf.client.manager.DesktopPane;

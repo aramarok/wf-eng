@@ -56,17 +56,6 @@
 */
 package wf.db;
 
-import com.ibatis.common.resources.Resources;
-import com.ibatis.sqlmap.client.SqlMapClient;
-import com.ibatis.sqlmap.client.SqlMapClientBuilder;
-import net.sf.cglib.proxy.Enhancer;
-import net.sf.cglib.proxy.MethodInterceptor;
-import org.apache.log4j.Logger;
-
-import wf.server.controller.*;
-
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.Reader;
 import java.sql.Connection;
@@ -75,6 +64,27 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Map;
+
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import net.sf.cglib.proxy.Enhancer;
+import net.sf.cglib.proxy.MethodInterceptor;
+
+import org.apache.log4j.Logger;
+
+import wf.server.controller.DirectedGraphP;
+import wf.server.controller.IBatisWork;
+import wf.server.controller.InboxP;
+import wf.server.controller.ProcessStack;
+import wf.server.controller.WaitingP;
+import wf.server.controller.WorkExecutor;
+import wf.server.controller.WorkItemP;
+import wf.server.controller.WorkflowP;
+
+import com.ibatis.common.resources.Resources;
+import com.ibatis.sqlmap.client.SqlMapClient;
+import com.ibatis.sqlmap.client.SqlMapClientBuilder;
 
 public class Persistence {
   public static final String DB_PROPERTIES = "xflow.properties";

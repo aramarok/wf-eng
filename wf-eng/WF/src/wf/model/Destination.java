@@ -55,7 +55,7 @@
 * ====================================================================
 */
 package wf.model;
-import java.io.*;
+import java.io.Serializable;
 
 public class Destination implements Serializable {
 
