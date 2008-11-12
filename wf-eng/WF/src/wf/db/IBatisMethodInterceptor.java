@@ -8,11 +8,7 @@ import java.lang.reflect.Method;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 
-/**
- * User: kosta
- * Date: Jul 18, 2004
- * Time: 9:00:05 PM
- */
+
 public class IBatisMethodInterceptor  implements MethodInterceptor{
 
   int c = 0;
@@ -31,7 +27,6 @@ public class IBatisMethodInterceptor  implements MethodInterceptor{
     boolean close = true;
     Object res;
     try {
-      // inc();
       if(  Persistence.threadSqlMap.get() == null ){
         SqlMapClient ss = Persistence.getSqlMap();
         Persistence.threadSqlMap.set( ss );
@@ -51,9 +46,7 @@ public class IBatisMethodInterceptor  implements MethodInterceptor{
             Persistence.log.debug("COMMIT TRANSACTION-" + method.getName());
           }
           Persistence.getThreadSqlMapSession().commitTransaction();
-          //Persistence.getThreadSqlMapSession().flushDataCache();
           Persistence.getThreadSqlMapSession().endTransaction();
-          // getThreadSqlMapSession().close();
           Persistence.threadSqlMap.set( null );
         }
       }
@@ -61,14 +54,11 @@ public class IBatisMethodInterceptor  implements MethodInterceptor{
     } catch (Throwable e) {
       if( Persistence.threadSqlMap.get() != null ){
         Persistence.log.debug("ROLLBACK TRANSACTION-" + method.getName());
-        //Persistence.getThreadSqlMapSession().flushDataCache();
         Persistence.getThreadSqlMapSession().endTransaction();
-        //  getThreadSqlMapSession().close();
       }
       Persistence.threadSqlMap.set( null );
       throw e;
     } finally{
-      //  dec();
     }
 
   }

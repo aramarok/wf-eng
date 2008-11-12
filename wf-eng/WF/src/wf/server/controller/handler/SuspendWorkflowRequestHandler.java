@@ -7,11 +7,7 @@ import wf.jms.model.SuspendWorkflowResponse;
 import wf.server.controller.RequestHandler;
 import wf.server.controller.WorkflowProcessor;
 
-/**
- * User: kosta
- * Date: Jul 24, 2004
- * Time: 3:17:26 PM
- */
+
 public class SuspendWorkflowRequestHandler implements RequestHandler{
 
   public Response handle(Request r) {

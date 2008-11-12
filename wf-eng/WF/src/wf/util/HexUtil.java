@@ -1,59 +1,4 @@
-/*
-* ====================================================================
-*
-* XFLOW - Process Management System
-* Copyright (C) 2003 Rob Tan
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions
-* are met:
-*
-* 1. Redistributions of source code must retain the above copyright
-*    notice, this list of conditions, and the following disclaimer.
-*
-* 2. Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions, and the disclaimer that follows
-*    these conditions in the documentation and/or other materials
-*    provided with the distribution.
-*
-* 3. The name "XFlow" must not be used to endorse or promote products
-*    derived from this software without prior written permission.  For
-*    written permission, please contact rcktan@yahoo.com
-*
-* 4. Products derived from this software may not be called "XFlow", nor
-*    may "XFlow" appear in their name, without prior written permission
-*    from the XFlow Project Management (rcktan@yahoo.com)
-*
-* In addition, we request (but do not require) that you include in the
-* end-user documentation provided with the redistribution and/or in the
-* software itself an acknowledgement equivalent to the following:
-*     "This product includes software developed by the
-*      XFlow Project (http://xflow.sourceforge.net/)."
-* Alternatively, the acknowledgment may be graphical using the logos
-* available at http://xflow.sourceforge.net/
-*
-* THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-* OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED.  IN NO EVENT SHALL THE XFLOW AUTHORS OR THE PROJECT
-* CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-* SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-* LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
-* USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
-* OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-* SUCH DAMAGE.
-*
-* ====================================================================
-* This software consists of voluntary contributions made by many
-* individuals on behalf of the XFlow Project and was originally
-* created by Rob Tan (rcktan@yahoo.com)
-* For more information on the XFlow Project, please see:
-*           <http://xflow.sourceforge.net/>.
-* ====================================================================
-*/
+
 package wf.util;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -67,9 +12,7 @@ import java.io.ObjectOutputStream;
 public class HexUtil
 {
 
-  /**
-   * <p>The nibbles' hexadecimal values. A nibble is a half byte.</p>
-   */
+  
   protected static final byte hexval[] =
       {(byte) '0', (byte) '1', (byte) '2', (byte) '3',
        (byte) '4', (byte) '5', (byte) '6', (byte) '7',
@@ -78,13 +21,7 @@ public class HexUtil
 
 
 
-  /**
-   * <p>Converts a string into its hexadecimal notation.</p>
-   *
-   * <p><strong>FIXME:</strong> If this method is called frequently,
-   * it should directly implement the algorithm in the called method
-   * in order to avoid creating a string instance.</p>
-   */
+  
   public static String hexEncode(final String s)
   {
     return hexEncode(s.getBytes());
@@ -92,9 +29,7 @@ public class HexUtil
 
 
 
-  /**
-   * <p>Converts a byte array into its hexadecimal notation.</p>
-   */
+  
   public static String hexEncode(final byte[] s)
   {
     return hexEncode(s, 0, s.length);
@@ -102,10 +37,7 @@ public class HexUtil
 
 
 
-  /**
-   * <p>Converts a part of a byte array into its hexadecimal
-   * notation.</p>
-   */
+  
   public static String hexEncode(final byte[] s, final int offset,
                                  final int length)
   {
@@ -121,9 +53,7 @@ public class HexUtil
 
 
 
-  /**
-   * <p>Converts a single byte into its hexadecimal notation.</p>
-   */
+  
   public static String hexEncode(final byte b)
   {
     StringBuffer sb = new StringBuffer(2);
@@ -134,10 +64,7 @@ public class HexUtil
 
 
 
-  /**
-   * <p>Converts a short value (16-bit) into its hexadecimal
-   * notation.</p>
-   */
+  
   public static String hexEncode(final short s)
   {
     StringBuffer sb = new StringBuffer(4);
@@ -150,10 +77,7 @@ public class HexUtil
 
 
 
-  /**
-   * <p>Converts an int value (32-bit) into its hexadecimal
-   * notation.</p>
-   */
+  
   public static String hexEncode(final int i)
   {
     StringBuffer sb = new StringBuffer(8);
@@ -170,10 +94,7 @@ public class HexUtil
 
 
 
-  /**
-   * <p>Converts a long value (64-bit) into its hexadecimal
-   * notation.</p>
-   */
+  
   public static String hexEncode(final long l)
   {
     StringBuffer sb = new StringBuffer(16);
@@ -183,25 +104,12 @@ public class HexUtil
   }
 
 
-  /**
-   * <p>Decodes the hexadecimal representation of a sequence of
-   * bytes into a byte array. Each character in the string
-   * represents a nibble (half byte) and must be one of the
-   * characters '0'-'9', 'A'-'F' or 'a'-'f'.</p>
-   *
-   * @param s The string to be decoded
-   *
-   * @return The bytes
-   *
-   * @throws IllegalArgumentException if the string does not contain
-   * a valid representation of a byte sequence.
-   */
+  
   public static byte[] hexDecode(final String s)
   {
     final int length = s.length();
 
-    /* The string to be converted must have an even number of
-    characters. */
+    
     if (length % 2 == 1)
       throw new IllegalArgumentException
           ("String has odd length " + length);
@@ -216,17 +124,7 @@ public class HexUtil
 
 
 
-  /**
-   * <p>Decodes a nibble.</p>
-   *
-   * @param c A character in the range '0'-'9' or 'A'-'F'. Lower
-   * case is not supported here.
-   *
-   * @return The decoded nibble in the range 0-15
-   *
-   * @throws IllegalArgumentException if <em>c</em> is not a
-   * permitted character
-   */
+  
   protected static byte decodeNibble(final char c)
   {
     for (byte i = 0; i < hexval.length; i++)
@@ -268,9 +166,7 @@ public class HexUtil
     return obj;
   }
 
-  /**
-   * <p>For testing.</p>
-   */
+  
   public static void main(final String args[])
       throws IOException
   {
@@ -288,15 +184,7 @@ public class HexUtil
         System.out.print("Re-decoded (object):  ");
         System.out.println(hexDecodeObject(bytes));
 
-        /*
-        String bytes = hexEncode(s);
-        System.out.print("Hex encoded (String): ");
-        System.out.println(bytes);
-        System.out.print("Hex encoded (byte[]): ");
-        System.out.println(hexEncode(s.getBytes()));
-        System.out.print("Re-decoded (byte[]):  ");
-        System.out.println(new String(hexDecode(bytes)));
-        */
+        
 
       }
     }

@@ -10,12 +10,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
 import java.awt.*;
 
-/**
- * Created by
- * User: kosta
- * Date: May 23, 2004
- * Time: 11:35:42 PM
- */
+
 public class WinListener implements WindowListener, WindowStateListener,InternalFrameListener{
 
   Preferences preferences;

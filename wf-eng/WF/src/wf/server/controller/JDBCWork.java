@@ -4,11 +4,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
-/**
- * User: kosta
- * Date: Jun 20, 2004
- * Time: 10:51:19 PM
- */
+
 public abstract class JDBCWork {
 
   protected Object result;

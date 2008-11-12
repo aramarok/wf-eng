@@ -8,11 +8,7 @@ import wf.model.Node;
 import wf.server.controller.RequestHandler;
 import wf.server.controller.WorkflowProcessor;
 
-/**
- * User: kosta
- * Date: Jul 24, 2004
- * Time: 2:18:41 PM
- */
+
 public class GetNodeByNameRequestHandler implements RequestHandler{
 
   public Response handle(Request r) {

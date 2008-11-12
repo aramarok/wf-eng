@@ -2,11 +2,7 @@ package wf.server.controller;
 
 import java.util.Date;
 
-/**
- * User: kosta
- * Date: Jun 29, 2004
- * Time: 12:11:36 AM
- */
+
 public class InboxRec {
 
   int workflowId;

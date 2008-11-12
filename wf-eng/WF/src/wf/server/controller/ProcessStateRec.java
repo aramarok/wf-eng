@@ -7,11 +7,7 @@ import java.lang.Integer;
 
 import java.util.Date;
 
-/**
- * User: kosta
- * Date: Jun 22, 2004
- * Time: 9:30:28 PM
- */
+
 public class ProcessStateRec {
 
   public int workflowId;

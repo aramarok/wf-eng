@@ -1,10 +1,6 @@
 package wf.server.controller;
 
-/**
- * User: kosta
- * Date: Jun 29, 2004
- * Time: 12:22:26 AM
- */
+
 public class WorkItemRec {
 
   int workitemId;

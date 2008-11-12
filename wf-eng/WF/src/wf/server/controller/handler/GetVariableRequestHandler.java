@@ -7,11 +7,7 @@ import wf.jms.model.Response;
 import wf.server.controller.RequestHandler;
 import wf.server.controller.WorkflowProcessor;
 
-/**
- * User: kosta
- * Date: Jul 24, 2004
- * Time: 2:25:07 PM
- */
+
 public class GetVariableRequestHandler implements RequestHandler{
 
   public Response handle(Request r) {

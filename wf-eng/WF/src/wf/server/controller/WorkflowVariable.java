@@ -1,10 +1,6 @@
 package wf.server.controller;
 
-/**
- * User: kosta
- * Date: Jun 22, 2004
- * Time: 9:17:22 PM
- */
+
 public class WorkflowVariable {
   String name;
   String value;

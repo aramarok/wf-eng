@@ -1,8 +1,4 @@
-/*
-* XFlowManager.java
-*
-* Created on May 11, 2004, 10:31 PM
-*/
+
 
 package wf.client;
 
@@ -18,10 +14,7 @@ import wf.exceptions.XflowException;
 import wf.model.WorkflowState;
 
 
-/**
- *
- * @author  kosta
- */
+
 public class XFlowAdminUI {
 
   public static final String USERNAME = "USER";
@@ -37,7 +30,7 @@ public class XFlowAdminUI {
     return _instance;
   }
 
-  /** Creates a new instance of XFlowManager */
+  
   private XFlowAdminUI( Preferences pref) throws IOException {
     _instance = this;
     preferences = pref;
@@ -54,16 +47,12 @@ public class XFlowAdminUI {
 
 
   public User getUSER() {
-    //if( _USER == null ){
     return   new User( preferences.get( USERNAME,  "kgi"), preferences.get( PASSWORD, "password") );
-    //}
-    // return _USER;
   }
 
   public void setUSER(User user) {
     preferences.put( USERNAME,  user.getName());
     preferences.put( PASSWORD, user.getPassword() );
-    //this._USER = user;
   }
 
   public List getKnownWorkflows() throws XflowException {

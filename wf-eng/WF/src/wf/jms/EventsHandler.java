@@ -1,59 +1,4 @@
-/*
- * ====================================================================
- *
- * XFLOW - Process Management System
- * Copyright (C) 2003 Rob Tan
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions, and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions, and the disclaimer that follows 
- *    these conditions in the documentation and/or other materials 
- *    provided with the distribution.
- *
- * 3. The name "XFlow" must not be used to endorse or promote products
- *    derived from this software without prior written permission.  For
- *    written permission, please contact rcktan@yahoo.com
- * 
- * 4. Products derived from this software may not be called "XFlow", nor
- *    may "XFlow" appear in their name, without prior written permission
- *    from the XFlow Project Management (rcktan@yahoo.com)
- * 
- * In addition, we request (but do not require) that you include in the 
- * end-user documentation provided with the redistribution and/or in the 
- * software itself an acknowledgement equivalent to the following:
- *     "This product includes software developed by the
- *      XFlow Project (http://xflow.sourceforge.net/)."
- * Alternatively, the acknowledgment may be graphical using the logos 
- * available at http://xflow.sourceforge.net/
- *
- * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED.  IN NO EVENT SHALL THE XFLOW AUTHORS OR THE PROJECT
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
- * USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- * ====================================================================
- * This software consists of voluntary contributions made by many 
- * individuals on behalf of the XFlow Project and was originally 
- * created by Rob Tan (rcktan@yahoo.com)
- * For more information on the XFlow Project, please see:
- *           <http://xflow.sourceforge.net/>.
- * ====================================================================
- */
+
 package wf.jms;
 
 import java.io.FileInputStream;
@@ -81,26 +26,17 @@ import wf.cfg.XflowConfig;
 import wf.db.Db;
 import wf.exceptions.XflowException;
 
-/**
- * @author xzma
- * 
- * The event handler will receive the event messages asynchronously 
- * using a JMS topicsubscription and save the event infomation into
- * database.
- */
+
 public class EventsHandler implements MessageListener {
 
 	private JMSSubscriber subscriber;
 
 
-	/**
-	 * Constructor. Properties file is used for getting DB info when EventsHandler is
-         * running standalone. 
-	 */
+	
 	public EventsHandler(Properties props) {
 		try {
 			JMSTopicConnection.initialize();
-			//EventsPersistence.init(props);
+			
 			subscriber = new JMSSubscriber(this, XflowConfig.XFLOW_EVENT_TOPIC(), null);
 		} catch (XflowException e) {
 			e.printStackTrace();
@@ -111,10 +47,7 @@ public class EventsHandler implements MessageListener {
 	}
 
 	
-	/**
-	 * the method defined from MessageListener interdace, it monitors 
-	 * possible incoming message events
-	 */
+	
 	public void onMessage(Message evt) {
 		String evtXML = null;
 		System.out.println("Got a message...");
@@ -132,7 +65,7 @@ public class EventsHandler implements MessageListener {
 		}
 
 		try {
-			//namespace of SOAP-ENV
+			
 			String docNS = "http://schemas.xmlsoap.org/soap/envelope/";
 
 			DocumentBuilderFactory factory =
@@ -145,14 +78,14 @@ public class EventsHandler implements MessageListener {
 			Document doc = builder.parse(is);
 
 			NodeList els = doc.getElementsByTagNameNS(docNS, "Body");
-			Element body = (Element) els.item(0); //assumming certain format
+			Element body = (Element) els.item(0);
 
 			els = body.getChildNodes();
 			Element event;
 			els = body.getElementsByTagName("WorkflowSuspendedEvent");
 			if (els != null && els.item(0) != null) {
 				event = (Element) els.item(0);
-				insertSupendedEvent(event); //insert into DB
+				insertSupendedEvent(event);
 			} else if (
 				(els = body.getElementsByTagName("ProcessTimedOutEvent"))
 					!= null
@@ -209,14 +142,7 @@ public class EventsHandler implements MessageListener {
 		}
 	}
 
-	/**
-	 * inserts the following parameters into NodeTransitionEvent Table in DB
-	 * @param eventId
-	 * @param fname
-	 * @param ftype
-	 * @param tname
-	 * @param ttype
-	 */
+	
 	private void insertNodeTransitionEventTable(
 		int eventId,
 		String fname,
@@ -239,16 +165,7 @@ public class EventsHandler implements MessageListener {
 		executeQuery(query);
 	}
 
-	/**
-	 * 
-	 * @param eventId
-	 * @param workItemInternalId: if = -1, auto-incremented 
-	 * @param workItemId
-	 * @param payloadType
-	 * @param payload
-	 * @return workItemInternalId, if it is -1 when passed in, 
-	 *  return last modified value(by auto-increment) in db
-	 */
+	
 	private int insertEventWorkItemTable(
 		int eventId,
 		int workItemInternalId,
@@ -274,13 +191,7 @@ public class EventsHandler implements MessageListener {
 
 	}
 
-	/**
-	 * insert work item properties into WorkItemPropertiesTable
-	 * @param workItenInternalId
-	 * @param pname
-	 * @param ptype
-	 * @param pvalue
-	 */
+	
 	private void insertEventWorkItemPropertiesTable(
 		int workItenInternalId,
 		String pname,
@@ -299,9 +210,7 @@ public class EventsHandler implements MessageListener {
 		executeQuery(query);
 	}
 
-	/**
-	 * @param event
-	 */
+	
 	private void insertUpdatedEvent(Element event) {
 		int eventId;
 		Element var = (Element) event.getElementsByTagName("Variable").item(0);
@@ -315,12 +224,7 @@ public class EventsHandler implements MessageListener {
 		insertVariableUpdateEventTable(eventId, name, type, value);
 	}
 	
-	/**
-	 * @param eventId
-	 * @param name
-	 * @param type
-	 * @param value
-	 */
+	
 	private void insertVariableUpdateEventTable(
 		int eventId,
 		String name,
@@ -339,11 +243,7 @@ public class EventsHandler implements MessageListener {
 		executeQuery(query);
 	}
 	
-	/**
-	 * insert timeout event into DB, first insert event info into event table, 
-	 * get the assigned eventId, then insert timeout info into timeout table
-	 * @param event
-	 */
+	
 	private void insertTimeOutEvent(Element event) {
 		int eventId;
 		String processName =
@@ -357,11 +257,7 @@ public class EventsHandler implements MessageListener {
 		insertProcessTimedOutTable(eventId, processName);
 	}
 
-	/**
-	 * 
-	 * @param eventId
-	 * @param processName
-	 */
+	
 	private void insertProcessTimedOutTable(int eventId, String processName) {
 		String query =
 			"INSERT INTO evt_ProcessTimedOutEvent VALUES("
@@ -372,48 +268,31 @@ public class EventsHandler implements MessageListener {
 		executeQuery(query);
 	}
 
-	/**
-	 * @param event
-	 */
+	
 	private void insertCompletedEvent(Element event) {
 		insertEventTable(event);
 	}
 	
-	/**
-	 * 
-	 * @param event
-	 */
+	
 	private void insertResumedEvent(Element event) {
 		insertEventTable(event);
 	}
-	/**
-	 * 
-	 * @param event
-	 */
+	
 	private void insertDeployedEvent(Element event) {
 		insertEventTable(event);
 	}
 	
-	/**
-	 * @param event
-	 */
+	
 	private void insertAbortedEvent(Element event) {
 		insertEventTable(event);
 	}
 
-	/**
-	 * 
-	 * @param event
-	 */
+	
 	private void insertSupendedEvent(Element event) {
 		insertEventTable(event);
 	}
 	
-	/**
-	 * insert event information into data base
-	 * @param event
-	 * @return eventId, this id is used by may operation
-	 */
+	
 	private int insertEventTable(Element event) {
 		String eventId = null;
 		String eventType, workflowName, user;
@@ -460,7 +339,7 @@ public class EventsHandler implements MessageListener {
 
 		java.sql.Connection conn = null;
 		try {
-			//now create a query and update db
+			
 			conn = Db.getConnection();
 			Statement st = conn.createStatement();
 			st.execute(query);
@@ -488,15 +367,12 @@ public class EventsHandler implements MessageListener {
 		return Integer.parseInt(eventId);
 	}
 
-	/**
-	 * given the query string, execute the query on DB
-	 * @param query
-	 */
+	
 	private void executeQuery(String query) {
 		System.out.println(query);
 		java.sql.Connection conn = null;
 		try {
-			//now create a query and update db
+			
 			conn = Db.getConnection();
 			Statement st = conn.createStatement();
 			st.execute(query);
@@ -510,15 +386,7 @@ public class EventsHandler implements MessageListener {
 		}
 	}
 
-	/**
-	 * execute a query by given query string on table "tableName", return the largest 
-	 * index for specific colume. It can be use to get the last inserted entry if the 
-	 * column is auto-incremented
-	 * @param query
-	 * @param columnName
-	 * @param tableName
-	 * @return
-	 */
+	
 	private int executeQuery(
 		String query,
 		String columnName,
@@ -527,7 +395,7 @@ public class EventsHandler implements MessageListener {
 		java.sql.Connection conn = null;
 		String lastMod = null;
 		try {
-			//now create a query and update db
+			
 			conn = Db.getConnection();
 			Statement st = conn.createStatement();
 			st.execute(query);
@@ -540,7 +408,7 @@ public class EventsHandler implements MessageListener {
 						+ columnName
 						+ " from "
 						+ tableName);
-			while (rs.next()) { // actually only has one row
+			while (rs.next()) {
 				try {
 					lastMod = rs.getString(columnName).trim();
 				} catch (NumberFormatException e) {
@@ -559,11 +427,7 @@ public class EventsHandler implements MessageListener {
 		return Integer.parseInt(lastMod);
 	}
 
-	/**
-	 * get information for event from soap body element--event
-	 * @param event
-	 * @return
-	 */
+	
 	private String[] retriveEventInfo(Element event) {
 		String info[] = new String[7];
 
@@ -617,11 +481,7 @@ public class EventsHandler implements MessageListener {
 		return info;
 	}
 
-	/**
-	 * involves inserting information into 3 tables:event, eventworkitem, and
-	 * eventworkitemproperties table.
-	 * @param event
-	 */
+	
 	private void insertNodeTransitionEvent(Element event) {
 		int eventId, workItemInternalId;
 		Element workItem =
@@ -667,10 +527,7 @@ public class EventsHandler implements MessageListener {
 		}
 	}
 
-	/**
-	 * involves inserting information into 2 tables: event and eventworkitem
-	 * @param event
-	 */
+	
 	private void insertStartedEvent(Element event) {
 		int eventId, workItemInternalId;
 		Element workItem =
@@ -710,11 +567,7 @@ public class EventsHandler implements MessageListener {
 		}
 	}
 
-	/**
-	 * get information from property node
-	 * @param property
-	 * @return
-	 */
+	
 	private String[] retriveWorkItemPropertyInfo(Element property) {
 		String info[] = new String[3];
 		info[0] =
@@ -738,11 +591,7 @@ public class EventsHandler implements MessageListener {
 		return info;
 	}
 	
-	/**
-	 * get information from workitem node
-	 * @param workItem
-	 * @return
-	 */
+	
 	private String[] retriveWorkItemInfo(Element workItem) {
 		String info[] = new String[3];
 
@@ -765,11 +614,7 @@ public class EventsHandler implements MessageListener {
 		return info;
 	}
 	
-	/**
-	 * get transistion information from event node 
-	 * @param event
-	 * @return
-	 */
+	
 	private String[] retrieveTransitionInfo(Element event) {
 		String info[] = new String[4];
 

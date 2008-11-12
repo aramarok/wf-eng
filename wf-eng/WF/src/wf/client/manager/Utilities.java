@@ -8,12 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.*;
 import java.lang.reflect.InvocationTargetException;
 
-/**
- * Created by
- * User: kosta
- * Date: May 11, 2004
- * Time: 10:58:46 PM
- */
+
 public class Utilities {
 
   static JFileChooser fileChooser;
