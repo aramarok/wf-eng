@@ -1,17 +1,17 @@
-<project name="xflow" default="build" basedir=".">
-    <typedef resource="dependencies.properties" />
-    <property file="build.properties"/>
-    <property name="app.name"       value="xflow" />
-    <property name="build.dir"      value="build/classes" />
-    <property name="test.classes.dir"      value="build/test_classes" />
-    <property name="conf.dir"       value="./conf" />
-    <property name="src.dir"        value="src" />
-    <property name="properties-file" value="database.properties" />
+<project name="wf" default="build" basedir=".">
+    <property name="app.name"			value="wf" />
+    <property name="build.dir"			value="build/classes" />
+    <property name="test.classes.dir"	value="build/test_classes" />
+    <property name="conf.dir"			value="./conf" />
+	<property name="db.dir"				value="${conf.dir}/db" />
+	<property name="ant_build.dir"			value="${conf.dir}/ant_build" />
+    <property name="src.dir"        	value="src" />
+    <property name="properties-file"	value="${db.dir}/database.properties" />
+	<property file="${ant_build.dir}/build.properties" />
+	<property file="${ant_build.dir}/${user.name}.properties"/>
     <property file="${properties-file}"/>
 
-  <property name="repositoryList" value="http://kgionline.com/maven/repository/, http://www.ibiblio.org/maven/" />
-
-    <path id="xflow.classpath">
+    <path id="wf.classpath">
         <fileset dir="${jboss.home}/client" includes="*.jar"/>
         <fileset dir="${jboss.home}/server/default/lib" includes="*.jar" />
 		<fileset dir="lib/" includes="*.jar" />
@@ -20,7 +20,6 @@
     <target name="gather-runtime-libraries" description="Gather runtime libraries to copy on server">
       <copy todir="build/rt-libraries" flatten="true" >
         <fileset dir="${jboss.home}/server/default/lib" includes="*.jar" />
-        <fileset refid="rt.classpath.files" />
       </copy>
     </target>
 
@@ -40,7 +39,7 @@
     <!-- =================================================================== -->
     <target name="compile">
         <javac srcdir="${src.dir}" destdir="${build.dir}" debug="on">
-            <classpath refid="xflow.classpath" />
+            <classpath refid="wf.classpath" />
             <include name="**/*.java"/>
             <exclude name="examples/**"/>
             <exclude name="${jboss.home}/**"/>
@@ -50,7 +49,7 @@
         <javac srcdir="tests" destdir="build/test_classes" debug="on">
             <classpath >
                <pathelement location="${build.dir}"/>
-               <path refid="xflow.classpath"/>
+               <path refid="wf.classpath"/>
             </classpath>
             <include name="**/*.java"/>
         </javac>
@@ -59,28 +58,28 @@
         <fileset dir="${conf.dir}" includes="*.properties,*.xml"/>
       </copy>
       <!-- enforce file copying in case we just build for different db -->
-      <copy todir="${build.dir}/xflow/server/controller" overwrite="true" >
-        <fileset dir="${conf.dir}/${database}" includes="*.properties,*.xml"/>
+      <copy todir="${build.dir}/wf/server/controller" overwrite="true" >
+        <fileset dir="${db.dir}/${database}" includes="*.properties,*.xml"/>
       </copy>
-      <copy tofile="${build.dir}/xflow/server/controller/sqlmap.properties"
+      <copy tofile="${build.dir}/wf/server/controller/sqlmap.properties"
          file="${properties-file}" overwrite="true" 
         />
     </target>
 
     <!-- ********************************************************************* -->
-    <!-- Build xflow web services                                              -->
+    <!-- Build wf web services                                              -->
     <!-- ********************************************************************* -->
     <target name="webservices" depends="compile">
         <mkdir dir="${build.dir}/WEB-INF"/>
         <mkdir dir="${build.dir}/WEB-INF/classes"/>
         <copy  todir="${build.dir}/WEB-INF">
-            <fileset dir="${src.dir}/xflow/webservice"
+            <fileset dir="${src.dir}/wf/webservice"
                 includes="*.xml,*.wsdd"
             />
         </copy>
         <copy  todir="${build.dir}/WEB-INF/classes">
             <fileset dir="${build.dir}" 
-                includes="xflow/webservice/**"
+                includes="wf/webservice/**"
             />
         </copy>
 
@@ -92,12 +91,12 @@
     <!-- ********************************************************************* -->
     <!-- Build xflow core                                                      -->
     <!-- ********************************************************************* -->
-    <target name="xflow-ejb-jar" depends="xflow-jar" description="Build Xflow ejb jar" >
-       <jar jarfile="build/xflow-ejb.jar">
-          <metainf dir="${src.dir}/xflow/server/controller" includes="*.xml"/>
-          <fileset dir="${build.dir}" includes="xflow/**,kgi/server/**"
-                                      excludes="xflow/webservice/**, xflow/client/**"/>
-          <fileset dir="${test.classes.dir}" includes="xflow/**/*.class" />
+    <target name="wf-ejb-jar" depends="wf-jar" description="Build wf ejb jar" >
+       <jar jarfile="build/wf-ejb.jar">
+          <metainf dir="${src.dir}/wf/server/controller" includes="*.xml"/>
+          <fileset dir="${build.dir}" includes="wf/**,kgi/server/**"
+                                      excludes="wf/webservice/**, wf/client/**"/>
+          <fileset dir="${test.classes.dir}" includes="wf/**/*.class" />
           <!--<fileset dir="${basedir}" includes="lib/*.jar"/>-->
           <!--<metainf dir="${conf.dir}" includes="xflow.properties"/>-->
            <fileset dir="${conf.dir}" includes="xflow.properties"/>
@@ -106,18 +105,18 @@
 
     <target name="javadoc">
       <javadoc  sourcepath="${src.dir}"
-                packagenames="xflow.*"
-                destdir="doc/api" classpathref="xflow.classpath" >
+                packagenames="wf.*"
+                destdir="doc/api" classpathref="wf.classpath" >
 
       </javadoc>
     </target>
 
-    <target name="build" depends="xflow-ejb-jar,javadoc,arc" description="Build everything" />
+    <target name="build" depends="wf-ejb-jar,javadoc,arc" description="Build everything" />
 
-     <target name="xflow-jar" depends="clean,compile" description="Build Xflow core" >
-         <jar jarfile="build/xflow.jar">
-           <fileset dir="${build.dir}" includes="xflow/**,kgi/server/**"
-                                        excludes="xflow/webservice/**"/>
+     <target name="wf-jar" depends="clean,compile" description="Build wf core" >
+         <jar jarfile="build/wf.jar">
+           <fileset dir="${build.dir}" includes="wf/**,kgi/server/**"
+                                        excludes="wf/webservice/**"/>
             <metainf dir="${conf.dir}" includes="xflow.properties"/>
          </jar>
       </target>
@@ -126,25 +125,25 @@
 
 
     <target name="deploy">
-      <unzip dest="${jboss.home}/server/${server}/deploy/xflow/xflow.jar" src="build/xflow-ejb.jar"/>
-      <touch file="${jboss.home}/server/${server}/deploy/xflow/xflow.jar/META-INF/ejb-jar.xml"/>
+      <unzip dest="${jboss.home}/server/${server}/deploy/wf/wf.jar" src="build/wf-ejb.jar"/>
+      <touch file="${jboss.home}/server/${server}/deploy/wf/wf.jar/META-INF/ejb-jar.xml"/>
     </target>
 
     <target name="recreate-database" description="Recreate Database">
          <property file="conf/xflow.properties" />
          <echo message="${DBDRIVER} url=${DBURL} userid=${DBUSER} password=${DBPASSWORD}" /> 
-         <!--sql classpathref="xflow.classpath"    onerror="continue" autocommit="true"
+         <!--sql classpathref="wf.classpath"    onerror="continue" autocommit="true"
              driver="${DBDRIVER}" url="${DBURL}" userid="${DBUSER}" password="${DBPASSWORD}" src="${conf.dir}/${database}/drop_db.${database}.sql"/ -->
-         <sql classpathref="xflow.classpath"    onerror="continue" autocommit="true"
-             driver="${DBDRIVER}" url="${DBURL}" userid="${DBUSER}" password="${DBPASSWORD}" src="${conf.dir}/${database}/create_db.${database}.sql"/>
+         <sql classpathref="wf.classpath"    onerror="continue" autocommit="true"
+             driver="${DBDRIVER}" url="${DBURL}" userid="${DBUSER}" password="${DBPASSWORD}" src="${db.dir}/${database}/create_db.${database}.sql"/>
     </target>
 
   <target name="start_ui">
-    <java classname="xflow.client.XFlowAdminUI" fork="true" >
+    <java classname="wf.client.XFlowAdminUI" fork="true" >
         <classpath>
           <pathelement location="${conf.dir}"/>
           <pathelement location="${build.dir}"/>
-          <path refid="xflow.classpath"/>
+          <path refid="wf.classpath"/>
           <fileset dir="${jboss.home}">
             <include name="lib/*.jar"/>
             <include name="server/all/lib/jbo*.jar"/>
@@ -158,14 +157,14 @@
       <format pattern="yyyy-MM-dd" property="day" />
     </tstamp>
     <mkdir dir="temp"/>
-    <jar file="build/${day}-xflow-src.jar" update="true" >
+    <jar file="build/${day}-wf-src.jar" update="true" >
       <fileset dir="." includes="*.properties, *.xml,conf/**, src/**, tests/**,doc/**, lib/jax*.jar, lib/sax*.jar"/>
 
     </jar>
   </target>
 
 
-  <target name="test" depends="compile" description="Run XFlow2 tests, suply -Dremote=yes if want to run tests against remote server" >
+  <target name="test" depends="compile" description="Run wf tests, suply -Dremote=yes if want to run tests against remote server" >
     <property name="remote" value="no"/>
     <java classname="junit.textui.TestRunner" >
       <classpath>
@@ -173,7 +172,7 @@
           <pathelement location="tests"/>
           <pathelement location="build/test_classes"/>
           <pathelement location="${build.dir}"/>
-          <path refid="xflow.classpath"/>
+          <path refid="wf.classpath"/>
         </classpath>
       <arg line="xflow.server.AllTests"   />
       <sysproperty key="remote" value="${remote}"/>  
@@ -189,7 +188,7 @@
           <pathelement location="tests"/>
           <pathelement location="build/test_classes"/>
           <pathelement location="${build.dir}"/>
-          <path refid="xflow.classpath"/>
+          <path refid="wf.classpath"/>
         </classpath>
 
         <formatter type="xml"/>
