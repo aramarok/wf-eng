@@ -2,11 +2,7 @@ package wf.server.case1;
 
 import java.io.Serializable;
 
-/**
- * User: kosta
- * Date: Jun 28, 2004
- * Time: 10:25:57 PM
- */
+
 public class TestCase1Payload implements Serializable{
 
   int id;

@@ -2,11 +2,7 @@ package wf.server.case_condition;
 
 import java.io.Serializable;
 
-/**
- * User: kosta
- * Date: Jul 20, 2004
- * Time: 9:06:13 PM
- */
+
 public class CaseConditionPayload implements Serializable{
 
   public CaseConditionPayload() {

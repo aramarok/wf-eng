@@ -8,11 +8,7 @@ import wf.db.Persistence;
 import wf.exceptions.XflowException;
 
 
-/**
- * User: kosta
- * Date: Jun 21, 2004
- * Time: 10:17:48 PM
- */
+
 public class WorkflowPTest extends TestCase{
 
   public void testSaveDB() throws XflowException {
