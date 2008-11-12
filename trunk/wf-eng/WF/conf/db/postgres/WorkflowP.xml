@@ -6,10 +6,10 @@
 
 <sqlMap namespace="WorkflowP">
 
-  <typeAlias alias="WorkflowP" type="xflow.server.controller.WorkflowP"/>
-  <typeAlias alias="WorkflowId" type="xflow.common.WorkflowId" />
-  <typeAlias alias="WorkflowModel" type="xflow.common.WorkflowModel"/>
-  <typeAlias alias="WorkflowState" type="xflow.common.WorkflowState"/>
+  <typeAlias alias="WorkflowP" type="wf.server.controller.WorkflowP"/>
+  <typeAlias alias="WorkflowId" type="wf.model.WorkflowId" />
+  <typeAlias alias="WorkflowModel" type="wf.common.WorkflowModel"/>
+  <typeAlias alias="WorkflowState" type="wf.common.WorkflowState"/>
 
 
 
@@ -97,7 +97,7 @@
     insert into workflowvars( workflowId, name, value )  values ( #workflowId#, #name#, #varVal# )
   </insert>
 
-  <select id="selectWorkwlowVariables" resultClass="xflow.server.controller.WorkflowVariable" >
+  <select id="selectWorkwlowVariables" resultClass="wf.server.controller.WorkflowVariable" >
     select name, value, workflowid from workflowvars where workflowid = #value#
   </select>
 
@@ -114,7 +114,7 @@
          and w.gid = g.gid
   </select>
 
-  <select id="selectProcessStateRecords" resultClass="xflow.server.controller.ProcessStateRec">
+  <select id="selectProcessStateRecords" resultClass="wf.server.controller.ProcessStateRec">
      select * from inbox where workflowid = #value#
   </select>
 
