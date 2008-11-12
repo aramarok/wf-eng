@@ -1,4 +1,4 @@
-package xflow;
+package wf;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

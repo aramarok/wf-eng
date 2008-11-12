@@ -1,4 +1,4 @@
-package xflow.server.case1;
+package wf.server.case1;
 
 import java.io.Serializable;
 

@@ -1,12 +1,12 @@
-package xflow.server;
+package wf.server;
 
 import junit.framework.TestSuite;
 
 
-import xflow.server.case_or.CaseOrTest;
-import xflow.server.case_and.CaseAndTest;
-import xflow.server.case_condition.CaseConditionTest;
-import xflow.server.case1.Case1_Test;
+import wf.server.case1.Case1_Test;
+import wf.server.case_and.CaseAndTest;
+import wf.server.case_condition.CaseConditionTest;
+import wf.server.case_or.CaseOrTest;
 
 /**
  * User: kosta

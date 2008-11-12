@@ -1,21 +1,34 @@
-package xflow.server.controller;
+package wf.server.controller;
 
-import junit.framework.TestCase;
-import xflow.common.WorkflowModel;
-import xflow.common.WorkItem;
-import xflow.common.XflowException;
-import xflow.messaging.JMSPublisher;
-import xflow.messaging.SynchQueueMessaging;
-import xflow.protocol.*;
-import xflow.TestConfig;
-import xflow.TestUtilities;
-import xflow.security.User;
-import xflow.util.Util;
-
-import java.util.Iterator;
-import java.util.Date;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.Iterator;
+
+import junit.framework.TestCase;
+import wf.TestConfig;
+import wf.TestUtilities;
+import wf.client.auth.User;
+import wf.exceptions.XflowException;
+import wf.jms.JMSPublisher;
+import wf.jms.SynchQueueMessaging;
+import wf.jms.model.CompleteWorkItemRequest;
+import wf.jms.model.CompleteWorkItemResponse;
+import wf.jms.model.DeployModelRequest;
+import wf.jms.model.DeployModelResponse;
+import wf.jms.model.GetModelsRequest;
+import wf.jms.model.GetModelsResponse;
+import wf.jms.model.GetNextWorkItemRequest;
+import wf.jms.model.GetNextWorkItemResponse;
+import wf.jms.model.GetWorkflowStateRequest;
+import wf.jms.model.GetWorkflowStateResponse;
+import wf.jms.model.Request;
+import wf.jms.model.Response;
+import wf.jms.model.StartWorkflowRequest;
+import wf.jms.model.StartWorkflowResponse;
+import wf.model.WorkItem;
+import wf.model.WorkflowModel;
+import wf.util.Util;
 
 /**
  * User: kosta
