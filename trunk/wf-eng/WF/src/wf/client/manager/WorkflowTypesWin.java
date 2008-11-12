@@ -6,6 +6,7 @@
 
 package wf.client.manager;
 
+import wf.client.WFClientConstants;
 import wf.client.WorkflowManager;
 import wf.client.XFlowAdminUI;
 import wf.client.manager.Utilities;
@@ -72,7 +73,7 @@ public class WorkflowTypesWin extends javax.swing.JInternalFrame {
 
         jMenu1.setMnemonic('a');
         jMenu1.setText("Actions");
-        uploadWfMI.setIcon(new javax.swing.ImageIcon(getClass().getResource("/xflow/client/manager/icon/open.gif")));
+        uploadWfMI.setIcon(new javax.swing.ImageIcon(getClass().getResource(WFClientConstants.CLIENT_ICON_LOCATION + "open.gif")));
         uploadWfMI.setMnemonic('u');
         uploadWfMI.setText("Upload WF definition");
         uploadWfMI.addActionListener(new java.awt.event.ActionListener() {
@@ -83,7 +84,7 @@ public class WorkflowTypesWin extends javax.swing.JInternalFrame {
 
         jMenu1.add(uploadWfMI);
 
-        removeWfMI.setIcon(new javax.swing.ImageIcon(getClass().getResource("/xflow/client/manager/icon/delete.gif")));
+        removeWfMI.setIcon(new javax.swing.ImageIcon(getClass().getResource(WFClientConstants.CLIENT_ICON_LOCATION + "delete.gif")));
         removeWfMI.setText("Remove Definition");
         removeWfMI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,7 +94,7 @@ public class WorkflowTypesWin extends javax.swing.JInternalFrame {
 
         jMenu1.add(removeWfMI);
 
-        refreshListMI.setIcon(new javax.swing.ImageIcon(getClass().getResource("/xflow/client/manager/icon/refresh.gif")));
+        refreshListMI.setIcon(new javax.swing.ImageIcon(getClass().getResource(WFClientConstants.CLIENT_ICON_LOCATION + "refresh.gif")));
         refreshListMI.setMnemonic('r');
         refreshListMI.setText("Refresh List");
         refreshListMI.addActionListener(new java.awt.event.ActionListener() {
@@ -106,7 +107,7 @@ public class WorkflowTypesWin extends javax.swing.JInternalFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/xflow/client/manager/icon/refresh.gif")));
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource(WFClientConstants.CLIENT_ICON_LOCATION + "refresh.gif")));
         jMenu2.setMnemonic('r');
         jMenu2.setText("Refresh");
         jMenu2.setFocusable(false);

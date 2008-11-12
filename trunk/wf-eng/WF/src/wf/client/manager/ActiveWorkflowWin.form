@@ -30,7 +30,7 @@
         <Component class="javax.swing.JButton" name="refreshBtn">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.openide.explorer.propertysheet.editors.IconEditor">
-              <Image iconType="3" name="/xflow/client/manager/icon/refresh.gif"/>
+              <Image iconType="3" name="/wf/client/manager/icon/refresh.gif"/>
             </Property>
             <Property name="mnemonic" type="int" value="114"/>
             <Property name="text" type="java.lang.String" value="refresh"/>
