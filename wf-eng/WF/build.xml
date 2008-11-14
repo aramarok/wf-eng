@@ -87,8 +87,8 @@
 			<fileset dir="${build.dir}" includes="wf/**,kgi/server/**" excludes="wf/webservice/**" />
 			<fileset dir="${test.classes.dir}" includes="wf/**/*.class" />
 			<!--<fileset dir="${basedir}" includes="lib/*.jar"/>-->
-			<!--<metainf dir="${conf.dir}" includes="xflow.properties"/>-->
-			<fileset dir="${conf.dir}" includes="xflow.properties" />
+			<!--<metainf dir="${conf.dir}" includes="app.properties"/>-->
+			<fileset dir="${conf.dir}" includes="app.properties" />
 		</jar>
 	</target>
 
@@ -109,7 +109,7 @@
 	<target name="wf-jar" depends="clean,compile" description="Build wf core">
 		<jar jarfile="build/wf.jar">
 			<fileset dir="${build.dir}" includes="wf/**,kgi/server/**" excludes="wf/webservice/**" />
-			<metainf dir="${conf.dir}" includes="xflow.properties" />
+			<metainf dir="${conf.dir}" includes="app.properties" />
 		</jar>
 	</target>
 
@@ -124,7 +124,7 @@
 
 
 	<target name="recreate-database" description="Recreate Database">
-		<property file="conf/xflow.properties" />
+		<property file="conf/app.properties" />
 		<echo message="${DBDRIVER} url=${DBURL} userid=${DBUSER} password=${DBPASSWORD}" />
 		<!--sql classpathref="wf.classpath"    onerror="continue" autocommit="true"
              driver="${DBDRIVER}" url="${DBURL}" userid="${DBUSER}" password="${DBPASSWORD}" src="${conf.dir}/${database}/drop_db.${database}.sql"/ -->
@@ -133,7 +133,7 @@
 
 
 	<target name="start_ui">
-		<java classname="wf.client.XFlowAdminUI" fork="true">
+		<java classname="wf.client.Admin" fork="true">
 			<classpath>
 				<pathelement location="${conf.dir}" />
 				<pathelement location="${build.dir}" />
