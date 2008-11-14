@@ -3,7 +3,7 @@
 package wf.client.manager;
 
 import wf.client.Preferences;
-import wf.client.XFlowAdminUI;
+import wf.client.Admin;
 
 import java.awt.*;
 
@@ -130,8 +130,8 @@ public class SettingsDlg extends javax.swing.JDialog {
   }
 
   private void storePreferences() {
-    preferences.put( XFlowAdminUI.USERNAME, tfUserName.getText() );
-    preferences.put( XFlowAdminUI.PASSWORD, tfPassword.getText() );
+    preferences.put( Admin.USERNAME, tfUserName.getText() );
+    preferences.put( Admin.PASSWORD, tfPassword.getText() );
     try {
       preferences.flush();
     } catch (Exception e1) {
@@ -140,8 +140,8 @@ public class SettingsDlg extends javax.swing.JDialog {
   }
 
   private void displayPreferences() {
-    tfUserName.setText(  preferences.get( XFlowAdminUI.USERNAME,"None" ) );
-    tfPassword.setText(  preferences.get( XFlowAdminUI.PASSWORD,"" ) );
+    tfUserName.setText(  preferences.get( Admin.USERNAME,"None" ) );
+    tfPassword.setText(  preferences.get( Admin.PASSWORD,"" ) );
   }
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

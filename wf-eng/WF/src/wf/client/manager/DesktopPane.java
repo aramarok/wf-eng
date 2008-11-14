@@ -3,7 +3,7 @@
 package wf.client.manager;
 
 import wf.client.WFClientConstants;
-import wf.client.XFlowAdminUI;
+import wf.client.Admin;
 import wf.client.manager.ActiveProcessesWin;
 import wf.client.manager.ActiveWorkflowWin;
 
@@ -16,13 +16,13 @@ public class DesktopPane extends javax.swing.JFrame {
     SettingsDlg settingsDlg = null;
 
 
-    XFlowAdminUI xFlowAdminUI;
+    Admin xFlowAdminUI;
     
     public DesktopPane() {
         initComponents();
     }
 
-  public DesktopPane(XFlowAdminUI xFlowAdminUI)  {
+  public DesktopPane(Admin xFlowAdminUI)  {
     this();
     this.xFlowAdminUI = xFlowAdminUI;
   }
@@ -89,7 +89,7 @@ public class DesktopPane extends javax.swing.JFrame {
     if( settingsDlg == null ){
       settingsDlg = new SettingsDlg( this, true );
     }
-    settingsDlg.showModalDialog( XFlowAdminUI.getInstance().getPreferences() );
+    settingsDlg.showModalDialog( Admin.getInstance().getPreferences() );
   }
 
   private void showActiveWfWin(java.awt.event.ActionEvent evt) {

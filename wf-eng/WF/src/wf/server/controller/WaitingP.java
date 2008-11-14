@@ -5,7 +5,7 @@ package wf.server.controller;
 import org.apache.log4j.Logger;
 
 import wf.db.Persistence;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.model.Node;
 
 import java.sql.SQLException;
@@ -18,7 +18,7 @@ public class WaitingP {
 
   private static Logger log = Logger.getLogger(WaitingP.class);
 
-  public  void addProcess (Integer workflowId, int destNodeId, int fromNodeId) throws XflowException, SQLException {
+  public  void addProcess (Integer workflowId, int destNodeId, int fromNodeId) throws WorkFlowException, SQLException {
 
     Map params = new HashMap();
     params.put( "workflowId", workflowId );
@@ -27,7 +27,7 @@ public class WaitingP {
     Persistence.getThreadSqlMapSession().insert( "insertWaitingRecord", params );
   }
 
-  public  void removeProcesses (List fromNodes, Integer workflowId) throws XflowException, SQLException {
+  public  void removeProcesses (List fromNodes, Integer workflowId) throws WorkFlowException, SQLException {
     Map params = new HashMap();
     params.put( "workflowId", workflowId );
     for (int i = 0; i < fromNodes.size(); i++) {
@@ -38,13 +38,13 @@ public class WaitingP {
 
   }
 
-  public  void removeProcesses (Integer wfId) throws XflowException, SQLException {
+  public  void removeProcesses (Integer wfId) throws WorkFlowException, SQLException {
     Persistence.getThreadSqlMapSession().delete( "removeProcessesForWorkflow", wfId );
 
   }
 
   public  boolean allProcessesArrived (List fromNodes, Integer workflowId, int destNodeId)
-      throws XflowException, SQLException {
+      throws WorkFlowException, SQLException {
     int count = fromNodes.size();
     Map params = new HashMap();
     params.put( "workflowId", workflowId );

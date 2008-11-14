@@ -20,16 +20,16 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.xml.sax.InputSource;
 
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.model.Destination;
 import wf.model.DirectedGraph;
 
-public class XflowGraphSerializer {
+public class GraphSerializer {
 
-    private static Logger log = Logger.getLogger(XflowGraphSerializer.class);
+    private static Logger log = Logger.getLogger(GraphSerializer.class);
     private static String template = "<xflow><nodes></nodes><transitions></transitions></xflow>";
 
-    public static String serialize (DirectedGraph dg) throws XflowException {
+    public static String serialize (DirectedGraph dg) throws WorkFlowException {
 
         String graphName = dg.getName();
         String result = null;
@@ -83,12 +83,12 @@ public class XflowGraphSerializer {
 
             result = serialize (doc.getDocumentElement());
         } catch (Exception e) {
-            throw new XflowException(e);
+            throw new WorkFlowException(e);
         }
         return result;
     }
 
-    public static String serialize (Element element) throws XflowException {
+    public static String serialize (Element element) throws WorkFlowException {
 
         String serialized = null;
 
@@ -103,7 +103,7 @@ public class XflowGraphSerializer {
             transformer.transform(source, result);
             serialized = writer.toString();
 	} catch (Exception e) {
-	    throw new XflowException (e);
+	    throw new WorkFlowException (e);
         }
        
 	return serialized;
@@ -128,7 +128,7 @@ public class XflowGraphSerializer {
 	    serializeTransitions (doc, transitionsEl, d.node);
         }
     }
-    public static void main (String[] args) throws XflowException {
+    public static void main (String[] args) throws WorkFlowException {
 
         DirectedGraph dg = new DirectedGraph("test");
         wf.model.Node gnode1 = new wf.model.Node("Start", wf.model.Node.START);

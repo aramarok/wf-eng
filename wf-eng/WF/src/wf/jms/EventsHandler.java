@@ -22,9 +22,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import wf.cfg.XflowConfig;
+import wf.cfg.AppConfig;
 import wf.db.Db;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 
 
 public class EventsHandler implements MessageListener {
@@ -37,8 +37,8 @@ public class EventsHandler implements MessageListener {
 		try {
 			JMSTopicConnection.initialize();
 			
-			subscriber = new JMSSubscriber(this, XflowConfig.XFLOW_EVENT_TOPIC(), null);
-		} catch (XflowException e) {
+			subscriber = new JMSSubscriber(this, AppConfig.XFLOW_EVENT_TOPIC(), null);
+		} catch (WorkFlowException e) {
 			e.printStackTrace();
 			System.out.println("Can't set up JMS Subscription");
 		} catch (JMSException e){
@@ -630,7 +630,7 @@ public class EventsHandler implements MessageListener {
 		return info;
 	}
 
-        public static void main (String[] args) throws XflowException, JMSException {
+        public static void main (String[] args) throws WorkFlowException, JMSException {
     
             String propFileName = args[0];
             if (propFileName == null) {

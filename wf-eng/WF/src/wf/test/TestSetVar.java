@@ -5,11 +5,11 @@ package wf.test;
 
 import wf.client.WorkflowManager;
 import wf.client.auth.User;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 
 public class TestSetVar {
 
-    public static void main (String[] args) throws XflowException {
+    public static void main (String[] args) throws WorkFlowException {
 
         String wfId = args[0];
         String name = args[1];

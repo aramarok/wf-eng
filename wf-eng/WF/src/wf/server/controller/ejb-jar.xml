@@ -24,7 +24,7 @@
              <env-entry-name>authenticator</env-entry-name>
              <env-entry-type>java.lang.String</env-entry-type>
              <!-- The following value is customizable --> 
-             <env-entry-value>wf.client.auth.XflowUserAuthenticator</env-entry-value>
+             <env-entry-value>wf.client.auth.UserAuth</env-entry-value>
              <description>Class name for user authentication</description>
          </env-entry>
       </message-driven>

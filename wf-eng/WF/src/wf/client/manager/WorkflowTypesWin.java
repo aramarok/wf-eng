@@ -4,7 +4,7 @@ package wf.client.manager;
 
 import wf.client.WFClientConstants;
 import wf.client.WorkflowManager;
-import wf.client.XFlowAdminUI;
+import wf.client.Admin;
 import wf.client.manager.Utilities;
 
 import javax.swing.*;
@@ -16,14 +16,14 @@ import java.io.FileReader;
 
 public class WorkflowTypesWin extends javax.swing.JInternalFrame {
 
-  XFlowAdminUI xFlowAdminUI;
+  Admin xFlowAdminUI;
 
   
   public WorkflowTypesWin() {
     initComponents();
   }
 
-  public WorkflowTypesWin(XFlowAdminUI xFlowAdminUI) {
+  public WorkflowTypesWin(Admin xFlowAdminUI) {
     this();
     this.xFlowAdminUI = xFlowAdminUI;
   }
@@ -173,7 +173,7 @@ public class WorkflowTypesWin extends javax.swing.JInternalFrame {
         while ((str = in.readLine()) != null) {
           xml.append( str );
         }
-        WorkflowManager.deployModel( xml.toString(), "XFLOW", XFlowAdminUI.getInstance().getUSER() );
+        WorkflowManager.deployModel( xml.toString(), "XFLOW", Admin.getInstance().getUSER() );
         refreshList();
       }catch( Exception e ){
         e.printStackTrace();

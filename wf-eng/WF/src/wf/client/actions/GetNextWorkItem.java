@@ -10,7 +10,7 @@ import javax.jms.JMSException;
 
 import wf.client.WorkflowProcess;
 import wf.client.auth.User;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.model.WorkItem;
 
 
@@ -25,7 +25,7 @@ public class GetNextWorkItem {
         procName = pname;
     }
 
-    public void start() throws XflowException {
+    public void start() throws WorkFlowException {
         wp = new WorkflowProcess (workflowName, -1, procName, null, new User("rtan","rtan"));
         WorkItem wi = wp.getNextWorkItem();
         System.out.println ("Work Item: " + wi);
@@ -42,7 +42,7 @@ public class GetNextWorkItem {
         }
     }
 
-    public static void main (String[] args) throws XflowException, JMSException {
+    public static void main (String[] args) throws WorkFlowException, JMSException {
         String wfName = args[0];
         String procName = args[1];
         new GetNextWorkItem (wfName, procName).start();

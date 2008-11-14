@@ -10,16 +10,16 @@ import java.util.Properties;
 
 import javax.jms.JMSException;
 
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.jms.EventsHandler;
 
 public class TestEventSubscriber {
 
-    public void start(Properties props) throws XflowException {
+    public void start(Properties props) throws WorkFlowException {
         EventsHandler subs = new EventsHandler (props);
     }
 
-    public static void main (String[] args) throws XflowException, JMSException {
+    public static void main (String[] args) throws WorkFlowException, JMSException {
 
         String propFileName = args[0];
         Properties props = new Properties();

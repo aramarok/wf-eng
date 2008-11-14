@@ -5,7 +5,7 @@ package wf.server.controller;
 import org.apache.log4j.Logger;
 
 import wf.db.Persistence;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.model.Node;
 import wf.server.util.PopNode;
 import wf.util.Util;
@@ -22,7 +22,7 @@ public class ProcessStack {
 
   private static Logger log = Logger.getLogger(ProcessStack.class);
 
-  public void push (Integer workflowId, int cGid, Node containerNode, Node endNode) throws XflowException, SQLException {
+  public void push (Integer workflowId, int cGid, Node containerNode, Node endNode) throws WorkFlowException, SQLException {
 
     int containerNodeId = containerNode.getNodeId();
     int endNodeId = endNode.getNodeId();
@@ -37,7 +37,7 @@ public class ProcessStack {
 
   }
 
-  public  PopNode pop (int workflowId, Node endNode) throws XflowException, SQLException {
+  public  PopNode pop (int workflowId, Node endNode) throws WorkFlowException, SQLException {
 
     int endNodeId = endNode.getNodeId();
     PopNode popNode = null;

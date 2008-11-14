@@ -3,8 +3,8 @@
 package wf.client.manager;
 
 import wf.client.WFClientConstants;
-import wf.client.XFlowAdminUI;
-import wf.exceptions.XflowException;
+import wf.client.Admin;
+import wf.exceptions.WorkFlowException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.awt.event.MouseAdapter;
@@ -21,7 +21,7 @@ import javax.swing.*;
 
 public class ActiveWorkflowWin extends javax.swing.JInternalFrame {
 
-  XFlowAdminUI xFlowAdminUI;
+  Admin xFlowAdminUI;
   DesktopPane desktopPane;
 
   
@@ -70,7 +70,7 @@ public class ActiveWorkflowWin extends javax.swing.JInternalFrame {
     return Integer.parseInt( id );
   }
 
-  public ActiveWorkflowWin(XFlowAdminUI xFlowAdminUI, DesktopPane desk) {
+  public ActiveWorkflowWin(Admin xFlowAdminUI, DesktopPane desk) {
     this();
     this.xFlowAdminUI = xFlowAdminUI;
     this.desktopPane = desk;

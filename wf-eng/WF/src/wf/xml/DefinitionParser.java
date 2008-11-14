@@ -15,14 +15,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.model.DirectedGraph;
 
-public class XflowXMLParser {
+public class DefinitionParser {
 
-    private static Logger log = Logger.getLogger(XflowXMLParser.class);
+    private static Logger log = Logger.getLogger(DefinitionParser.class);
 
-    public static DirectedGraph parse (String xml) throws XflowException {
+    public static DirectedGraph parse (String xml) throws WorkFlowException {
 
         String graphName = null;
         DirectedGraph rgraph = null;
@@ -42,11 +42,11 @@ public class XflowXMLParser {
             if (el != null) {
                 graphName = el.getAttribute ("name");
                 if (graphName == null) {
-                    throw new XflowException ("xflow name attribute not found in XML file.");
+                    throw new WorkFlowException ("xflow name attribute not found in XML file.");
                 }
                 rgraph = new DirectedGraph (graphName);
             } else {
-                throw new XflowException ("<xflow> element not found in XML file.");
+                throw new WorkFlowException ("<xflow> element not found in XML file.");
             }
 
             els = doc.getElementsByTagName ("node");
@@ -55,11 +55,11 @@ public class XflowXMLParser {
                 el = (Element)els.item(i);
                 String nodeName = el.getAttribute ("id");
                 if (nodeName == null) {
-                    throw new XflowException ("node id is not defined.");
+                    throw new WorkFlowException ("node id is not defined.");
                 }
                 String nodeType = el.getAttribute("type");
                 if (nodeType == null) {
-                    throw new XflowException ("node type is not defined.");
+                    throw new WorkFlowException ("node type is not defined.");
 		}
                 wf.model.Node gnode = new wf.model.Node(nodeName, nodeType);
 
@@ -78,7 +78,7 @@ public class XflowXMLParser {
                 if (nodeType.equals(wf.model.Node.CONTAINER)) {
                     String containee = el.getAttribute("containee");
                     if (containee == null) {
-                        throw new XflowException ("Containee not defined for container process");
+                        throw new WorkFlowException ("Containee not defined for container process");
                     }
                     gnode.setContainee (containee);
 		}
@@ -93,9 +93,9 @@ public class XflowXMLParser {
                 rootc.put (toNodeName, toNodeName);
                 log.info ( "parse transition from [" + fromNodeName + "] to [" + toNodeName + "]");
                 wf.model.Node fromNode = (wf.model.Node) pm.get (fromNodeName);
-                if( fromNode == null) throw new  XflowException( fromNodeName + " undefined!");
+                if( fromNode == null) throw new  WorkFlowException( fromNodeName + " undefined!");
                 wf.model.Node toNode = (wf.model.Node) pm.get (toNodeName);
-                if( toNode == null) throw new  XflowException( toNode + " undefined!");
+                if( toNode == null) throw new  WorkFlowException( toNode + " undefined!");
 
                 log.info (fromNode.getName() + " to " + toNode.getName());
                 NodeList els2 = el.getElementsByTagName ("rule");
@@ -111,19 +111,19 @@ public class XflowXMLParser {
             }
 
         } catch (Exception e) {
-            throw new XflowException(e);
+            throw new WorkFlowException(e);
         }
         
         try {
            String rootNodeId = findRootNodeId (pm, rootc);
            if (rootNodeId == null) {
-               throw new XflowException ("No root node in graph");           
+               throw new WorkFlowException ("No root node in graph");           
 	   }
            wf.model.Node rootNode = (wf.model.Node) pm.get(rootNodeId);
            rgraph.setRootNode (rootNode);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new XflowException(e);
+            throw new WorkFlowException(e);
         }
 
         return rgraph;

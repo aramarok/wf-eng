@@ -9,7 +9,7 @@ import javax.jms.JMSException;
 import wf.client.InboxMessageListener;
 import wf.client.WorkflowProcess;
 import wf.client.auth.User;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.jms.JMSTopicConnection;
 import wf.model.WorkItem;
 
@@ -38,16 +38,16 @@ public class ProcAgent implements InboxMessageListener {
         System.out.println ("Completing work item");
         try {
             wp.completeWorkItem (witem);
-        } catch (XflowException e) {
+        } catch (WorkFlowException e) {
             e.printStackTrace();
         }
     }
 
-    public void start() throws XflowException {
+    public void start() throws WorkFlowException {
         wp = new WorkflowProcess (workflowName, -1, procName, this, new User("rtan","rtan"));
     }
 
-    public static void main (String[] args) throws XflowException, JMSException {
+    public static void main (String[] args) throws WorkFlowException, JMSException {
         String wfName = args[0];
         String procName = args[1];
         JMSTopicConnection.initialize();

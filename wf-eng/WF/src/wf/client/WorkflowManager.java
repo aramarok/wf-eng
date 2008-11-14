@@ -4,7 +4,7 @@ package wf.client;
 import java.util.List;
 
 import wf.client.auth.User;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.jms.SynchQueueMessaging;
 import wf.jms.model.AbortWorkflowRequest;
 import wf.jms.model.AbortWorkflowResponse;
@@ -48,7 +48,7 @@ public class WorkflowManager {
   public static final String BPEL   = "BPEL";
 
   
-  public static DeployModelResponse deployModel (String xml, String type, User user) throws XflowException {
+  public static DeployModelResponse deployModel (String xml, String type, User user) throws WorkFlowException {
     DeployModelRequest  req = new DeployModelRequest();
     req.user = user;
     req.xml = xml;
@@ -60,7 +60,7 @@ public class WorkflowManager {
   
   public static Integer startWorkflow (String workflowName,
                                        WorkItem workItem,
-                                       User user) throws XflowException {
+                                       User user) throws WorkFlowException {
 
     StartWorkflowRequest req = new StartWorkflowRequest();
     req.workflowName = workflowName;
@@ -75,7 +75,7 @@ public class WorkflowManager {
   public static Integer startWorkflow (String workflowName,
                                        int workflowVersion,
                                        WorkItem workItem,
-                                       User user) throws XflowException {
+                                       User user) throws WorkFlowException {
 
     StartWorkflowRequest req = new StartWorkflowRequest();
     req.workflowName = workflowName;
@@ -89,7 +89,7 @@ public class WorkflowManager {
 
   
   public static AbortWorkflowResponse abortWorkflow (Integer workflowId,
-                                    User user) throws XflowException {
+                                    User user) throws WorkFlowException {
 
     AbortWorkflowRequest req = new AbortWorkflowRequest();
     req.workflowId = workflowId;
@@ -101,7 +101,7 @@ public class WorkflowManager {
 
   
   public static SuspendWorkflowResponse suspendWorkflow (Integer workflowId,
-                                      User user) throws XflowException {
+                                      User user) throws WorkFlowException {
 
     SuspendWorkflowRequest req = new SuspendWorkflowRequest();
     req.workflowId = workflowId;
@@ -113,7 +113,7 @@ public class WorkflowManager {
 
   
   public static ResumeWorkflowResponse resumeWorkflow (Integer workflowId,
-                                     User user) throws XflowException {
+                                     User user) throws WorkFlowException {
 
     ResumeWorkflowRequest req = new ResumeWorkflowRequest();
     req.workflowId = workflowId;
@@ -125,7 +125,7 @@ public class WorkflowManager {
 
   
   public static WorkflowState getWorkflowState (Integer workflowId,
-                                                User user) throws XflowException {
+                                                User user) throws WorkFlowException {
 
     GetWorkflowStateRequest req = new GetWorkflowStateRequest();
     req.workflowId = workflowId;
@@ -138,7 +138,7 @@ public class WorkflowManager {
   
   public static SetVariableResponse setVariable (Integer workflowId, String variableName, Object variableValue,
                                   User user)
-      throws XflowException {
+      throws WorkFlowException {
     SetVariableRequest req = new SetVariableRequest();
     req.workflowId = workflowId;
     req.variableName  = variableName;
@@ -151,7 +151,7 @@ public class WorkflowManager {
 
   
   public static Object getVariable (Integer workflowId, String variableName,
-                                    User user) throws XflowException {
+                                    User user) throws WorkFlowException {
 
     GetVariableRequest req = new GetVariableRequest();
     req.workflowId = workflowId;
@@ -162,7 +162,7 @@ public class WorkflowManager {
   }
 
   
-  public static List getActiveWorkflows (User user) throws XflowException {
+  public static List getActiveWorkflows (User user) throws WorkFlowException {
 
     GetActiveWorkflowsRequest  req = new GetActiveWorkflowsRequest();
     req.user = user;
@@ -172,7 +172,7 @@ public class WorkflowManager {
 
 
   
-  public static List getAllWorkflows (User user) throws XflowException {
+  public static List getAllWorkflows (User user) throws WorkFlowException {
 
     GetAllWorkflowsRequest  req = new GetAllWorkflowsRequest();
     req.user = user;
@@ -181,7 +181,7 @@ public class WorkflowManager {
   }
 
   
-  public static List getAllWorkflowsByName (String name, User user) throws XflowException {
+  public static List getAllWorkflowsByName (String name, User user) throws WorkFlowException {
 
     GetWorkflowsByNameRequest  req = new GetWorkflowsByNameRequest();
     req.user = user;
@@ -191,7 +191,7 @@ public class WorkflowManager {
   }
 
   
-  public static List getProcessNodes (Integer workflowId, User user) throws XflowException {
+  public static List getProcessNodes (Integer workflowId, User user) throws WorkFlowException {
     GetProcessNodesRequest req = new GetProcessNodesRequest();
     req.user = user;
     req.workflowId = workflowId;
@@ -201,7 +201,7 @@ public class WorkflowManager {
 
   
   public static Node getNodeByName (String workflowName, int workflowVersion,
-                                    String nodeName, User user) throws XflowException {
+                                    String nodeName, User user) throws WorkFlowException {
     GetNodeByNameRequest req = new GetNodeByNameRequest();
     req.user = user;
     req.workflowName = workflowName;
@@ -212,25 +212,25 @@ public class WorkflowManager {
   }
 
   
-  public static List getWorkflowModels (User user) throws XflowException {
+  public static List getWorkflowModels (User user) throws WorkFlowException {
     GetModelsRequest req = new GetModelsRequest();
     req.user = user;
     GetModelsResponse resp = (GetModelsResponse)sendRequest(req);
     return resp.models;
   }
 
-  private static Response sendRequest (Request req) throws XflowException {
+  private static Response sendRequest (Request req) throws WorkFlowException {
 
     req.replyName = Util.generateUniqueStringId();
     try {
       Response resp = SynchQueueMessaging.sendRequest (req);
       if (resp.responseCode != Response.SUCCESS) {
         System.out.println ("FAILURE response from server.");
-        throw new XflowException(resp.message);
+        throw new WorkFlowException(resp.message);
       }
       return resp;
     } catch (Exception t) {
-      throw new XflowException (t );
+      throw new WorkFlowException (t );
     }
   }
 

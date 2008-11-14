@@ -8,7 +8,7 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.jms.JMSSubscriber;
 import wf.jms.JMSTopicConnection;
 
@@ -24,11 +24,11 @@ public class TestJMSSubscriber2 implements MessageListener {
        }
     }
 
-    public void start(String topic) throws XflowException {
+    public void start(String topic) throws WorkFlowException {
         JMSSubscriber subs = new JMSSubscriber (this, topic, null);
     }
 
-    public static void main (String[] args) throws XflowException, JMSException {
+    public static void main (String[] args) throws WorkFlowException, JMSException {
         JMSTopicConnection.initialize();
         String topic = args[0];
         new TestJMSSubscriber2().start(topic);

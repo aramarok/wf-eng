@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 import wf.db.Persistence;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.server.controller.DirectedGraphP;
 import wf.server.controller.IBatisWork;
 import wf.util.Util;
-import wf.xml.XflowGraphSerializer;
+import wf.xml.GraphSerializer;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
@@ -89,7 +89,7 @@ public class DirectedGraph implements Serializable {
   }
 
   
-  public void loadDB() throws XflowException, SQLException {
+  public void loadDB() throws WorkFlowException, SQLException {
     DirectedGraphP directGraphP = Persistence.getDirectGraphP();
     Integer gid = directGraphP.getGraphId( name, version );
     directGraphP.loadByGraphById( gid.intValue(), this );
@@ -100,7 +100,7 @@ public class DirectedGraph implements Serializable {
 
 
   
-  public static DirectedGraph loadByGraphId(int gid) throws XflowException {
+  public static DirectedGraph loadByGraphId(int gid) throws WorkFlowException {
     DirectedGraph res = new DirectedGraph();
     Persistence.getDirectGraphP().loadByGraphById( gid, res );
     return res;
@@ -116,7 +116,7 @@ public class DirectedGraph implements Serializable {
 
       public void execute(SqlMapClient sqlMap) throws Exception {
         if (Persistence.getDirectGraphP().graphExistsInDB( name, version )) {
-          throw new XflowException(
+          throw new WorkFlowException(
               "There is already a graph called " + name + " version " + version + " in the database");
         }
         graphId = Util.generateUniqueIntId();
@@ -141,12 +141,12 @@ public class DirectedGraph implements Serializable {
   }
 
   
-  public void validate() throws XflowException {
+  public void validate() throws WorkFlowException {
     validate(rootNode);
   }
 
   
-  private void validate(Node node) throws XflowException {
+  private void validate(Node node) throws WorkFlowException {
 
     if (node.isValidated()) {
       return;
@@ -169,24 +169,24 @@ public class DirectedGraph implements Serializable {
       validateOR(node);
     }
     if (startNode.size() == 0) {
-      throw new XflowException("there is no Start node in the graph");
+      throw new WorkFlowException("there is no Start node in the graph");
     }
     if (endNode.size() == 0) {
-      throw new XflowException("there is no End node in the graph");
+      throw new WorkFlowException("there is no End node in the graph");
     }
   }
 
-  private void validateStart(Node node) throws XflowException {
+  private void validateStart(Node node) throws WorkFlowException {
     startNode.put(node.getName(), node);
     if (startNode.size() != 1) {
-      throw new XflowException("More than one Start node in the graph");
+      throw new WorkFlowException("More than one Start node in the graph");
     } else {
       if (node.getFromNodes().size()!=0){
-        throw new XflowException("No nodes should go into Start node");
+        throw new WorkFlowException("No nodes should go into Start node");
       } else {
         List destinations = node.getDestinations();
         if(destinations.size()==0){
-          throw new XflowException("Start node should has at lease one node out");
+          throw new WorkFlowException("Start node should has at lease one node out");
         } else {
           for (int i = 0; i < destinations.size(); i++) {
             Destination d = (Destination) destinations.get (i);
@@ -194,7 +194,7 @@ public class DirectedGraph implements Serializable {
             if (ntype.equals(Node.CONTAINER)||ntype.equals(Node.PROCESS)){
               validate(d.node);
             } else {
-              throw new XflowException("Start node should go into Container" +
+              throw new WorkFlowException("Start node should go into Container" +
                   " or Process node.");
             }
           }
@@ -204,25 +204,25 @@ public class DirectedGraph implements Serializable {
 
   }
 
-  private void validateEnd(Node node) throws XflowException {
+  private void validateEnd(Node node) throws WorkFlowException {
     endNode.put(node.getName(), node);
     if (endNode.size() != 1) {
-      throw new XflowException("More than one End node in the graph");
+      throw new WorkFlowException("More than one End node in the graph");
     } else {
       if (node.getDestinations().size()!=0){
-        throw new XflowException("No nodes should go out from End node");
+        throw new WorkFlowException("No nodes should go out from End node");
       }
     }
 
   }
 
-  private void validateAND(Node node) throws XflowException {
+  private void validateAND(Node node) throws WorkFlowException {
     if (node.getFromNodes().size()<2){
-      throw new XflowException("AND node should have at least 2 nodes in");
+      throw new WorkFlowException("AND node should have at least 2 nodes in");
     } else {
       List destinations = node.getDestinations();
       if(destinations.size()==0){
-        throw new XflowException("AND node should has at lease one node out");
+        throw new WorkFlowException("AND node should has at lease one node out");
       } else {
         for (int i = 0; i < destinations.size(); i++) {
           Destination d = (Destination) destinations.get (i);
@@ -232,7 +232,7 @@ public class DirectedGraph implements Serializable {
               ntype.equals(Node.OR)){
             validate(d.node);
           } else {
-            throw new XflowException("AND node should go into a Container," +
+            throw new WorkFlowException("AND node should go into a Container," +
                 " a Process, an AND, an OR or an End node.");
           }
         }
@@ -241,13 +241,13 @@ public class DirectedGraph implements Serializable {
   }
 
 
-  private void validateOR(Node node) throws XflowException {
+  private void validateOR(Node node) throws WorkFlowException {
     if (node.getFromNodes().size()<2){
-      throw new XflowException("OR node should have at least 2 nodes in");
+      throw new WorkFlowException("OR node should have at least 2 nodes in");
     } else {
       List destinations = node.getDestinations();
       if(destinations.size()==0){
-        throw new XflowException("OR node should has at lease one node out");
+        throw new WorkFlowException("OR node should has at lease one node out");
       } else {
         for (int i = 0; i < destinations.size(); i++) {
           Destination d = (Destination) destinations.get (i);
@@ -257,7 +257,7 @@ public class DirectedGraph implements Serializable {
               ntype.equals(Node.OR)){
             validate(d.node);
           } else {
-            throw new XflowException("OR node should go into a Container," +
+            throw new WorkFlowException("OR node should go into a Container," +
                 " a Process, an AND, an OR or an End node.");
           }
         }
@@ -266,10 +266,10 @@ public class DirectedGraph implements Serializable {
   }
 
 
-  private void validateProcess(Node node) throws XflowException {
+  private void validateProcess(Node node) throws WorkFlowException {
     List destinations = node.getDestinations();
     if(destinations.size()==0){
-      throw new XflowException("Process node should has at lease one node out");
+      throw new WorkFlowException("Process node should has at lease one node out");
     } else {
       for (int i = 0; i < destinations.size(); i++) {
         Destination d = (Destination) destinations.get (i);
@@ -279,14 +279,14 @@ public class DirectedGraph implements Serializable {
             ntype.equals(Node.OR)){
           validate(d.node);
         } else {
-          throw new XflowException("Process node should go into a Container," +
+          throw new WorkFlowException("Process node should go into a Container," +
               " a Process, an AND, an OR or an End node.");
         }
       }
     }
   }
 
-  private void validateContainer(Node node) throws XflowException {
+  private void validateContainer(Node node) throws WorkFlowException {
     List destinations = node.getDestinations();
     for (int i = 0; i < destinations.size(); i++) {
       Destination d = (Destination) destinations.get (i);
@@ -296,14 +296,14 @@ public class DirectedGraph implements Serializable {
           ntype.equals(Node.OR)){
         validate(d.node);
       } else {
-        throw new XflowException("Container node should go into a Container," +
+        throw new WorkFlowException("Container node should go into a Container," +
             " a Process, an AND, an OR or End node.");
       }
     }
   }
 
-  public String toXML () throws XflowException {
-    return XflowGraphSerializer.serialize(this);
+  public String toXML () throws WorkFlowException {
+    return GraphSerializer.serialize(this);
   }
 
   
