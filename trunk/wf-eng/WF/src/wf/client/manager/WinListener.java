@@ -1,7 +1,7 @@
 package wf.client.manager;
 
 import wf.client.Preferences;
-import wf.client.XFlowAdminUI;
+import wf.client.Admin;
 
 import javax.swing.event.InternalFrameListener;
 import javax.swing.event.InternalFrameEvent;
@@ -17,7 +17,7 @@ public class WinListener implements WindowListener, WindowStateListener,Internal
   String windowKey;
 
   public WinListener( String windowKey) {
-    this(XFlowAdminUI.getInstance().getPreferences(), windowKey);
+    this(Admin.getInstance().getPreferences(), windowKey);
   }
 
   public WinListener(Preferences preferences, String windowKey) {

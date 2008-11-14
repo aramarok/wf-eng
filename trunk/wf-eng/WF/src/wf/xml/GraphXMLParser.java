@@ -15,13 +15,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.model.DirectedGraph;
 
 public class GraphXMLParser {
 
 	public static DirectedGraph parseGxl(String xml, String graphName)
-		throws XflowException {
+		throws WorkFlowException {
 
 		
 		DirectedGraph rgraph = new DirectedGraph(graphName);
@@ -86,19 +86,19 @@ public class GraphXMLParser {
 			}
 
 		} catch (Exception e) {
-			throw new XflowException(e);
+			throw new WorkFlowException(e);
 		}
 
 		try {
 			String rootNodeId = findRootNodeId(pm, rootc);
 			if (rootNodeId == null) {
-				throw new XflowException("No root node in graph");
+				throw new WorkFlowException("No root node in graph");
 			}
 			wf.model.Node rootNode = (wf.model.Node) pm.get(rootNodeId);
 			rgraph.setRootNode(rootNode);
 			rootNode.traverse();
 		} catch (Exception e) {
-			throw new XflowException(e);
+			throw new WorkFlowException(e);
 		}
 
 		return rgraph;

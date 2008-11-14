@@ -14,7 +14,7 @@ import javax.naming.InitialContext;
 
 import org.apache.log4j.Logger;
 
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 
 public class JMSPublisher {
 
@@ -30,15 +30,15 @@ public class JMSPublisher {
     sendingEnabled = enabled;
   }
 
-  public static void send (String topicName, String smsg, List props) throws XflowException {
+  public static void send (String topicName, String smsg, List props) throws WorkFlowException {
      send ( topicName, smsg, null, props);
   }
 
-  public static void send (String topicName, byte[] byteMsg, List props) throws XflowException {
+  public static void send (String topicName, byte[] byteMsg, List props) throws WorkFlowException {
     send ( topicName, null, byteMsg,  props);
   }
 
-  private static void send (String topicName, String txtNsg, byte[] byteMsg, List props) throws XflowException {
+  private static void send (String topicName, String txtNsg, byte[] byteMsg, List props) throws WorkFlowException {
     if( ! sendingEnabled ) return;
     try {
       InitialContext iniCtx = JMSTopicConnection.getInitialContext();
@@ -66,7 +66,7 @@ public class JMSPublisher {
       pub.close();
       log.info ("Published message for topic: " + topicName);
     } catch (Exception e) {
-      throw new XflowException ("Can't publish message on JMS topic: " + topicName, e);
+      throw new WorkFlowException ("Can't publish message on JMS topic: " + topicName, e);
     }
   }
 }

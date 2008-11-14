@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import org.jaxen.JaxenException;
 import org.xml.sax.SAXException;
 
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.model.WorkItem;
 
 public class RuleEngine {
@@ -31,7 +31,7 @@ public class RuleEngine {
   }
 
   public static boolean evaluate (WorkItem witem, String r)
-      throws JaxenException, IOException, ParserConfigurationException, XflowException, SAXException {
+      throws JaxenException, IOException, ParserConfigurationException, WorkFlowException, SAXException {
     boolean result = true;
     String rule = clean(r);
     rule = rule.substring(1);
@@ -53,14 +53,14 @@ public class RuleEngine {
       log.info ("propValue = " + propValue);
       Object prop = witem.getProperty(propName);
       if (prop == null) {
-        throw new XflowException ("Property does not exist: " + propName);
+        throw new WorkFlowException ("Property does not exist: " + propName);
       }
       result = new ExpressionEval().applyRule (prop, oper, propValue);
 
     } else {
       String payloadType = witem.getPayloadType();
       if (payloadType == null) {
-        throw new XflowException ("Payload type not defined in work item");
+        throw new WorkFlowException ("Payload type not defined in work item");
       }
       if (payloadType.equals(WorkItem.XML)) {
         result = evaluateRuleOnXmlPayload ((String)witem.getPayload(), r);

@@ -3,7 +3,7 @@
 package wf.server.controller;
 
 import wf.db.Persistence;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.model.WorkItem;
 
 import java.lang.Integer;
@@ -16,7 +16,7 @@ public class InboxP {
 
 
   public  void addWorkItem (int gid, String workflowName, String procName, WorkItem workitem)
-      throws XflowException {
+      throws WorkFlowException {
     Integer wfId = workitem.getWorkflowId();
     Integer workitemId  = workitem.getId();
     int workflowId = wfId.intValue();
@@ -34,11 +34,11 @@ public class InboxP {
       Persistence.getWorkItemP().savePropertiesToDB (workitem, workflowName, procName );
 
     } catch (Exception e) {
-      throw new XflowException ("Failed to save row in inbox in database", e);
+      throw new WorkFlowException ("Failed to save row in inbox in database", e);
     }
   }
 
-  public  void removeWorkItem (int gid, String procName, WorkItem workitem) throws XflowException {
+  public  void removeWorkItem (int gid, String procName, WorkItem workitem) throws WorkFlowException {
     Integer wfId = workitem.getWorkflowId();
     Integer workitemId  = workitem.getId();
     int workflowId = wfId.intValue();
@@ -50,15 +50,15 @@ public class InboxP {
       inboxRec.setWorkflowId( workflowId );
       Persistence.getThreadSqlMapSession().delete( "deleteInboxRecords", inboxRec );
     } catch (Exception e) {
-      throw new XflowException ("Failed to delete row in inbox from database", e );
+      throw new WorkFlowException ("Failed to delete row in inbox from database", e );
     }
   }
 
-  public  void removeWorkItems (Integer workflowId) throws XflowException, SQLException {
+  public  void removeWorkItems (Integer workflowId) throws WorkFlowException, SQLException {
     Persistence.getThreadSqlMapSession().delete( "deleteInboxRecordsForWorkflow",  workflowId  );
   }
 
-  public  boolean isWorkItemValid (int gid, String procName, WorkItem workitem) throws XflowException, SQLException {
+  public  boolean isWorkItemValid (int gid, String procName, WorkItem workitem) throws WorkFlowException, SQLException {
 
     Integer wfId = workitem.getWorkflowId();
     Integer workitemId  = workitem.getId();
@@ -72,7 +72,7 @@ public class InboxP {
     return (inboxRecords != null && inboxRecords.size() > 0 );
   }
 
-  public  java.util.Date getTimeStarted (int workflowId, String procName) throws XflowException, SQLException {
+  public  java.util.Date getTimeStarted (int workflowId, String procName) throws WorkFlowException, SQLException {
     InboxRec inboxRec = new InboxRec();
     inboxRec.setTimeout(false);
     inboxRec.setProcName( procName );
@@ -80,7 +80,7 @@ public class InboxP {
     return (Date) Persistence.getThreadSqlMapSession().queryForObject( "selectDateStarted", inboxRec);
   }
 
-  public  void setTimeoutFlag (int workflowId, String procName) throws XflowException, SQLException {
+  public  void setTimeoutFlag (int workflowId, String procName) throws WorkFlowException, SQLException {
     InboxRec inboxRec = new InboxRec();
     inboxRec.setTimeout(true);
     inboxRec.setProcName( procName );
@@ -88,7 +88,7 @@ public class InboxP {
     Persistence.getThreadSqlMapSession().update( "setInboxTimeoutFlag", inboxRec );
   }
 
-  public  boolean workitemsExist (int workflowId) throws XflowException, SQLException {
+  public  boolean workitemsExist (int workflowId) throws WorkFlowException, SQLException {
     List items = Persistence.getThreadSqlMapSession().queryForList( "", new Integer( workflowId ));
     return ( items != null && items.size() > 0 );
   }

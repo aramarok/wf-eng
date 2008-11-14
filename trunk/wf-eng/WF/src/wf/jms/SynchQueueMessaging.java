@@ -18,8 +18,8 @@ import javax.jms.QueueSender;
 import javax.jms.QueueSession;
 import javax.naming.InitialContext;
 
-import wf.cfg.XflowConfig;
-import wf.exceptions.XflowException;
+import wf.cfg.AppConfig;
+import wf.exceptions.WorkFlowException;
 import wf.jms.model.Request;
 import wf.jms.model.Response;
 
@@ -37,16 +37,16 @@ public class SynchQueueMessaging {
       
       InitialContext iniCtx = new InitialContext();
 
-      Object tmp = iniCtx.lookup(XflowConfig.XFLOW_CONNECTION_FACTORY());
+      Object tmp = iniCtx.lookup(AppConfig.XFLOW_CONNECTION_FACTORY());
       QueueConnectionFactory qcf = (QueueConnectionFactory) tmp;
       qconn = qcf.createQueueConnection();
 
       qsession = qconn.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
-      receiveQueue = (Queue) iniCtx.lookup(XflowConfig.XFLOW_QUEUE());
+      receiveQueue = (Queue) iniCtx.lookup(AppConfig.XFLOW_QUEUE());
 
       qconn.start();
 
-      wfQueue = (Queue) iniCtx.lookup(XflowConfig.WORKFLOWENGINE_QUEUE());
+      wfQueue = (Queue) iniCtx.lookup(AppConfig.WORKFLOWENGINE_QUEUE());
       JMSShutdownHook shook = new JMSShutdownHook();
       Runtime.getRuntime().addShutdownHook(shook);
     } catch (Exception e) {
@@ -60,7 +60,7 @@ public class SynchQueueMessaging {
 
   public static Response sendRequest(Request req) throws JMSException, IOException,
       ClassNotFoundException,
-      XflowException {
+      WorkFlowException {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     ObjectOutputStream s = new ObjectOutputStream(out);
 
@@ -92,7 +92,7 @@ public class SynchQueueMessaging {
       ObjectInputStream sin = new ObjectInputStream(in);
       response = (Response) sin.readObject();
     } else {
-      throw new XflowException("Response not received from server within 5 seconds.");
+      throw new WorkFlowException("Response not received from server within 5 seconds.");
     }
     return response;
   }

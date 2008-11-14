@@ -5,7 +5,7 @@ package wf.server.controller;
 import org.apache.log4j.Logger;
 
 import wf.db.Persistence;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.model.WorkItem;
 import wf.util.Util;
 import java.lang.Integer;
@@ -18,7 +18,7 @@ public class WorkItemP {
   private static Logger log = Logger.getLogger(WorkItemP.class);
 
 
-  public WorkItem getWorkItem( Integer workitemId, String workflowName, String processName ) throws SQLException, XflowException {
+  public WorkItem getWorkItem( Integer workitemId, String workflowName, String processName ) throws SQLException, WorkFlowException {
     WorkItemRec workItemRec = (WorkItemRec) Persistence.getThreadSqlMapSession().queryForObject( "selectWorkItemRec", workitemId);
     if( workItemRec != null ){
       String pstr = workItemRec.getPayload();
@@ -35,7 +35,7 @@ public class WorkItemP {
     return null;
   }
 
-  public  List getWorkItems (String workflowName, String processName) throws XflowException, SQLException {
+  public  List getWorkItems (String workflowName, String processName) throws WorkFlowException, SQLException {
 
     List v = new ArrayList();
     Map params = new HashMap();
@@ -57,7 +57,7 @@ public class WorkItemP {
     return v;
   }
 
-  public  WorkItem getNextWorkItem (String workflowName, String processName) throws XflowException, SQLException {
+  public  WorkItem getNextWorkItem (String workflowName, String processName) throws WorkFlowException, SQLException {
 
     WorkItem witem = null;
     log.info( "1");
@@ -82,7 +82,7 @@ public class WorkItemP {
     return witem;
   }
 
-  public  WorkItem getWorkItem (Integer wid, String processName) throws XflowException, SQLException {
+  public  WorkItem getWorkItem (Integer wid, String processName) throws WorkFlowException, SQLException {
     WorkItem witem = null;
     Integer wfId = witem.getWorkflowId();
 
@@ -105,7 +105,7 @@ public class WorkItemP {
     return witem;
   }
 
-  public  void saveDB ( WorkItem witem) throws XflowException, SQLException {
+  public  void saveDB ( WorkItem witem) throws WorkFlowException, SQLException {
     Object payload = witem.getPayload();
     String payloadStr = "";
     String payloadType = witem.getPayloadType();
@@ -117,7 +117,7 @@ public class WorkItemP {
     witem.setId(   new Integer( id.intValue() ) );
   }
 
-  public  void updateDB (WorkItem witem) throws XflowException, SQLException {
+  public  void updateDB (WorkItem witem) throws WorkFlowException, SQLException {
     Integer workitemId = witem.getId();
     Object payload = witem.getPayload();
     String payloadStr = "";
@@ -132,7 +132,7 @@ public class WorkItemP {
 
 
   public  void loadPropertiesFromDB (WorkItem witem, String workflowName, String procName )
-      throws XflowException, SQLException {
+      throws WorkFlowException, SQLException {
     HashMap properties = witem.getProperties();
     Integer workitemId = witem.getId();
     Map params = new HashMap();
@@ -152,7 +152,7 @@ public class WorkItemP {
   }
 
   public  void savePropertiesToDB (WorkItem witem, String workflowName, String procName )
-      throws XflowException, SQLException {
+      throws WorkFlowException, SQLException {
     HashMap properties = witem.getProperties();
     Iterator itr = properties.keySet().iterator();
     while (itr.hasNext()) {
@@ -175,7 +175,7 @@ public class WorkItemP {
 
   }
 
-  public  void deleteDB(WorkItem wi) throws XflowException, SQLException {
+  public  void deleteDB(WorkItem wi) throws WorkFlowException, SQLException {
     Integer workItemId = wi.getId();
     Persistence.getThreadSqlMapSession().delete( "deleteWorkitemprops", workItemId );
     Persistence.getThreadSqlMapSession().delete( "deleteWorkitem", workItemId );

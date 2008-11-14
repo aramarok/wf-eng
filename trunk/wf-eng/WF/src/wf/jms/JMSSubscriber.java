@@ -10,7 +10,7 @@ import javax.naming.InitialContext;
 
 import org.apache.log4j.Logger;
 
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 
 public class JMSSubscriber {
 
@@ -19,7 +19,7 @@ public class JMSSubscriber {
 
     private static Logger log = Logger.getLogger(JMSSubscriber.class);
 
-    public JMSSubscriber (MessageListener lner, String topicName, String selector) throws XflowException {
+    public JMSSubscriber (MessageListener lner, String topicName, String selector) throws WorkFlowException {
 
         try {
             InitialContext iniCtx = JMSTopicConnection.getInitialContext();
@@ -36,7 +36,7 @@ public class JMSSubscriber {
             log.info ("Created topic subscription for: " + topicName);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new XflowException ("Can't set up JMS Subscription");
+            throw new WorkFlowException ("Can't set up JMS Subscription");
         }
     }
 }

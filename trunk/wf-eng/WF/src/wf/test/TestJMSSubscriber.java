@@ -8,8 +8,8 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
-import wf.cfg.XflowConfig;
-import wf.exceptions.XflowException;
+import wf.cfg.AppConfig;
+import wf.exceptions.WorkFlowException;
 import wf.jms.JMSSubscriber;
 import wf.jms.JMSTopicConnection;
 
@@ -25,11 +25,11 @@ public class TestJMSSubscriber implements MessageListener {
        }
     }
 
-    public void start() throws XflowException {
-        JMSSubscriber subs = new JMSSubscriber (this, XflowConfig.XFLOW_TOPIC(), "ProcName in ('ProcA')");
+    public void start() throws WorkFlowException {
+        JMSSubscriber subs = new JMSSubscriber (this, AppConfig.XFLOW_TOPIC(), "ProcName in ('ProcA')");
     }
 
-    public static void main (String[] args) throws XflowException, JMSException {
+    public static void main (String[] args) throws WorkFlowException, JMSException {
         JMSTopicConnection.initialize();
         new TestJMSSubscriber().start();
     }

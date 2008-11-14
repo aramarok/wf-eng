@@ -5,10 +5,10 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import wf.cfg.XflowConfig;
-import wf.exceptions.XflowException;
+import wf.cfg.AppConfig;
+import wf.exceptions.WorkFlowException;
 import wf.model.WorkItem;
-import wf.xml.XflowGraphSerializer;
+import wf.xml.GraphSerializer;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -76,8 +76,8 @@ public class EventsPublisher {
     version.appendChild(n);
     event.appendChild(version);
     String xmlString =
-        XflowGraphSerializer.serialize(doc.getDocumentElement());
-    publish(xmlString, XflowConfig.XFLOW_EVENT_TOPIC(), null);
+        GraphSerializer.serialize(doc.getDocumentElement());
+    publish(xmlString, AppConfig.XFLOW_EVENT_TOPIC(), null);
 
   }
 
@@ -88,7 +88,7 @@ public class EventsPublisher {
       Integer parentWorkflowId,
       String user,
       WorkItem witem)
-      throws XflowException {
+      throws WorkFlowException {
     if( doNotPublish ) return;
     String docNS = "http://schemas.xmlsoap.org/soap/envelope/";
     try {
@@ -150,10 +150,10 @@ public class EventsPublisher {
 
       event.appendChild(wkItem);
       String xmlString =
-          XflowGraphSerializer.serialize(doc.getDocumentElement());
-      publish(xmlString, XflowConfig.XFLOW_EVENT_TOPIC(), null);
+          GraphSerializer.serialize(doc.getDocumentElement());
+      publish(xmlString, AppConfig.XFLOW_EVENT_TOPIC(), null);
     } catch (Exception ex) {
-      throw new XflowException(ex);
+      throw new WorkFlowException(ex);
     }
 
   }
@@ -219,7 +219,7 @@ public class EventsPublisher {
       int workflowVersion,
       Integer workflowId,
       String user)
-      throws XflowException {
+      throws WorkFlowException {
     if( doNotPublish ) return;
     String docNS = "http://schemas.xmlsoap.org/soap/envelope/";
     try {
@@ -265,10 +265,10 @@ public class EventsPublisher {
       wkfId.appendChild(n);
       event.appendChild(wkfId);
       String xmlString =
-          XflowGraphSerializer.serialize(doc.getDocumentElement());
-      publish(xmlString, XflowConfig.XFLOW_EVENT_TOPIC(), null);
+          GraphSerializer.serialize(doc.getDocumentElement());
+      publish(xmlString, AppConfig.XFLOW_EVENT_TOPIC(), null);
     } catch (Exception ex) {
-      throw new XflowException(ex);
+      throw new WorkFlowException(ex);
     }
 
   }
@@ -278,7 +278,7 @@ public class EventsPublisher {
       int workflowVersion,
       Integer workflowId,
       String user)
-      throws XflowException {
+      throws WorkFlowException {
     if( doNotPublish ) return;
     String docNS = "http://schemas.xmlsoap.org/soap/envelope/";
     try {
@@ -325,10 +325,10 @@ public class EventsPublisher {
       wkfId.appendChild(n);
       event.appendChild(wkfId);
       String xmlString =
-          XflowGraphSerializer.serialize(doc.getDocumentElement());
-      publish(xmlString, XflowConfig.XFLOW_EVENT_TOPIC(), null);
+          GraphSerializer.serialize(doc.getDocumentElement());
+      publish(xmlString, AppConfig.XFLOW_EVENT_TOPIC(), null);
     } catch (Exception ex) {
-      throw new XflowException(ex);
+      throw new WorkFlowException(ex);
     }
   }
 
@@ -337,7 +337,7 @@ public class EventsPublisher {
       int workflowVersion,
       Integer workflowId,
       String user)
-      throws XflowException {
+      throws WorkFlowException {
     if( doNotPublish ) return;
     String docNS = "http://schemas.xmlsoap.org/soap/envelope/";
     try {
@@ -383,10 +383,10 @@ public class EventsPublisher {
       wkfId.appendChild(n);
       event.appendChild(wkfId);
       String xmlString =
-          XflowGraphSerializer.serialize(doc.getDocumentElement());
-      publish(xmlString, XflowConfig.XFLOW_EVENT_TOPIC(), null);
+          GraphSerializer.serialize(doc.getDocumentElement());
+      publish(xmlString, AppConfig.XFLOW_EVENT_TOPIC(), null);
     } catch (Exception ex) {
-      throw new XflowException(ex);
+      throw new WorkFlowException(ex);
     }
   }
 
@@ -395,7 +395,7 @@ public class EventsPublisher {
       int workflowVersion,
       Integer workflowId,
       String user)
-      throws XflowException {
+      throws WorkFlowException {
     if( doNotPublish ) return;
     String docNS = "http://schemas.xmlsoap.org/soap/envelope/";
     try {
@@ -442,10 +442,10 @@ public class EventsPublisher {
       wkfId.appendChild(n);
       event.appendChild(wkfId);
       String xmlString =
-          XflowGraphSerializer.serialize(doc.getDocumentElement());
-      publish(xmlString, XflowConfig.XFLOW_EVENT_TOPIC(), null);
+          GraphSerializer.serialize(doc.getDocumentElement());
+      publish(xmlString, AppConfig.XFLOW_EVENT_TOPIC(), null);
     } catch (Exception ex) {
-      throw new XflowException(ex);
+      throw new WorkFlowException(ex);
     }
   }
 
@@ -456,7 +456,7 @@ public class EventsPublisher {
       String fromNodeName,
       String toNodeName,
       WorkItem witem)
-      throws XflowException {
+      throws WorkFlowException {
     if( doNotPublish ) return;
     String docNS = "http://schemas.xmlsoap.org/soap/envelope/";
     try {
@@ -511,10 +511,10 @@ public class EventsPublisher {
 
       event.appendChild(wkItem);
       String xmlString =
-          XflowGraphSerializer.serialize(doc.getDocumentElement());
-      publish(xmlString, XflowConfig.XFLOW_EVENT_TOPIC(), null);
+          GraphSerializer.serialize(doc.getDocumentElement());
+      publish(xmlString, AppConfig.XFLOW_EVENT_TOPIC(), null);
     } catch (Exception ex) {
-      throw new XflowException(ex);
+      throw new WorkFlowException(ex);
     }
 
   }
@@ -525,7 +525,7 @@ public class EventsPublisher {
       Integer workflowId,
       String variableName,
       Object variableValue)
-      throws XflowException {
+      throws WorkFlowException {
     if( doNotPublish ) return;
     String docNS = "http://schemas.xmlsoap.org/soap/envelope/";
     try {
@@ -572,10 +572,10 @@ public class EventsPublisher {
       var.setAttribute("type", type);
       event.appendChild(var);
       String xmlString =
-          XflowGraphSerializer.serialize(doc.getDocumentElement());
-      publish(xmlString, XflowConfig.XFLOW_EVENT_TOPIC(), null);
+          GraphSerializer.serialize(doc.getDocumentElement());
+      publish(xmlString, AppConfig.XFLOW_EVENT_TOPIC(), null);
     } catch (Exception ex) {
-      throw new XflowException(ex);
+      throw new WorkFlowException(ex);
     }
   }
 
@@ -584,7 +584,7 @@ public class EventsPublisher {
       int workflowVersion,
       int workflowId,
       String processName)
-      throws XflowException {
+      throws WorkFlowException {
     if( doNotPublish ) return;
     String docNS = "http://schemas.xmlsoap.org/soap/envelope/";
     try {
@@ -626,10 +626,10 @@ public class EventsPublisher {
       pname.appendChild(n);
       event.appendChild(pname);
       String xmlString =
-          XflowGraphSerializer.serialize(doc.getDocumentElement());
-      publish(xmlString, XflowConfig.XFLOW_EVENT_TOPIC(), null);
+          GraphSerializer.serialize(doc.getDocumentElement());
+      publish(xmlString, AppConfig.XFLOW_EVENT_TOPIC(), null);
     } catch (Exception ex) {
-      throw new XflowException(ex);
+      throw new WorkFlowException(ex);
     }
   }
 
@@ -638,7 +638,7 @@ public class EventsPublisher {
     return name.substring(name.lastIndexOf(".") + 1);
   }
 
-  public Document createXMLDoc() throws XflowException {
+  public Document createXMLDoc() throws WorkFlowException {
     Document xmldoc = null;
     Element e = null;
     String ns_env = "http://schemas.xmlsoap.org/soap/envelope/";
@@ -663,19 +663,19 @@ public class EventsPublisher {
       e = xmldoc.createElementNS(ns_env, "SOAP-ENV:Body");
       root.appendChild(e);
     } catch (Exception ex) {
-      throw new XflowException(ex);
+      throw new WorkFlowException(ex);
     }
     return xmldoc;
   }
 
   private void publish(String msg, String topicName, List props)
-      throws XflowException {
+      throws WorkFlowException {
     if( doNotPublish ) return;
     try {
       JMSTopicConnection.initialize();
       JMSPublisher.send (topicName, msg, props);
     } catch (Exception e) {
-      throw new XflowException(e.getMessage(), e );
+      throw new WorkFlowException(e.getMessage(), e );
     }
   }
 }

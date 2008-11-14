@@ -12,9 +12,9 @@ import javax.jms.MessageListener;
 
 import org.apache.log4j.Logger;
 
-import wf.cfg.XflowConfig;
+import wf.cfg.AppConfig;
 import wf.client.auth.User;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.jms.JMSSubscriber;
 import wf.jms.JMSTopicConnection;
 import wf.jms.SynchQueueMessaging;
@@ -66,12 +66,12 @@ public class WorkflowProcess implements MessageListener {
 
   
   public WorkflowProcess (String wfName, int wfVersion, String processName, InboxMessageListener listener,
-                          User user) throws XflowException {
+                          User user) throws WorkFlowException {
 
     try {
       JMSTopicConnection.initialize();
     } catch (JMSException e) {
-      throw new XflowException (e);
+      throw new WorkFlowException (e);
     }
 
     workflowName = wfName;
@@ -87,16 +87,16 @@ public class WorkflowProcess implements MessageListener {
 
     ValidateProcessResponse resp = (ValidateProcessResponse) sendRequest(req);
     if (!resp.ok) {
-      throw new XflowException ("Unrecognized process name in specified workflow.");
+      throw new WorkFlowException ("Unrecognized process name in specified workflow.");
     }
     if (listener != null) {
-      subscriber = new JMSSubscriber(this, XflowConfig.XFLOW_TOPIC(), "ProcessName in ('" + workflowName +
+      subscriber = new JMSSubscriber(this, AppConfig.XFLOW_TOPIC(), "ProcessName in ('" + workflowName +
           procName + "')");
     }
   }
 
   
-  public List getWorkItems () throws XflowException {
+  public List getWorkItems () throws WorkFlowException {
 
     GetWorkItemsRequest req = new GetWorkItemsRequest();
     req.workflowName = workflowName;
@@ -108,7 +108,7 @@ public class WorkflowProcess implements MessageListener {
   }
 
   
-  public WorkItem getNextWorkItem() throws XflowException {
+  public WorkItem getNextWorkItem() throws WorkFlowException {
 
     GetNextWorkItemRequest req = new GetNextWorkItemRequest();
     req.workflowName = workflowName;
@@ -120,7 +120,7 @@ public class WorkflowProcess implements MessageListener {
   }
 
   
-  public WorkItem getWorkItem(Integer workItemId) throws XflowException {
+  public WorkItem getWorkItem(Integer workItemId) throws WorkFlowException {
 
     GetWorkItemRequest req = new GetWorkItemRequest();
     req.workflowName = workflowName;
@@ -133,7 +133,7 @@ public class WorkflowProcess implements MessageListener {
   }
 
   
-  public CompleteWorkItemResponse completeWorkItem(WorkItem workItem) throws XflowException {
+  public CompleteWorkItemResponse completeWorkItem(WorkItem workItem) throws WorkFlowException {
 
     CompleteWorkItemRequest req = new CompleteWorkItemRequest();
     req.workflowName = workflowName;
@@ -145,17 +145,17 @@ public class WorkflowProcess implements MessageListener {
     return resp;
   }
 
-  private static Response sendRequest (Request req) throws XflowException {
+  private static Response sendRequest (Request req) throws WorkFlowException {
 
     req.replyName = Util.generateUniqueStringId();
     try {
       Response resp = SynchQueueMessaging.sendRequest (req);
       if (resp.responseCode != Response.SUCCESS) {
-        throw new XflowException(resp.message);
+        throw new WorkFlowException(resp.message);
       }
       return resp;
     } catch (Exception t) {
-      throw new XflowException (t);
+      throw new WorkFlowException (t);
     }
   }
 }

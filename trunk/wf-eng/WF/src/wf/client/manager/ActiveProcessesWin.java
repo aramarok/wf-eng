@@ -3,13 +3,13 @@
 package wf.client.manager;
 
 import wf.client.WFClientConstants;
-import wf.client.XFlowAdminUI;
+import wf.client.Admin;
 import wf.model.WorkflowState;
 
 
 public class ActiveProcessesWin extends javax.swing.JInternalFrame {
 
-    XFlowAdminUI xFlowAdminUI;
+    Admin xFlowAdminUI;
     private int wfId = -1;
 
     
@@ -17,7 +17,7 @@ public class ActiveProcessesWin extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-  public ActiveProcessesWin(XFlowAdminUI xFlowAdminUI) {
+  public ActiveProcessesWin(Admin xFlowAdminUI) {
     this();
     this.xFlowAdminUI = xFlowAdminUI;
   }

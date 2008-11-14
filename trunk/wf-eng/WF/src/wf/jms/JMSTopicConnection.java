@@ -15,7 +15,7 @@ import javax.naming.InitialContext;
 
 import org.apache.log4j.Logger;
 
-import wf.cfg.XflowConfig;
+import wf.cfg.AppConfig;
 
 public class JMSTopicConnection {
 
@@ -52,7 +52,7 @@ public class JMSTopicConnection {
         iniCtx = new InitialContext();
       }
 
-      Object tmp = iniCtx.lookup(XflowConfig.XFLOW_CONNECTION_FACTORY());
+      Object tmp = iniCtx.lookup(AppConfig.XFLOW_CONNECTION_FACTORY());
       TopicConnectionFactory tcf = (TopicConnectionFactory) tmp;
       conn = tcf.createTopicConnection();
     } catch (Exception e) {

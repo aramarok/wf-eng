@@ -7,17 +7,17 @@ import java.util.Properties;
 import java.net.URL;
 import java.io.InputStream;
 
-public class XflowConfig {
+public class AppConfig {
 
-  public static final String XFLOW_CONFIG = "xflow.properties";
+  public static final String XFLOW_CONFIG = "app.properties";
 
-  private static Logger log = Logger.getLogger(XflowConfig.class);
+  private static Logger log = Logger.getLogger(AppConfig.class);
 
-  private static XflowConfig _xXflowConfig;
+  private static AppConfig _xXflowConfig;
 
   private Properties config = new Properties();
 
-  private XflowConfig(){
+  private AppConfig(){
     try{
       URL url = this.getClass().getClassLoader().getResource( XFLOW_CONFIG );
       if( url == null ){
@@ -34,9 +34,9 @@ public class XflowConfig {
 
   }
 
-  public synchronized static XflowConfig getInstance(){
+  public synchronized static AppConfig getInstance(){
     if( _xXflowConfig == null ){
-      _xXflowConfig = new XflowConfig();
+      _xXflowConfig = new AppConfig();
     }
     return _xXflowConfig;
   }

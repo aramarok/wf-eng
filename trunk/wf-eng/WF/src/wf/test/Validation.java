@@ -5,9 +5,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.model.DirectedGraph;
-import wf.xml.XflowXMLParser;
+import wf.xml.DefinitionParser;
 
 
 public class Validation {
@@ -24,9 +24,9 @@ public class Validation {
 			}
 			System.out.println(xml);
 			try {
-				DirectedGraph g = XflowXMLParser.parse(xml);
+				DirectedGraph g = DefinitionParser.parse(xml);
 				g.validate();
-			} catch (XflowException e) {
+			} catch (WorkFlowException e) {
 				e.printStackTrace();
 			} 
 		} catch (IOException e) {

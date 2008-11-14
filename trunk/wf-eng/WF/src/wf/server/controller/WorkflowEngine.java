@@ -4,9 +4,9 @@ package wf.server.controller;
 
 import org.apache.log4j.Logger;
 
-import wf.cfg.XflowConfig;
+import wf.cfg.AppConfig;
 import wf.client.auth.Authenticator;
-import wf.client.auth.XflowUserAuthenticator;
+import wf.client.auth.UserAuth;
 import wf.db.Persistence;
 import wf.jms.model.Request;
 import wf.jms.model.Response;
@@ -118,7 +118,7 @@ public class WorkflowEngine implements MessageDrivenBean, MessageListener {
       InstantiationException, IllegalAccessException  {
 
     InitialContext iniCtx = new InitialContext();
-    Object tmp = iniCtx.lookup(XflowConfig.XFLOW_CONNECTION_FACTORY());
+    Object tmp = iniCtx.lookup(AppConfig.XFLOW_CONNECTION_FACTORY());
     QueueConnectionFactory qcf = (QueueConnectionFactory) tmp;
     conn = qcf.createQueueConnection();
     session = conn.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
@@ -127,7 +127,7 @@ public class WorkflowEngine implements MessageDrivenBean, MessageListener {
     String authClassName = (String)iniCtx.lookup("java:comp/env/authenticator");
     if( authClassName == null || authClassName.length() == 0) {
       log.info( "Authenticator was not supplied, use default. ");
-      authClassName = XflowUserAuthenticator.class.getName();
+      authClassName = UserAuth.class.getName();
     }
     log.info ("Authenticator is: " + authClassName);
     authenticator = (Authenticator)Class.forName(authClassName).newInstance();

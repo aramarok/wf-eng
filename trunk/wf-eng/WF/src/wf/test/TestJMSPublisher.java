@@ -8,14 +8,14 @@ import java.util.List;
 
 import javax.jms.JMSException;
 
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.jms.JMSPublisher;
 import wf.jms.JMSTopicConnection;
 import wf.jms.MessageProperty;
 
 public class TestJMSPublisher {
 
-    public static void main (String[] args) throws XflowException, JMSException  {
+    public static void main (String[] args) throws WorkFlowException, JMSException  {
 
         JMSTopicConnection.initialize();
 

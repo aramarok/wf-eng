@@ -5,12 +5,12 @@ package wf.test;
 
 import wf.client.WorkflowManager;
 import wf.client.auth.User;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.model.WorkItem;
 
 public class StartWorkflow {
 
-    public static void main (String[] args) throws XflowException {
+    public static void main (String[] args) throws WorkFlowException {
 
         String wfName = args[0];
         WorkItem witem = new WorkItem();

@@ -1,7 +1,7 @@
 package wf.server.controller;
 
 import wf.db.Persistence;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.model.DirectedGraph;
 import wf.model.Node;
 import wf.util.Util;
@@ -16,7 +16,7 @@ public class DirectedGraphP {
 
   private static Logger log = Logger.getLogger(DirectedGraphP.class);
 
-  public DirectedGraph loadByGraphById( int gid, DirectedGraph destination) throws XflowException {
+  public DirectedGraph loadByGraphById( int gid, DirectedGraph destination) throws WorkFlowException {
     try {
       Map m =  (Map) Persistence.getThreadSqlMapSession().queryForObject( "getGraph", new Integer( gid ));
       Integer version = (Integer) Util.getValue( m, "version");
@@ -30,7 +30,7 @@ public class DirectedGraphP {
       rootNode.expand();
       return destination;
     } catch (Throwable c) {
-      throw new XflowException ("Failed to load workflow from database.", c);
+      throw new WorkFlowException ("Failed to load workflow from database.", c);
     }
   }
 
@@ -56,7 +56,7 @@ public class DirectedGraphP {
     return getMaxGraphVersion( name ).intValue();
   }
 
-  public DirectedGraph loadDirectedGraph(String name, int version) throws SQLException, XflowException {
+  public DirectedGraph loadDirectedGraph(String name, int version) throws SQLException, WorkFlowException {
     Integer graphId = getGraphId( name, version );
     return loadByGraphById( graphId.intValue(), new DirectedGraph());
   }

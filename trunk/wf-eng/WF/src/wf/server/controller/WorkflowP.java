@@ -5,7 +5,7 @@ package wf.server.controller;
 import org.apache.log4j.Logger;
 
 import wf.db.Persistence;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.model.WorkflowModel;
 import wf.model.WorkflowState;
 import wf.server.util.ProcessWithTimeout;
@@ -37,7 +37,7 @@ public class WorkflowP {
 
   
   public Integer saveNewWorkflow (final int graphId, String workflowName, final String initiator, final int parentWorkflowId)
-      throws XflowException {
+      throws WorkFlowException {
     Map params = new Hashtable();
     if (parentWorkflowId != -1) {
       params.put( "pWfId", new Integer( parentWorkflowId ) );
@@ -51,7 +51,7 @@ public class WorkflowP {
     try {
       result = Persistence.getThreadSqlMapSession().insert( "insertWorkflow",params  );
     } catch (SQLException e) {
-      throw new XflowException( e );
+      throw new WorkFlowException( e );
     }
     return ((Integer) result );
   }
@@ -89,7 +89,7 @@ public class WorkflowP {
     Persistence.getThreadSqlMapSession().update( "abortWorkflow",params  );
   }
 
-  public  void suspendWorkflow (final Integer workflowId) throws XflowException, SQLException {
+  public  void suspendWorkflow (final Integer workflowId) throws WorkFlowException, SQLException {
     Persistence.getThreadSqlMapSession().update( "suspendWorkflow",workflowId   );
   }
 
@@ -97,7 +97,7 @@ public class WorkflowP {
     Persistence.getThreadSqlMapSession().update( "resumeWorkflow",workflowId   );
   }
 
-  public  WorkflowState getWorkflowState (Integer workflowId) throws XflowException, SQLException {
+  public  WorkflowState getWorkflowState (Integer workflowId) throws WorkFlowException, SQLException {
 
     WorkflowState state = (WorkflowState) Persistence.getThreadSqlMapSession().queryForObject( "getWorkflowState", workflowId );
     if ( state== null ) return null;
@@ -159,7 +159,7 @@ public class WorkflowP {
     return (  res != null );
   }
 
-  public  List getProcessesWithTimeouts() throws XflowException, SQLException {
+  public  List getProcessesWithTimeouts() throws WorkFlowException, SQLException {
     List v = new ArrayList();
     String pName = null;
     Integer    pId;

@@ -18,9 +18,9 @@ import org.apache.log4j.Logger;
 import org.jaxen.JaxenException;
 import org.xml.sax.SAXException;
 
-import wf.cfg.XflowConfig;
+import wf.cfg.AppConfig;
 import wf.db.Persistence;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.jms.EventsPublisher;
 import wf.jms.JMSPublisher;
 import wf.jms.MessageProperty;
@@ -30,7 +30,7 @@ import wf.model.WorkItem;
 import wf.model.WorkflowModel;
 import wf.model.WorkflowState;
 import wf.server.util.PopNode;
-import wf.xml.XflowXMLParser;
+import wf.xml.DefinitionParser;
 
 public class WorkflowProcessor {
 
@@ -88,21 +88,21 @@ public class WorkflowProcessor {
 
   }
 
-  public  void deployModel (String xml, String type, String user) throws XflowException {
+  public  void deployModel (String xml, String type, String user) throws WorkFlowException {
 
     DirectedGraph dg = null;
 
     if ( WorkflowEngine.FLOW_TYPE_XFLOW.equals( type ) ) {
       try {
-        dg = XflowXMLParser.parse (xml);
+        dg = DefinitionParser.parse (xml);
         dg.validate();
       } catch (Exception e) {
-        throw new XflowException ("Failed to parse XML : " + e.getMessage(), e);
+        throw new WorkFlowException ("Failed to parse XML : " + e.getMessage(), e);
       }
       try {
         dg.saveDB();
       } catch (Exception e) {
-        throw new XflowException ("Failed to save model to database ", e);
+        throw new WorkFlowException ("Failed to save model to database ", e);
       }
 
       String modelName = dg.getName();
@@ -119,7 +119,7 @@ public class WorkflowProcessor {
         log.warn ("Failed to publish event");
       }
     } else {
-      throw new XflowException ("Type: " + type + " is not supported.");
+      throw new WorkFlowException ("Type: " + type + " is not supported.");
     }
   }
 
@@ -129,7 +129,7 @@ public class WorkflowProcessor {
   }
 
   public  boolean validateProcess (String workflowName, int workflowVersion, String processName)
-      throws XflowException, SQLException {
+      throws WorkFlowException, SQLException {
 
     boolean result = false;
     DirectedGraph dg = getGraphByNameAndVersion (workflowName, workflowVersion);
@@ -141,7 +141,7 @@ public class WorkflowProcessor {
     return result;
   }
 
-  public  List getProcessNodes (Integer wfId) throws SQLException, XflowException {
+  public  List getProcessNodes (Integer wfId) throws SQLException, WorkFlowException {
 
     int gid = workflowP.getGraphId (wfId);
     DirectedGraph dg = getGraphByGraphId (gid);
@@ -149,26 +149,26 @@ public class WorkflowProcessor {
     if (dg != null) {
       nodes = dg.getNodes(Node.PROCESS);
     } else {
-      throw new XflowException ("Can't find graph for workflow id: " + wfId);
+      throw new WorkFlowException ("Can't find graph for workflow id: " + wfId);
     }
     return nodes;
   }
 
   public  Node getNodeByName (String workflowName, int workflowVersion,
-                              String nodeName) throws XflowException, SQLException {
+                              String nodeName) throws WorkFlowException, SQLException {
     Node node = null;
     DirectedGraph dg = getGraphByNameAndVersion (workflowName, workflowVersion);
     if (dg != null) {
       node = dg.getNode(nodeName);
     } else {
-      throw new XflowException ("Can't find graph for " + workflowName +
+      throw new WorkFlowException ("Can't find graph for " + workflowName +
           ", version: " + workflowVersion);
     }
     return node;
   }
 
   public  Integer startWorkflow (String workflowName, int version, WorkItem witem, String initiator)
-      throws XflowException, SQLException, JaxenException, IOException, ParserConfigurationException, SAXException {
+      throws WorkFlowException, SQLException, JaxenException, IOException, ParserConfigurationException, SAXException {
     Integer workflowId = null;
     DirectedGraph dg = getGraphByNameAndVersion (workflowName, version);
     log.info ("Saving workitem: " + witem);
@@ -193,7 +193,7 @@ public class WorkflowProcessor {
         thisVersion = directedGraphP.getLatestVersionNumber (workflowName);
       }
       eventsPublisher.publishWorkflowStartedEvent (workflowName, thisVersion, workflowId,new Integer( -1), initiator, witem);
-    } catch (XflowException e) {
+    } catch (WorkFlowException e) {
       log.warn ("Failed to publish event");
     }
 
@@ -201,7 +201,7 @@ public class WorkflowProcessor {
   }
 
   private  Integer startContaineeWorkflow (String workflowName, int version, WorkItem _witem, String initiator,
-                                           Integer parentWorkflowId) throws XflowException, SQLException, JaxenException, IOException, ParserConfigurationException, SAXException {
+                                           Integer parentWorkflowId) throws WorkFlowException, SQLException, JaxenException, IOException, ParserConfigurationException, SAXException {
 
     Integer workflowId = null;
     DirectedGraph dg = getGraphByNameAndVersion (workflowName, version);
@@ -230,14 +230,14 @@ public class WorkflowProcessor {
       }
       eventsPublisher.publishWorkflowStartedEvent (workflowName, thisVersion, new Integer( graphId),
           parentWorkflowId, initiator, clonedWItem);
-    } catch (XflowException e) {
+    } catch (WorkFlowException e) {
       log.warn ("Failed to publish event");
     }
 
     return workflowId;
   }
 
-  public  void abortWorkflow (Integer wfId, String user) throws XflowException, SQLException {
+  public  void abortWorkflow (Integer wfId, String user) throws WorkFlowException, SQLException {
 
     int graphId = workflowP.getGraphId(wfId );
     DirectedGraph dg = getGraphByGraphId (graphId);
@@ -254,18 +254,18 @@ public class WorkflowProcessor {
       String workflowName = dg.getName();
       int version = dg.getVersion();
       eventsPublisher.publishWorkflowAbortedEvent (workflowName, version, wfId, user);
-    } catch (XflowException e) {
+    } catch (WorkFlowException e) {
       log.warn ("Failed to publish event");
     }
   }
 
-  public  void suspendWorkflow (Integer wfId) throws XflowException, SQLException {
+  public  void suspendWorkflow (Integer wfId) throws WorkFlowException, SQLException {
     int graphId = workflowP.getGraphId(wfId);
     DirectedGraph dg = getGraphByGraphId (graphId);
 
     Integer key = wfId;
     if (suspendedWorkflows.contains( key) ) {
-      throw new XflowException ("Workflow is already suspended");
+      throw new WorkFlowException ("Workflow is already suspended");
     }
     suspendedWorkflows.add (key);
     workflowP.suspendWorkflow (wfId);
@@ -275,19 +275,19 @@ public class WorkflowProcessor {
       int version = dg.getVersion();
       eventsPublisher.publishWorkflowSuspendedEvent (workflowName, version,
           wfId,"system");
-    } catch (XflowException e) {
+    } catch (WorkFlowException e) {
       log.warn ("Failed to publish event");
     }
   }
 
-  public  void resumeWorkflow (Integer wfId) throws XflowException, SQLException {
+  public  void resumeWorkflow (Integer wfId) throws WorkFlowException, SQLException {
 
     int graphId = workflowP.getGraphId(wfId );
     DirectedGraph dg = getGraphByGraphId (graphId);
 
     Integer key = wfId;
     if (!suspendedWorkflows.contains(key) ) {
-      throw new XflowException ("Workflow is not currently suspended");
+      throw new WorkFlowException ("Workflow is not currently suspended");
     }
     suspendedWorkflows.remove (key);
     workflowP.resumeWorkflow (wfId);
@@ -297,22 +297,22 @@ public class WorkflowProcessor {
       int version = dg.getVersion();
       eventsPublisher.publishWorkflowResumedEvent (workflowName, version,
           wfId, "system");
-    } catch (XflowException e) {
+    } catch (WorkFlowException e) {
       log.warn ("Failed to publish event");
     }
   }
 
-  public  WorkflowState getWorkflowState (Integer wfId) throws XflowException, SQLException {
+  public  WorkflowState getWorkflowState (Integer wfId) throws WorkFlowException, SQLException {
     return workflowP.getWorkflowState (wfId);
   }
 
-  public  void setVariable (Integer workflowId, String name, Object value) throws XflowException, SQLException {
+  public  void setVariable (Integer workflowId, String name, Object value) throws WorkFlowException, SQLException {
     int graphId = workflowP.getGraphId(workflowId);
     DirectedGraph dg = getGraphByGraphId (graphId);
 
     Integer key = workflowId;
     if (!activeWorkflows.contains(key) ) {
-      throw new XflowException ("Workflow ID is not active or valid");
+      throw new WorkFlowException ("Workflow ID is not active or valid");
     }
     workflowP.setVariable (workflowId, name, value);
 
@@ -320,7 +320,7 @@ public class WorkflowProcessor {
       String workflowName = dg.getName();
       int version = dg.getVersion();
       eventsPublisher.publishVariableUpdatedEvent (workflowName, version, workflowId, name, value);
-    } catch (XflowException e) {
+    } catch (WorkFlowException e) {
       log.warn ("Failed to publish event");
     }
   }
@@ -329,7 +329,7 @@ public class WorkflowProcessor {
     return workflowP.getVariable (workflowId, name);
   }
 
-  public  List getActiveWorkflows () throws XflowException, SQLException {
+  public  List getActiveWorkflows () throws WorkFlowException, SQLException {
     List v = new ArrayList();
     WorkflowState ws = null;
     List wflowIds = workflowP.getActiveWorkflows();
@@ -342,7 +342,7 @@ public class WorkflowProcessor {
     return v;
   }
 
-  public  List getAllWorkflows () throws XflowException {
+  public  List getAllWorkflows () throws WorkFlowException {
     try{
       List v = new ArrayList();
       WorkflowState ws = null;
@@ -356,11 +356,11 @@ public class WorkflowProcessor {
       }
       return v;
     }catch(Exception e ){
-      throw new XflowException( e );
+      throw new WorkFlowException( e );
     }
   }
 
-  public  List getWorkflowsByName (String name) throws XflowException, SQLException {
+  public  List getWorkflowsByName (String name) throws WorkFlowException, SQLException {
     List v = new ArrayList();
     WorkflowState ws = null;
     List wflowIds = workflowP.getWorkflowsByName(name);
@@ -374,7 +374,7 @@ public class WorkflowProcessor {
   }
 
   public  void completeWorkItem (String workflowName, int workflowVersion,  String processName, WorkItem witem)
-      throws XflowException, SQLException, JaxenException, IOException, ParserConfigurationException, SAXException {
+      throws WorkFlowException, SQLException, JaxenException, IOException, ParserConfigurationException, SAXException {
     log.info ("In CompleteWorkItem.");
     log.info ("workflowName: " + workflowName);
     log.info ("processName: " + processName);
@@ -383,13 +383,13 @@ public class WorkflowProcessor {
 
 
     if (witem == null || witem.getId() == null) {
-      throw new XflowException ("Cannot complete work item. Null workitem or its ID");
+      throw new WorkFlowException ("Cannot complete work item. Null workitem or its ID");
     }
 
     Integer wid  = witem.getId();
     Integer wfId = witem.getWorkflowId();
     if (wfId == null) {
-      throw new XflowException ("Cannot complete work item. Null workflow Id");
+      throw new WorkFlowException ("Cannot complete work item. Null workflow Id");
     }
 
     Integer key = wfId;
@@ -399,18 +399,18 @@ public class WorkflowProcessor {
     }
 
     if (suspendedWorkflows.contains(key) ) {
-      throw new XflowException ("Cannot complete work item. Workflow instance has been suspended");
+      throw new WorkFlowException ("Cannot complete work item. Workflow instance has been suspended");
     }
 
     int gid = -1;
     try {
       gid = directedGraphP.getGraphId (workflowName, workflowVersion).intValue();
     } catch (Exception e) {
-      throw new XflowException (e);
+      throw new WorkFlowException (e);
     }
 
     if (!inboxP.isWorkItemValid(gid, processName, witem)) {
-      throw new XflowException ("Cannot complete work item. Invalid work item state.");
+      throw new WorkFlowException ("Cannot complete work item. Invalid work item state.");
     }
 
 
@@ -427,19 +427,19 @@ public class WorkflowProcessor {
 
   }
 
-  public  List getWorkItems (String wfName, String procName) throws XflowException, SQLException {
+  public  List getWorkItems (String wfName, String procName) throws WorkFlowException, SQLException {
     return Persistence.getWorkItemP().getWorkItems(wfName, procName);
   }
 
-  public  WorkItem getNextWorkItem (String wfName, String procName) throws XflowException, SQLException {
+  public  WorkItem getNextWorkItem (String wfName, String procName) throws WorkFlowException, SQLException {
     return Persistence.getWorkItemP().getNextWorkItem(wfName, procName);
   }
 
-  public  WorkItem getWorkItem (Integer wid, String procName) throws XflowException, SQLException {
+  public  WorkItem getWorkItem (Integer wid, String procName) throws WorkFlowException, SQLException {
     return Persistence.getWorkItemP().getWorkItem(wid, procName);
   }
 
-  private  DirectedGraph getGraphByGraphId (int gid) throws XflowException {
+  private  DirectedGraph getGraphByGraphId (int gid) throws WorkFlowException {
     DirectedGraph dg = (DirectedGraph)graphsByGraphId.get(new Integer(gid));
     if (dg == null) {
       try {
@@ -448,13 +448,13 @@ public class WorkflowProcessor {
         String nameVers = dg.getName() + dg.getVersion();
         graphsByNameAndVersion.put (nameVers, dg);
       } catch (Exception e) {
-        throw new XflowException (e);
+        throw new WorkFlowException (e);
       }
     }
     return dg;
   }
 
-  private  DirectedGraph getGraphByNameAndVersion (String name, int version) throws XflowException, SQLException {
+  private  DirectedGraph getGraphByNameAndVersion (String name, int version) throws WorkFlowException, SQLException {
     DirectedGraph dg = (DirectedGraph)graphsByNameAndVersion.get(name+version);
     if (dg == null) {
       log.info ("Loading workflow: " + name + " " + version);
@@ -470,7 +470,7 @@ public class WorkflowProcessor {
 
 
 
-  private  void processContainer (int gid, Node containerNode, WorkItem witem) throws XflowException, SQLException, JaxenException, IOException, ParserConfigurationException, SAXException {
+  private  void processContainer (int gid, Node containerNode, WorkItem witem) throws WorkFlowException, SQLException, JaxenException, IOException, ParserConfigurationException, SAXException {
 
     log.info ("in processContainer");
 
@@ -502,7 +502,7 @@ public class WorkflowProcessor {
     }
   }
 
-  private  boolean evaluateRule (WorkItem witem, String rule) throws XflowException, JaxenException, IOException, ParserConfigurationException, SAXException {
+  private  boolean evaluateRule (WorkItem witem, String rule) throws WorkFlowException, JaxenException, IOException, ParserConfigurationException, SAXException {
 
     boolean result = true;
     if (rule != null && !rule.equals("") && !rule.equals("always")) {
@@ -516,7 +516,7 @@ public class WorkflowProcessor {
   }
 
   private  void transitionFrom (int gid, String workflowName, int workflowVersion,
-                                Node fromNode, WorkItem witem) throws XflowException, SQLException, JaxenException, IOException, ParserConfigurationException, SAXException {
+                                Node fromNode, WorkItem witem) throws WorkFlowException, SQLException, JaxenException, IOException, ParserConfigurationException, SAXException {
 
 
     List destv = fromNode.getDestinations();
@@ -556,7 +556,7 @@ public class WorkflowProcessor {
 
           try {
             eventsPublisher.publishWorkflowCompletedEvent (workflowName, thisVersion,  workflowId, "system");
-          } catch (XflowException e) {
+          } catch (WorkFlowException e) {
             log.warn ("Failed to publish event");
           }
         } else {
@@ -594,7 +594,7 @@ public class WorkflowProcessor {
           log.info ("Transitioning to: " + nextProcessName);
           transitionTo (gid, workflowName, workflowId, workflowVersion, processName, nextProcessName, witem);
         }else{
-          throw new XflowException( "Next node is not process!!");
+          throw new WorkFlowException( "Next node is not process!!");
         }
       } else if (nextProcessType.equals(Node.AND)) {
         log.info ("Processing AND node");
@@ -621,7 +621,7 @@ public class WorkflowProcessor {
 
   private  void transitionFromStartNode (int gid, String workflowName, int workflowVersion,
                                          Node startNode, WorkItem witem)
-      throws XflowException, JaxenException, IOException, ParserConfigurationException, SAXException {
+      throws WorkFlowException, JaxenException, IOException, ParserConfigurationException, SAXException {
     List destv = startNode.getDestinations();
     for (int i = 0; i < destv.size(); i++) {
       wf.model.Destination dest = (wf.model.Destination)destv.get(i);
@@ -649,7 +649,7 @@ public class WorkflowProcessor {
   private  void transitionTo (int gid, String workflowName, Integer workflowId,
                               int workflowVersion, String processName,
                               String nextProcessName, WorkItem witem)
-      throws XflowException {
+      throws WorkFlowException {
 
     inboxP.removeWorkItem (gid, processName, witem);
     inboxP.addWorkItem (gid, workflowName, nextProcessName, witem);
@@ -688,7 +688,7 @@ public class WorkflowProcessor {
       mp.name = "ProcessName";
       mp.value = workflowName + procName;
       props.add (mp);
-      JMSPublisher.send (XflowConfig.XFLOW_TOPIC(), barr, props);
+      JMSPublisher.send (AppConfig.XFLOW_TOPIC(), barr, props);
     } catch (Exception e) {
       e.printStackTrace();
     }

@@ -13,7 +13,7 @@ import org.apache.axis.message.SOAPHeaderElement;
 import org.apache.axis.utils.Mapping;
 import org.apache.axis.utils.XMLUtils;
 
-public class XflowSoapEnvelope {
+public class SoapEnvelope {
 
   static String XflowNS = "http://xenopsys.org/xflow";
   static String XflowPrefix = "XFLOW";

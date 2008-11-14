@@ -8,7 +8,7 @@ import java.util.List;
 import wf.client.WorkflowManager;
 import wf.client.WorkflowProcess;
 import wf.client.auth.User;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.model.WorkItem;
 import wf.model.WorkflowState;
 
@@ -27,7 +27,7 @@ public class XflowService {
                 wfId = WorkflowManager.startWorkflow (workflowName, version, witem, user);
 	    }
             System.out.println ("Workflow Started");
-	} catch (XflowException e) {
+	} catch (WorkFlowException e) {
             e.printStackTrace();
         }
 
@@ -40,7 +40,7 @@ public class XflowService {
         try {
             WorkflowManager.abortWorkflow (new Integer(workflowId), user);
             System.out.println ("Workflow Aborted");
-	} catch (XflowException e) {
+	} catch (WorkFlowException e) {
             e.printStackTrace();
         }
     }    
@@ -48,7 +48,7 @@ public class XflowService {
     public WorkflowState getWorkflowState (int workflowId, User user) {
         try {
             return WorkflowManager.getWorkflowState (new Integer(workflowId), user);
-        } catch (XflowException e) {
+        } catch (WorkFlowException e) {
             e.printStackTrace();
             return null;
         }
@@ -57,7 +57,7 @@ public class XflowService {
     public void setVariable (int workflowId, String variableName, Object variableValue, User user) {
         try {
             WorkflowManager.setVariable (new Integer(workflowId), variableName, variableValue, user);
-        } catch (XflowException e) {
+        } catch (WorkFlowException e) {
             e.printStackTrace();
         }
     }
@@ -65,7 +65,7 @@ public class XflowService {
     public Object getVariable (int workflowId, String variableName, User user) {
         try {
             return WorkflowManager.getVariable (new Integer(workflowId), variableName, user);
-        } catch (XflowException e) {
+        } catch (WorkFlowException e) {
             e.printStackTrace();
             return "ERROR";
         }
@@ -74,7 +74,7 @@ public class XflowService {
     public List getActiveWorkflows(User user) {
         try {
             return WorkflowManager.getActiveWorkflows (user);
-        } catch (XflowException e) {
+        } catch (WorkFlowException e) {
             e.printStackTrace();
             return null;
         }
@@ -83,7 +83,7 @@ public class XflowService {
     public void deployModel (String xml, String type, User user) {
         try {
             WorkflowManager.deployModel (xml, type, user);
-        } catch (XflowException e) {
+        } catch (WorkFlowException e) {
             e.printStackTrace();
         }
     }
@@ -93,7 +93,7 @@ public class XflowService {
         try {
             WorkflowProcess wfp = new WorkflowProcess(wfName, -1, processName, null, user);
             v = wfp.getWorkItems();
-        } catch (XflowException e) {
+        } catch (WorkFlowException e) {
             e.printStackTrace();
         }
         return v;
@@ -104,7 +104,7 @@ public class XflowService {
         try {
             WorkflowProcess wfp = new WorkflowProcess(wfName, -1, processName, null, user);
             wi = wfp.getNextWorkItem();
-        } catch (XflowException e) {
+        } catch (WorkFlowException e) {
             e.printStackTrace();
         }
         return wi;
@@ -115,7 +115,7 @@ public class XflowService {
         try {
             WorkflowProcess wfp = new WorkflowProcess(wfName, -1, processName, null, user);
             wi = wfp.getWorkItem(new Integer(id));
-        } catch (XflowException e) {
+        } catch (WorkFlowException e) {
             e.printStackTrace();
         }
         return wi;
@@ -125,7 +125,7 @@ public class XflowService {
         try {
             WorkflowProcess wfp = new WorkflowProcess(wfName, -1, processName, null, user);
             wfp.completeWorkItem (witem);
-        } catch (XflowException e) {
+        } catch (WorkFlowException e) {
             e.printStackTrace();
         }
     } 

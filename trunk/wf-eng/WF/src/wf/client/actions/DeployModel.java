@@ -9,7 +9,7 @@ import java.io.FileReader;
 
 import wf.client.WorkflowManager;
 import wf.client.auth.User;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 
 
 public class DeployModel {
@@ -29,7 +29,7 @@ public class DeployModel {
         try {
             WorkflowManager.deployModel (xml, WorkflowManager.XFLOW, new User("foo", "foo"));
             System.out.println ("Success");
-        } catch (XflowException xe) {
+        } catch (WorkFlowException xe) {
             System.out.println (xe);
         } 
     }

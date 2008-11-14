@@ -10,12 +10,12 @@ import javax.swing.JFrame;
 import wf.client.auth.User;
 import wf.client.manager.DesktopPane;
 import wf.client.manager.WinListener;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.model.WorkflowState;
 
 
 
-public class XFlowAdminUI {
+public class Admin {
 
   public static final String USERNAME = "USER";
   public static final String PASSWORD = "PASSWORD";
@@ -23,15 +23,15 @@ public class XFlowAdminUI {
   DesktopPane desk = null;
   Preferences preferences;
 
-  private static XFlowAdminUI _instance;
+  private static Admin _instance;
 
 
-  public static XFlowAdminUI getInstance(){
+  public static Admin getInstance(){
     return _instance;
   }
 
   
-  private XFlowAdminUI( Preferences pref) throws IOException {
+  private Admin( Preferences pref) throws IOException {
     _instance = this;
     preferences = pref;
     desk = new DesktopPane( this );
@@ -55,7 +55,7 @@ public class XFlowAdminUI {
     preferences.put( PASSWORD, user.getPassword() );
   }
 
-  public List getKnownWorkflows() throws XflowException {
+  public List getKnownWorkflows() throws WorkFlowException {
     List v = WorkflowManager.getWorkflowModels( getUSER() );
     return v;
   }
@@ -69,20 +69,20 @@ public class XFlowAdminUI {
     this.preferences = preferences;
   }
 
-  public List getActiveWorkflows() throws XflowException {
+  public List getActiveWorkflows() throws WorkFlowException {
     List v = WorkflowManager.getActiveWorkflows( getUSER() );
     return v;
   }
 
-  public WorkflowState getWorkflowState ( int wfid) throws XflowException {
+  public WorkflowState getWorkflowState ( int wfid) throws WorkFlowException {
     WorkflowState  state =  WorkflowManager.getWorkflowState( new Integer( wfid ) , getUSER() );
     return state;
   }
 
   public static void main( String[] args ){
-    final XFlowAdminUI xFlowAdminUI;
+    final Admin xFlowAdminUI;
     try {
-      xFlowAdminUI = new XFlowAdminUI( Preferences.getInstance( "XFlowManager.properties" ) );
+      xFlowAdminUI = new Admin( Preferences.getInstance( "appdata.properties" ) );
 
       Runtime.getRuntime().addShutdownHook( new Thread(){
         public void run() {

@@ -3,7 +3,7 @@
 
 package wf.test;
 
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.jms.EventsPublisher;
 import wf.model.WorkItem;
 
@@ -37,7 +37,7 @@ public class TestEventPublisher {
           new Integer(-1),
           "rtan",
           wi);
-    } catch (XflowException e) {
+    } catch (WorkFlowException e) {
       System.out.println (e.getMessage());
     }
 
@@ -49,7 +49,7 @@ public class TestEventPublisher {
           new Integer(0),
           "score",
           new Integer(100));
-    } catch (XflowException e) {
+    } catch (WorkFlowException e) {
       System.out.println (e.getMessage());
     }
 
@@ -61,7 +61,7 @@ public class TestEventPublisher {
           -1,
           new Integer(123),
           "rtan");
-    } catch (XflowException e) {
+    } catch (WorkFlowException e) {
       System.out.println (e.getMessage());
     }
 
@@ -73,7 +73,7 @@ public class TestEventPublisher {
           -1,
           new Integer(123),
           "rtan");
-    } catch (XflowException e) {
+    } catch (WorkFlowException e) {
       System.out.println (e.getMessage());
     }
 
@@ -84,7 +84,7 @@ public class TestEventPublisher {
           -1,
           new Integer(123),
           "rtan");
-    } catch (XflowException e) {
+    } catch (WorkFlowException e) {
       System.out.println (e.getMessage());
     }
 
@@ -95,7 +95,7 @@ public class TestEventPublisher {
           -1,
           new Integer(123),
           "rtan");
-    } catch (XflowException e) {
+    } catch (WorkFlowException e) {
       System.out.println (e.getMessage());
     }
 
@@ -109,7 +109,7 @@ public class TestEventPublisher {
           "START",
           "Node1",
           wi);
-    } catch (XflowException e) {
+    } catch (WorkFlowException e) {
       System.out.println (e.getMessage());
     }
 
@@ -120,7 +120,7 @@ public class TestEventPublisher {
           -1,
           123,
           "P1");
-    } catch (XflowException e) {
+    } catch (WorkFlowException e) {
       System.out.println (e.getMessage());
     }
   }
