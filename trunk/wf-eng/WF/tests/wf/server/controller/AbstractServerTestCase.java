@@ -9,7 +9,7 @@ import junit.framework.TestCase;
 import wf.TestConfig;
 import wf.TestUtilities;
 import wf.client.auth.User;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 import wf.jms.JMSPublisher;
 import wf.jms.SynchQueueMessaging;
 import wf.jms.model.CompleteWorkItemRequest;
@@ -153,7 +153,7 @@ public class AbstractServerTestCase extends TestCase {
         Response resp = SynchQueueMessaging.sendRequest(req);
         if (resp.responseCode != Response.SUCCESS) {
           System.out.println("FAILURE response from server.");
-          throw new XflowException(resp.message);
+          throw new WorkFlowException(resp.message);
         }
         return resp;
       } catch (Exception e) {

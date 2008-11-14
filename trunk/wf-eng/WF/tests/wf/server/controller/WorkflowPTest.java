@@ -5,13 +5,13 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import wf.db.Persistence;
-import wf.exceptions.XflowException;
+import wf.exceptions.WorkFlowException;
 
 
 
 public class WorkflowPTest extends TestCase{
 
-  public void testSaveDB() throws XflowException {
+  public void testSaveDB() throws WorkFlowException {
     Persistence.getWorkflowP().saveNewWorkflow( 8888, "wf","testCase", -1);
   }
 
