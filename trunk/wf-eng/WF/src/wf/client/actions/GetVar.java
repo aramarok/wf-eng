@@ -8,12 +8,10 @@ public class GetVar {
 
 	public static void main(String[] args) throws WorkFlowException {
 
-		String wfId = args[0];
-		String name = args[1];
-		Integer wfi = new Integer(wfId);
-
-		Integer workflowId = new Integer(wfi.intValue());
-		Object val = WorkflowManager.getVariable(workflowId, name, new User(
+		Integer wfId = new Integer(args[0]);
+		String varName = args[1];
+		Integer workflowId = new Integer(wfId.intValue());
+		Object val = WorkflowManager.getVariable(workflowId, varName, new User(
 				"rtan", "rtan"));
 		System.out.println("Var value: " + val);
 	}

@@ -14,7 +14,7 @@ import org.apache.axis.utils.XMLUtils;
 public class SoapEnvelope {
 
 	static String nameSpace = "http://example.com/uvtwf";
-	static String wfPrefix = "WF"; //Changed from XFLOW
+	static String wfPrefix = "WF";
 
 	public static void main(String[] args) throws Exception {
 		try {
@@ -28,9 +28,9 @@ public class SoapEnvelope {
 					.StringToElement(nameSpace, "MyHeaderElement", ""));
 			env.addHeader(header);
 
-			SOAPBodyElement sbe = new SOAPBodyElement(XMLUtils.StringToElement(
+			SOAPBodyElement sbelem = new SOAPBodyElement(XMLUtils.StringToElement(
 					nameSpace, "MyMethod", "xxx"));
-			env.addBodyElement(sbe);
+			env.addBodyElement(sbelem);
 
 			AxisClient tmpEngine = new AxisClient(new NullProvider());
 			MessageContext msgContext = new MessageContext(tmpEngine);

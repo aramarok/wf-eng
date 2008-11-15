@@ -82,7 +82,7 @@ public class ActiveProcessesWin extends javax.swing.JInternalFrame {
 	private javax.swing.JToolBar jToolBar1;
 	private javax.swing.JButton refreshBtn;
 
-	public void showProcessesFoWfID(int selectedWfID) {
+	public void showProcessesForWfID(int selectedWfID) {
 		this.wfId = selectedWfID;
 		refreshList();
 	}

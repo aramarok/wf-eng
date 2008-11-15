@@ -130,7 +130,7 @@ public class DesktopPane extends javax.swing.JFrame {
 			jDesktopPane.add(activeProcessesWin);
 		}
 		activeProcessesWin.setVisible(true);
-		activeProcessesWin.showProcessesFoWfID(selectedWfID);
+		activeProcessesWin.showProcessesForWfID(selectedWfID);
 	}
 
 }

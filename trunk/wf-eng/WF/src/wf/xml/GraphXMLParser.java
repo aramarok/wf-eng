@@ -33,14 +33,14 @@ public class GraphXMLParser {
 			InputSource is = new InputSource(sreader);
 			Document doc = builder.parse(is);
 
-			NodeList els = doc.getElementsByTagName("node");
-			int count = els.getLength();
+			NodeList elements = doc.getElementsByTagName("node");
+			int count = elements.getLength();
 			for (int i = 0; i < count; i++) {
-				Element el = (Element) els.item(i);
-				String nodeId = el.getAttribute("id");
-				NodeList els2 = el.getElementsByTagName("string");
-				Element e = (Element) els2.item(0);
-				org.w3c.dom.Node node = e.getFirstChild();
+				Element element = (Element) elements.item(i);
+				String nodeId = element.getAttribute("id");
+				NodeList elements2 = element.getElementsByTagName("string");
+				Element elem = (Element) elements2.item(0);
+				org.w3c.dom.Node node = elem.getFirstChild();
 				String nodeString = node.getNodeValue();
 				wf.model.Node gnode = getNode(nodeString);
 
@@ -49,10 +49,10 @@ public class GraphXMLParser {
 				pm.put(nodeId, gnode);
 			}
 
-			els = doc.getElementsByTagName("edge");
-			count = els.getLength();
+			elements = doc.getElementsByTagName("edge");
+			count = elements.getLength();
 			for (int i = 0; i < count; i++) {
-				Element el = (Element) els.item(i);
+				Element el = (Element) elements.item(i);
 				String fromNodeId = el.getAttribute("from");
 				String toNodeId = el.getAttribute("to");
 				rootc.put(toNodeId, toNodeId);
