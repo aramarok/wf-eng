@@ -13,15 +13,15 @@ public class WorkflowTypesWin extends javax.swing.JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	
-	Admin xFlowAdminUI;
+	Admin wfAdminUI;
 
 	public WorkflowTypesWin() {
 		initComponents();
 	}
 
-	public WorkflowTypesWin(Admin xFlowAdminUI) {
+	public WorkflowTypesWin(Admin wfAdminUI) {
 		this();
-		this.xFlowAdminUI = xFlowAdminUI;
+		this.wfAdminUI = wfAdminUI;
 	}
 
 	private void initComponents() {
@@ -159,11 +159,11 @@ public class WorkflowTypesWin extends javax.swing.JInternalFrame {
 
 	private void uploadWfDefinition(java.awt.event.ActionEvent evt) {
 		JFileChooser fc = Utilities.getFileChooser();
-		fc.setCurrentDirectory(new File(xFlowAdminUI.getPreferences().get(
+		fc.setCurrentDirectory(new File(wfAdminUI.getPreferences().get(
 				"OPEN_DIRECTORY", ".")));
 		if (JFileChooser.APPROVE_OPTION == fc.showOpenDialog(this)) {
 			File f = fc.getSelectedFile();
-			xFlowAdminUI.getPreferences().put("OPEN_DIRECTORY",
+			wfAdminUI.getPreferences().put("OPEN_DIRECTORY",
 					f.getParentFile().getAbsolutePath());
 			try {
 
@@ -191,7 +191,7 @@ public class WorkflowTypesWin extends javax.swing.JInternalFrame {
 
 	private void refreshList() {
 		try {
-			wfTypesTable.setModel(Utilities.createTableModel(xFlowAdminUI
+			wfTypesTable.setModel(Utilities.createTableModel(wfAdminUI
 					.getKnownWorkflows()));
 		} catch (Exception e) {
 			e.printStackTrace();

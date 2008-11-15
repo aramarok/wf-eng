@@ -88,7 +88,7 @@ public class WorkflowProcessor {
 
 		DirectedGraph dg = null;
 
-		if (WorkflowEngine.FLOW_TYPE_XFLOW.equals(type)) {
+		if (WorkflowEngine.FLOW_TYPE_WF.equals(type)) {
 			try {
 				dg = DefinitionParser.parse(xml);
 				dg.validate();

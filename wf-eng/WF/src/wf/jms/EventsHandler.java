@@ -472,7 +472,7 @@ public class EventsHandler implements MessageListener {
 		String propFileName = args[0];
 		if (propFileName == null) {
 			System.out
-					.println("Usage: xflow.events.EventsHandler <properties file name>");
+					.println("Usage: wf.jms.EventsHandler <properties file name>");
 			System.exit(0);
 		}
 

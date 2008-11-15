@@ -14,15 +14,15 @@ public class DesktopPane extends javax.swing.JFrame {
 	ActiveProcessesWin activeProcessesWin = null;
 	SettingsDlg settingsDlg = null;
 
-	Admin xFlowAdminUI;
+	Admin wfAdminUI;
 
 	public DesktopPane() {
 		initComponents();
 	}
 
-	public DesktopPane(Admin xFlowAdminUI) {
+	public DesktopPane(Admin wfAdminUI) {
 		this();
-		this.xFlowAdminUI = xFlowAdminUI;
+		this.wfAdminUI = wfAdminUI;
 	}
 
 	private void initComponents() {
@@ -93,7 +93,7 @@ public class DesktopPane extends javax.swing.JFrame {
 
 	private void showActiveWfWin(java.awt.event.ActionEvent evt) {
 		if (activeWorkflowWin == null) {
-			activeWorkflowWin = new ActiveWorkflowWin(xFlowAdminUI, this);
+			activeWorkflowWin = new ActiveWorkflowWin(wfAdminUI, this);
 			activeWorkflowWin.setSize(300, 200);
 			activeWorkflowWin.addInternalFrameListener(new WinListener(
 					"activeWorkflowWin"));
@@ -104,7 +104,7 @@ public class DesktopPane extends javax.swing.JFrame {
 
 	private void showWorkflowTypesWindow(java.awt.event.ActionEvent evt) {
 		if (workflowTypesWin == null) {
-			workflowTypesWin = new WorkflowTypesWin(xFlowAdminUI);
+			workflowTypesWin = new WorkflowTypesWin(wfAdminUI);
 			workflowTypesWin.setSize(300, 200);
 			workflowTypesWin.addInternalFrameListener(new WinListener(
 					"workflowTypesWin"));
@@ -123,7 +123,7 @@ public class DesktopPane extends javax.swing.JFrame {
 
 	public void showActiveProcessesWin(int selectedWfID) {
 		if (activeProcessesWin == null) {
-			activeProcessesWin = new ActiveProcessesWin(xFlowAdminUI);
+			activeProcessesWin = new ActiveProcessesWin(wfAdminUI);
 			activeProcessesWin.setSize(300, 200);
 			activeWorkflowWin.addInternalFrameListener(new WinListener(
 					"activeProcessesWin"));

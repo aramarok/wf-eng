@@ -82,7 +82,7 @@ public class AbstractServerTestCase extends TestCase {
 	public void deployWF(String modelName, String resource) throws IOException {
 		DeployModelRequest deployModelRequest = new DeployModelRequest();
 		deployModelRequest.user = TestConfig.getUser();
-		deployModelRequest.type = WorkflowEngine.FLOW_TYPE_XFLOW;
+		deployModelRequest.type = WorkflowEngine.FLOW_TYPE_WF;
 		deployModelRequest.xml = TestUtilities.readFileContent(resource);
 		DeployModelResponse deployModelResponse = (DeployModelResponse) handleRequest(deployModelRequest);
 		assertResponceOK(deployModelResponse);

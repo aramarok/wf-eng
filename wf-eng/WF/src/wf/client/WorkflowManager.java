@@ -42,7 +42,7 @@ import wf.util.Util;
 
 public class WorkflowManager {
 
-	public static final String XFLOW = "XFLOW";
+	public static final String WF = "WF";
 	public static final String BPEL = "BPEL";
 
 	public static DeployModelResponse deployModel(String xml, String type,
