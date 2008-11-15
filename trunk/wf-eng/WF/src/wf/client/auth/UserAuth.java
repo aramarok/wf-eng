@@ -1,12 +1,8 @@
-
-
 package wf.client.auth;
-
-import java.security.*;
 
 public class UserAuth implements Authenticator {
 
-    public boolean authenticate (String userName, String password) {
-        return true;
-    }
+	public boolean authenticate(String userName, String password) {
+		return true;
+	}
 }

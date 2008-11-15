@@ -1,5 +1,3 @@
-
-
 package wf.client.manager;
 
 import wf.client.WFClientConstants;
@@ -7,127 +5,132 @@ import wf.client.Admin;
 import wf.client.manager.ActiveProcessesWin;
 import wf.client.manager.ActiveWorkflowWin;
 
-
 public class DesktopPane extends javax.swing.JFrame {
-    
-    WorkflowTypesWin workflowTypesWin = null;
-    ActiveWorkflowWin activeWorkflowWin = null;
-    ActiveProcessesWin activeProcessesWin = null;
-    SettingsDlg settingsDlg = null;
 
+	private static final long serialVersionUID = 1L;
 
-    Admin xFlowAdminUI;
-    
-    public DesktopPane() {
-        initComponents();
-    }
+	WorkflowTypesWin workflowTypesWin = null;
+	ActiveWorkflowWin activeWorkflowWin = null;
+	ActiveProcessesWin activeProcessesWin = null;
+	SettingsDlg settingsDlg = null;
 
-  public DesktopPane(Admin xFlowAdminUI)  {
-    this();
-    this.xFlowAdminUI = xFlowAdminUI;
-  }
+	Admin xFlowAdminUI;
 
-    
-    private void initComponents() {
-        jDesktopPane = new javax.swing.JDesktopPane();
-        jMenuBar2 = new javax.swing.JMenuBar();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JSeparator();
-        miSettings = new javax.swing.JMenuItem();
+	public DesktopPane() {
+		initComponents();
+	}
 
-        getContentPane().add(jDesktopPane, java.awt.BorderLayout.CENTER);
+	public DesktopPane(Admin xFlowAdminUI) {
+		this();
+		this.xFlowAdminUI = xFlowAdminUI;
+	}
 
-        jMenu2.setMnemonic('w');
-        jMenu2.setText("Show window");
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource(WFClientConstants.CLIENT_ICON_LOCATION + "types.gif")));
-        jMenuItem1.setMnemonic('t');
-        jMenuItem1.setText("Workflow Types");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showWorkflowTypesWindow(evt);
-            }
-        });
+	private void initComponents() {
+		jDesktopPane = new javax.swing.JDesktopPane();
+		jMenuBar2 = new javax.swing.JMenuBar();
+		jMenu2 = new javax.swing.JMenu();
+		jMenuItem1 = new javax.swing.JMenuItem();
+		jMenuItem2 = new javax.swing.JMenuItem();
+		jSeparator1 = new javax.swing.JSeparator();
+		miSettings = new javax.swing.JMenuItem();
 
-        jMenu2.add(jMenuItem1);
+		getContentPane().add(jDesktopPane, java.awt.BorderLayout.CENTER);
 
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource(WFClientConstants.CLIENT_ICON_LOCATION + "execute.gif")));
-        jMenuItem2.setMnemonic('c');
-        jMenuItem2.setText("Active Workflow");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showActiveWfWin(evt);
-            }
-        });
+		jMenu2.setMnemonic('w');
+		jMenu2.setText("Show window");
+		jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource(
+				WFClientConstants.CLIENT_ICON_LOCATION + "types.gif")));
+		jMenuItem1.setMnemonic('t');
+		jMenuItem1.setText("Workflow Types");
+		jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				showWorkflowTypesWindow(evt);
+			}
+		});
 
-        jMenu2.add(jMenuItem2);
+		jMenu2.add(jMenuItem1);
 
-        jMenu2.add(jSeparator1);
+		jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource(
+				WFClientConstants.CLIENT_ICON_LOCATION + "execute.gif")));
+		jMenuItem2.setMnemonic('c');
+		jMenuItem2.setText("Active Workflow");
+		jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				showActiveWfWin(evt);
+			}
+		});
 
-        miSettings.setMnemonic('e');
-        miSettings.setText("Settings");
-        miSettings.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miSettingsActionPerformed(evt);
-            }
-        });
+		jMenu2.add(jMenuItem2);
 
-        jMenu2.add(miSettings);
+		jMenu2.add(jSeparator1);
 
-        jMenuBar2.add(jMenu2);
+		miSettings.setMnemonic('e');
+		miSettings.setText("Settings");
+		miSettings.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				miSettingsActionPerformed(evt);
+			}
+		});
 
-        setJMenuBar(jMenuBar2);
+		jMenu2.add(miSettings);
 
-    }
+		jMenuBar2.add(jMenu2);
 
-    private void miSettingsActionPerformed(java.awt.event.ActionEvent evt) {
-       showSettingsDialog();
-    }
+		setJMenuBar(jMenuBar2);
 
-  private void showSettingsDialog() {
-    if( settingsDlg == null ){
-      settingsDlg = new SettingsDlg( this, true );
-    }
-    settingsDlg.showModalDialog( Admin.getInstance().getPreferences() );
-  }
+	}
 
-  private void showActiveWfWin(java.awt.event.ActionEvent evt) {
-        if( activeWorkflowWin == null ){
-          activeWorkflowWin = new ActiveWorkflowWin( xFlowAdminUI, this );
-          activeWorkflowWin.setSize( 300, 200 );
-          activeWorkflowWin.addInternalFrameListener( new WinListener( "activeWorkflowWin"));
-           jDesktopPane.add( activeWorkflowWin );
-        }
-      activeWorkflowWin.setVisible( true );
-    }
+	private void miSettingsActionPerformed(java.awt.event.ActionEvent evt) {
+		showSettingsDialog();
+	}
 
-    private void showWorkflowTypesWindow(java.awt.event.ActionEvent evt) {
-       if( workflowTypesWin == null ){
-           workflowTypesWin = new WorkflowTypesWin( xFlowAdminUI );
-           workflowTypesWin.setSize( 300, 200 );
-           workflowTypesWin.addInternalFrameListener( new WinListener( "workflowTypesWin"));
-           jDesktopPane.add( workflowTypesWin );
-       }
-       workflowTypesWin.setVisible( true );
-    }
-    private javax.swing.JDesktopPane jDesktopPane;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JMenuItem miSettings;
+	private void showSettingsDialog() {
+		if (settingsDlg == null) {
+			settingsDlg = new SettingsDlg(this, true);
+		}
+		settingsDlg.showModalDialog(Admin.getInstance().getPreferences());
+	}
 
-   public void showActiveProcessesWin(int selectedWfID) {
-      if( activeProcessesWin == null  ){
-        activeProcessesWin = new ActiveProcessesWin( xFlowAdminUI );
-          activeProcessesWin.setSize( 300, 200 );
-          activeWorkflowWin.addInternalFrameListener( new WinListener( "activeProcessesWin"));
-           jDesktopPane.add( activeProcessesWin );
-       }
-       activeProcessesWin.setVisible( true );
-       activeProcessesWin.showProcessesFoWfID( selectedWfID );
-   }
+	private void showActiveWfWin(java.awt.event.ActionEvent evt) {
+		if (activeWorkflowWin == null) {
+			activeWorkflowWin = new ActiveWorkflowWin(xFlowAdminUI, this);
+			activeWorkflowWin.setSize(300, 200);
+			activeWorkflowWin.addInternalFrameListener(new WinListener(
+					"activeWorkflowWin"));
+			jDesktopPane.add(activeWorkflowWin);
+		}
+		activeWorkflowWin.setVisible(true);
+	}
+
+	private void showWorkflowTypesWindow(java.awt.event.ActionEvent evt) {
+		if (workflowTypesWin == null) {
+			workflowTypesWin = new WorkflowTypesWin(xFlowAdminUI);
+			workflowTypesWin.setSize(300, 200);
+			workflowTypesWin.addInternalFrameListener(new WinListener(
+					"workflowTypesWin"));
+			jDesktopPane.add(workflowTypesWin);
+		}
+		workflowTypesWin.setVisible(true);
+	}
+
+	private javax.swing.JDesktopPane jDesktopPane;
+	private javax.swing.JMenu jMenu2;
+	private javax.swing.JMenuBar jMenuBar2;
+	private javax.swing.JMenuItem jMenuItem1;
+	private javax.swing.JMenuItem jMenuItem2;
+	private javax.swing.JSeparator jSeparator1;
+	private javax.swing.JMenuItem miSettings;
+
+	public void showActiveProcessesWin(int selectedWfID) {
+		if (activeProcessesWin == null) {
+			activeProcessesWin = new ActiveProcessesWin(xFlowAdminUI);
+			activeProcessesWin.setSize(300, 200);
+			activeWorkflowWin.addInternalFrameListener(new WinListener(
+					"activeProcessesWin"));
+			jDesktopPane.add(activeProcessesWin);
+		}
+		activeProcessesWin.setVisible(true);
+		activeProcessesWin.showProcessesFoWfID(selectedWfID);
+	}
 
 }
