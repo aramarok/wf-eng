@@ -1,60 +1,54 @@
 package wf.server.controller;
 
-
 import wf.model.ProcessState;
-
 import java.lang.Integer;
-
 import java.util.Date;
-
 
 public class ProcessStateRec {
 
-  public int workflowId;
-  public String processName;
-  public Date timeStarted;
-  public int  workItemId;
+	public int workflowId;
+	public String processName;
+	public Date timeStarted;
+	public int workItemId;
 
+	public String getProcessName() {
+		return processName;
+	}
 
+	public void setProcessName(String processName) {
+		this.processName = processName;
+	}
 
-  public String getProcessName() {
-    return processName;
-  }
+	public Date getTimeStarted() {
+		return timeStarted;
+	}
 
-  public void setProcessName(String processName) {
-    this.processName = processName;
-  }
+	public void setTimeStarted(Date timeStarted) {
+		this.timeStarted = timeStarted;
+	}
 
-  public Date getTimeStarted() {
-    return timeStarted;
-  }
+	public int getWorkflowId() {
+		return workflowId;
+	}
 
-  public void setTimeStarted(Date timeStarted) {
-    this.timeStarted = timeStarted;
-  }
+	public void setWorkflowId(int workflowId) {
+		this.workflowId = workflowId;
+	}
 
-  public int getWorkflowId() {
-    return workflowId;
-  }
+	public int getWorkItemId() {
+		return workItemId;
+	}
 
-  public void setWorkflowId(int workflowId) {
-    this.workflowId = workflowId;
-  }
+	public void setWorkItemId(int workItemId) {
+		this.workItemId = workItemId;
+	}
 
-  public int getWorkItemId() {
-    return workItemId;
-  }
-
-  public void setWorkItemId(int workItemId) {
-    this.workItemId = workItemId;
-  }
-
-  public ProcessState makeProcessState() {
-    ProcessState res = new ProcessState();
-    res.setProcessName( processName );
-    res.setTimeStarted( timeStarted );
-    res.setWorkflowId( new Integer( workflowId ));
-    res.setWorkItemId( new Integer( workItemId ));
-    return res;
-  }
+	public ProcessState makeProcessState() {
+		ProcessState res = new ProcessState();
+		res.setProcessName(processName);
+		res.setTimeStarted(timeStarted);
+		res.setWorkflowId(new Integer(workflowId));
+		res.setWorkItemId(new Integer(workItemId));
+		return res;
+	}
 }

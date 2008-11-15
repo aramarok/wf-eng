@@ -3,61 +3,38 @@
     PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
     "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
 
-<!-- Always ensure to use the correct XML header as above! -->
-
 <sqlMapConfig>
 
-  <properties resource="wf/server/controller/sqlmap.properties"/>
+	<properties resource="wf/server/controller/sqlmap.properties" />
 
-  <!--
-    The Settings element configures SqlMap settings such as (in order):
-     * The number of concurrent statement executions (0 = unlimited)
-     * The number of concurrent statement executions per connection (0 = unlimited)
-     * The number of concurrent transactions (0 = unlimited)
-     * The number of cached PreparedStatements (0 = unlimited; WARNING - Some databases are faster with this DISABLED.)
-     * Global Transactions support within an application server (true|false)
-  -->
-  <settings
+	<settings maxTransactions="1000" cacheModelsEnabled="false"
+		enhancementEnabled="false" lazyLoadingEnabled="true"
+		maxRequests="10000" maxSessions="1000" useStatementNamespaces="false" />
 
-    maxTransactions="1000"
-    cacheModelsEnabled="false"
-    enhancementEnabled="false"
-    lazyLoadingEnabled="true"
-    maxRequests="10000"
-    maxSessions="1000"
-    useStatementNamespaces="false"
+	<transactionManager type="JDBC">
 
-    />
+		<dataSource type="DBCP">
+			<property name="JDBC.Driver" value="${DBDRIVER}" />
+			<property name="JDBC.ConnectionURL" value="${DBURL}" />
+			<property name="JDBC.Username" value="${DBUSER}" />
+			<property name="JDBC.Password" value="${DBPASSWORD}" />
+			<property name="Pool.MaximumActiveConnections" value="1000" />
+			<property name="Pool.MaximumIdleConnections" value="100" />
+			<property name="Pool.MaximumWait" value="6000" />
+			<!-- ??? -->
+			<property name="Pool.PingEnabled" value="false" />
+			<property name="Pool.ValidationQuery"
+				value="select 1 from dbcp_helper" />
+			<property name="Pool.LogAbandoned" value="true" />
+			<property name="Pool.RemoveAbandoned" value="true" />
+			<property name="Pool.RemoveAbandonedTimeout" value="500" />
+		</dataSource>
+	</transactionManager>
 
-
-  <!-- Configure a datasource to use with this SQL Map using SimpleDataSource
-       notice the use of the properties from the above resource -->
-
- <transactionManager type="JDBC">
-
-   <dataSource type="DBCP">
-     <property name="JDBC.Driver" value="${DBDRIVER}"/>
-     <property name="JDBC.ConnectionURL" value="${DBURL}"/>
-     <property name="JDBC.Username" value="${DBUSER}"/>
-     <property name="JDBC.Password" value="${DBPASSWORD}"/>
-     <property name="Pool.MaximumActiveConnections" value="1000"/>
-     <property name="Pool.MaximumIdleConnections" value="100"/>
-     <property name="Pool.MaximumWait" value="6000"/>
-     <!-- Use of the validation query can be problematic. If you have difficulty, try without it. -->
-     <property name="Pool.PingEnabled" value="false"/>
-     <property name="Pool.ValidationQuery" value="select 1 from dbcp_helper"/>
-     <property name="Pool.LogAbandoned" value="true"/>
-     <property name="Pool.RemoveAbandoned" value="true"/>
-     <property name="Pool.RemoveAbandonedTimeout" value="500"/>
-   </dataSource>
-  </transactionManager>
-  <!-- Identify all SQL Map XML files to be loaded by this
-       SQL map.  Notice the paths are relative to the classpath. -->
-
-  <sqlMap resource="wf/server/controller/WorkflowP.xml"/>
-  <sqlMap resource="wf/server/controller/WorkItemP.xml"/>
-  <sqlMap resource="wf/server/controller/DirectedGraphP.xml"/>
-  <sqlMap resource="wf/server/controller/InboxP.xml"/>
-  <sqlMap resource="wf/server/controller/WaitingP.xml"/>
+	<sqlMap resource="wf/server/controller/WorkflowP.xml" />
+	<sqlMap resource="wf/server/controller/WorkItemP.xml" />
+	<sqlMap resource="wf/server/controller/DirectedGraphP.xml" />
+	<sqlMap resource="wf/server/controller/InboxP.xml" />
+	<sqlMap resource="wf/server/controller/WaitingP.xml" />
 
 </sqlMapConfig>

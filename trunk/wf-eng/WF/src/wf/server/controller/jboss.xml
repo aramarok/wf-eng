@@ -1,16 +1,15 @@
 <?xml version="1.0"?>
 <jboss>
-   <enterprise-beans>
-      <message-driven>
-         <ejb-name>WorkflowEngine</ejb-name>
-         <destination-jndi-name>queue/WorkflowEngineQueue</destination-jndi-name>
-      <!--   <mdb-user>kosta</mdb-user>
-         <mdb-passwd>kosta</mdb-passwd>
-         <mdb-subscription-id>WorkflowEngineSubsId</mdb-subscription-id> -->
-         <resource-ref>
-            <res-ref-name>jms/QCF</res-ref-name>
-            <jndi-name>ConnectionFactory</jndi-name>
-         </resource-ref>
-      </message-driven>
-   </enterprise-beans>
+	<enterprise-beans>
+		<message-driven>
+			<ejb-name>WorkflowEngine</ejb-name>
+			<destination-jndi-name>
+				queue/WFQUEUE_ENGINE
+			</destination-jndi-name>
+			<resource-ref>
+				<res-ref-name>jms/QCF</res-ref-name>
+				<jndi-name>ConnectionFactory</jndi-name>
+			</resource-ref>
+		</message-driven>
+	</enterprise-beans>
 </jboss>
