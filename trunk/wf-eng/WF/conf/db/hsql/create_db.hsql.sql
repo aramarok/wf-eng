@@ -1,5 +1,5 @@
 /*==========================================================================*/
-/* Project Filename:    C:\temp\xflow.dez                                   */
+/* Project Filename:    C:\temp\wfprj.dez                                   */
 /* Project Name:                                                            */
 /* Author:                                                                  */
 /* DBMS:                hsql                                        */
