@@ -12,14 +12,23 @@
 	<property file="${ant_build.dir}/${user.name}.properties" />
 	<property file="${properties-file}" />
 
-	<target name="clean.build.and.deploy" depends="wf-ejb-jar, deploy">
-		</target>
-	
 	<path id="wf.classpath">
 		<fileset dir="${jboss.home}/client" includes="*.jar" />
 		<fileset dir="${jboss.home}/server/default/lib" includes="*.jar" />
 		<fileset dir="lib/" includes="*.jar" />
 	</path>
+	
+	<target name="database.from.scratch" description="Recreate Database">
+		<property file="conf/app.properties" />
+		<echo message="${DBDRIVER} url=${DBURL} userid=${DBUSER} password=${DBPASSWORD}" />
+		<!--sql classpathref="wf.classpath"    onerror="continue" autocommit="true"
+             driver="${DBDRIVER}" url="${DBURL}" userid="${DBUSER}" password="${DBPASSWORD}" src="${conf.dir}/${database}/drop_db.${database}.sql"/ -->
+		<sql classpathref="wf.classpath" onerror="continue" autocommit="true" driver="${DBDRIVER}" url="${DBURL}" userid="${DBUSER}" password="${DBPASSWORD}" src="${db.dir}/${database}/create_db.${database}.sql" />
+	</target>
+
+	
+	<target name="clean.build.and.deploy" depends="wf-ejb-jar, deploy">
+	</target>
 
 	<!-- ********************************************************************** -->
 	<!-- Clean the class files                                                  -->
@@ -122,16 +131,7 @@
 		</copy>
 	</target>
 
-
-	<target name="recreate-database" description="Recreate Database">
-		<property file="conf/app.properties" />
-		<echo message="${DBDRIVER} url=${DBURL} userid=${DBUSER} password=${DBPASSWORD}" />
-		<!--sql classpathref="wf.classpath"    onerror="continue" autocommit="true"
-             driver="${DBDRIVER}" url="${DBURL}" userid="${DBUSER}" password="${DBPASSWORD}" src="${conf.dir}/${database}/drop_db.${database}.sql"/ -->
-		<sql classpathref="wf.classpath" onerror="continue" autocommit="true" driver="${DBDRIVER}" url="${DBURL}" userid="${DBUSER}" password="${DBPASSWORD}" src="${db.dir}/${database}/create_db.${database}.sql" />
-	</target>
-
-
+	
 	<target name="start_ui">
 		<java classname="wf.client.Admin" fork="true">
 			<classpath>
