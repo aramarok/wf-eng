@@ -1,12 +1,9 @@
-
-
 package wf.jms.model;
-
-
 
 public class GetWorkflowsByNameRequest extends Request {
 
-    public String name = "";
+	private static final long serialVersionUID = 1L;
+	
+	public String name = "";
 
 }
- 

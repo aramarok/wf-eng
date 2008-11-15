@@ -1,12 +1,10 @@
-
 package wf.jms.model;
-
 
 public class DeployModelRequest extends Request {
 
-    public String xml;
-    public String type;
+	private static final long serialVersionUID = 1L;
 
+	public String xml;
+	public String type;
 
 }
- 
