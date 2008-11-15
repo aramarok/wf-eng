@@ -1,4 +1,3 @@
-
 package wf.test;
 
 import java.io.BufferedReader;
@@ -9,17 +8,16 @@ import wf.exceptions.WorkFlowException;
 import wf.model.DirectedGraph;
 import wf.xml.DefinitionParser;
 
-
 public class Validation {
 
 	public static void main(String[] args) {
 		try {
-			BufferedReader fin =
-				new BufferedReader(new FileReader("d:\\eclipse\\workspace\\" +					"XFlow\\src\\xflow\\test\\testRule.xml"));
+			BufferedReader fin = new BufferedReader(new FileReader(
+					"testRule.xml"));
 			String xml = "";
 			String s = "";
 			while ((s = fin.readLine()) != null) {
-				s+="\n";
+				s += "\n";
 				xml += s;
 			}
 			System.out.println(xml);
@@ -28,7 +26,7 @@ public class Validation {
 				g.validate();
 			} catch (WorkFlowException e) {
 				e.printStackTrace();
-			} 
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

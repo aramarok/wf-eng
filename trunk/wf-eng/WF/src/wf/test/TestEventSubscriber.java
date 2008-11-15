@@ -1,41 +1,37 @@
-
-
-
 package wf.test;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
-
 import javax.jms.JMSException;
-
 import wf.exceptions.WorkFlowException;
 import wf.jms.EventsHandler;
 
 public class TestEventSubscriber {
 
-    public void start(Properties props) throws WorkFlowException {
-        EventsHandler subs = new EventsHandler (props);
-    }
+	public void start(Properties props) throws WorkFlowException {
+		EventsHandler subs = new EventsHandler(props);
+	}
 
-    public static void main (String[] args) throws WorkFlowException, JMSException {
+	public static void main(String[] args) throws WorkFlowException,
+			JMSException {
 
-        String propFileName = args[0];
-        Properties props = new Properties();
-        try {
-            FileInputStream fi = new FileInputStream(propFileName);
-            props.load(fi);
-            fi.close();
-        } catch (FileNotFoundException fx) {
-            System.out.print("Property file not found: " + fx.getMessage());
-            return;
-        } catch (IOException e) {
-            System.out.print("Failed to read property file: " + e.getMessage());
-            return;
-        }
+		String propFileName = args[0];
+		Properties props = new Properties();
+		try {
+			FileInputStream fi = new FileInputStream(propFileName);
+			props.load(fi);
+			fi.close();
+		} catch (FileNotFoundException fx) {
+			System.out.print("Property file not found: " + fx.getMessage());
+			return;
+		} catch (IOException e) {
+			System.out.print("Failed to read property file: " + e.getMessage());
+			return;
+		}
 
-        new TestEventSubscriber().start(props);
-    }
+		new TestEventSubscriber().start(props);
+	}
 
 }
