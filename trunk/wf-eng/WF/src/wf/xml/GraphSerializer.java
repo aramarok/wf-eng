@@ -22,7 +22,7 @@ import wf.model.DirectedGraph;
 public class GraphSerializer {
 
 	private static Logger log = Logger.getLogger(GraphSerializer.class);
-	private static String template = "<xflow><nodes></nodes><transitions></transitions></xflow>";
+	private static String template = "<wf><nodes></nodes><transitions></transitions></wf>";
 
 	public static String serialize(DirectedGraph dg) throws WorkFlowException {
 
@@ -37,9 +37,9 @@ public class GraphSerializer {
 			InputSource is = new InputSource(sreader);
 			Document doc = builder.parse(is);
 
-			NodeList els = doc.getElementsByTagName("xflow");
-			Element xflowEl = (Element) els.item(0);
-			xflowEl.setAttribute("name", graphName);
+			NodeList els = doc.getElementsByTagName("wf");
+			Element wfElement = (Element) els.item(0);
+			wfElement.setAttribute("name", graphName);
 
 			els = doc.getElementsByTagName("nodes");
 			Element nodesEl = (Element) els.item(0);

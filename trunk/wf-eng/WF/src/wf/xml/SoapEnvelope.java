@@ -14,13 +14,13 @@ import org.apache.axis.utils.XMLUtils;
 public class SoapEnvelope {
 
 	static String nameSpace = "http://example.com/uvtwf";
-	static String XflowPrefix = "XFLOW";
+	static String wfPrefix = "WF"; //Changed from XFLOW
 
 	public static void main(String[] args) throws Exception {
 		try {
 			SOAPEnvelope env = new SOAPEnvelope();
 
-			env.addMapping(new Mapping(nameSpace, XflowPrefix));
+			env.addMapping(new Mapping(nameSpace, wfPrefix));
 			env.addAttribute(Constants.URI_SOAP11_ENV, "actor", "some-uri");
 			env.addAttribute(Constants.URI_SOAP11_ENV, "mustUnderstand", "1");
 

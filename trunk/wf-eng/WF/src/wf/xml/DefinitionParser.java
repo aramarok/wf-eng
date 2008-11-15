@@ -33,18 +33,18 @@ public class DefinitionParser {
 			InputSource is = new InputSource(sreader);
 			Document doc = builder.parse(is);
 
-			NodeList els = doc.getElementsByTagName("xflow");
+			NodeList els = doc.getElementsByTagName("wf");
 			Element el = (Element) els.item(0);
 			if (el != null) {
 				graphName = el.getAttribute("name");
 				if (graphName == null) {
 					throw new WorkFlowException(
-							"xflow name attribute not found in XML file.");
+							"wf name attribute not found in XML file.");
 				}
 				rgraph = new DirectedGraph(graphName);
 			} else {
 				throw new WorkFlowException(
-						"<xflow> element not found in XML file.");
+						"<wf> element not found in XML file.");
 			}
 
 			els = doc.getElementsByTagName("node");
@@ -151,7 +151,7 @@ public class DefinitionParser {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String xml = "<xflow name=\"Test\"><nodes><node id=\"StartNode\" type=\"Start\"/><node id=\"P1\" type=\"Process\"/><node id=\"EndNode\" type=\"End\"/></nodes><transitions><transition from=\"StartNode\" to=\"P1\"/><transition from=\"P1\" to=\"EndNode\"/></transitions></xflow>";
+		String xml = "<wf name=\"Test\"><nodes><node id=\"StartNode\" type=\"Start\"/><node id=\"P1\" type=\"Process\"/><node id=\"EndNode\" type=\"End\"/></nodes><transitions><transition from=\"StartNode\" to=\"P1\"/><transition from=\"P1\" to=\"EndNode\"/></transitions></wf>";
 		DirectedGraph g = parse(xml);
 		g.getRootNode().traverse();
 	}

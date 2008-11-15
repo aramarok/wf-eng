@@ -1,4 +1,4 @@
-<xflow name="case_condition">
+<wf name="case_condition">
 	<nodes>
 		<node id="StartNode" type="Start" />
 		<node id="proc1" type="Process" />
@@ -22,4 +22,4 @@
 		<transition from="proc3" to="EndNode" />
 		<transition from="proc4" to="EndNode" />
 	</transitions>
-</xflow>
+</wf>
