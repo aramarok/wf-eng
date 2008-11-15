@@ -1,45 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id: jbossmq-destinations-service.xml,v 1.2 2002/05/04 03:07:49 chirino Exp $ -->
-
-
 <server>
 
-   <mbean code="org.jboss.mq.server.jmx.Topic"
-	 name="jboss.mq.destination:service=Topic,name=XFLOW.EVENT">
-    <depends optional-attribute-name="DestinationManager">jboss.mq:service=DestinationManager</depends>
-    <depends optional-attribute-name="SecurityManager">jboss.mq:service=SecurityManager</depends>
+	<mbean code="org.jboss.mq.server.jmx.Topic"
+		name="jboss.mq.destination:service=Topic,name=WFTOPIC_EVENTS">
+		<depends optional-attribute-name="DestinationManager">
+			jboss.mq:service=DestinationManager
+		</depends>
+		<depends optional-attribute-name="SecurityManager">
+			jboss.mq:service=SecurityManager
+		</depends>
+	</mbean>
 
-  </mbean>
+	<mbean code="org.jboss.mq.server.jmx.Topic"
+		name="jboss.mq.destination:service=Topic,name=WFTOPIC_INBOX">
+		<depends optional-attribute-name="DestinationManager">
+			jboss.mq:service=DestinationManager
+		</depends>
+		<depends optional-attribute-name="SecurityManager">
+			jboss.mq:service=SecurityManager
+		</depends>
+	</mbean>
 
-   <mbean code="org.jboss.mq.server.jmx.Topic"
-	 name="jboss.mq.destination:service=Topic,name=xflowInboxTopic">
-    <depends optional-attribute-name="DestinationManager">jboss.mq:service=DestinationManager</depends>
-    <depends optional-attribute-name="SecurityManager">jboss.mq:service=SecurityManager</depends>
-
-  </mbean>
-
-    <mbean code="org.jboss.mq.server.jmx.Queue"
-	 name="jboss.mq.destination:service=Queue,name=WorkflowEngineQueue">
-    <depends optional-attribute-name="DestinationManager">jboss.mq:service=DestinationManager</depends>
-    <depends optional-attribute-name="SecurityManager">jboss.mq:service=SecurityManager</depends>
-
-  </mbean>
-
-
-  <mbean code="org.jboss.mq.server.jmx.Queue"
-	 name="jboss.mq.destination:service=Queue,name=xflowReplyQueue">
-    <depends optional-attribute-name="DestinationManager">jboss.mq:service=DestinationManager</depends>
-    <depends optional-attribute-name="SecurityManager">jboss.mq:service=SecurityManager</depends>
-
-  </mbean>
-
-  <mbean code="org.jboss.mq.server.jmx.Queue"
-	 name="jboss.mq.destination:service=Queue,name=XFLOW_TEST">
-    <depends optional-attribute-name="DestinationManager">jboss.mq:service=DestinationManager</depends>
-  </mbean>
+	<mbean code="org.jboss.mq.server.jmx.Queue"
+		name="jboss.mq.destination:service=Queue,name=WFQUEUE_ENGINE">
+		<depends optional-attribute-name="DestinationManager">
+			jboss.mq:service=DestinationManager
+		</depends>
+		<depends optional-attribute-name="SecurityManager">
+			jboss.mq:service=SecurityManager
+		</depends>
+	</mbean>
 
 
-
+	<mbean code="org.jboss.mq.server.jmx.Queue"
+		name="jboss.mq.destination:service=Queue,name=WFQUEUE_OUTBOX">
+		<depends optional-attribute-name="DestinationManager">
+			jboss.mq:service=DestinationManager
+		</depends>
+		<depends optional-attribute-name="SecurityManager">
+			jboss.mq:service=SecurityManager
+		</depends>
+	</mbean>
 
 </server>
