@@ -10,11 +10,11 @@ public class GetAllWorkflowInstances {
 
 	public static void main(String[] args) throws Exception {
 
-		String name = "";
+		String wfName = "";
 		List v;
 		if (args.length > 0) {
-			name = args[0];
-			v = WorkflowManager.getAllWorkflowsByName(name, new User("foo",
+			wfName = args[0];
+			v = WorkflowManager.getAllWorkflowsByName(wfName, new User("foo",
 					"foo"));
 		} else {
 			v = WorkflowManager.getAllWorkflows(new User("foo", "foo"));

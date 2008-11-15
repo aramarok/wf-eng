@@ -33,48 +33,48 @@ public class GraphSerializer {
 					.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 
-			StringReader sreader = new StringReader(template);
-			InputSource is = new InputSource(sreader);
+			StringReader sReader = new StringReader(template);
+			InputSource is = new InputSource(sReader);
 			Document doc = builder.parse(is);
 
-			NodeList els = doc.getElementsByTagName("wf");
-			Element wfElement = (Element) els.item(0);
+			NodeList elements = doc.getElementsByTagName("wf");
+			Element wfElement = (Element) elements.item(0);
 			wfElement.setAttribute("name", graphName);
 
-			els = doc.getElementsByTagName("nodes");
-			Element nodesEl = (Element) els.item(0);
-			List gnodes = dg.getAllNodes();
-			for (int i = 0; i < gnodes.size(); i++) {
-				wf.model.Node gnode = (wf.model.Node) gnodes.get(i);
+			elements = doc.getElementsByTagName("nodes");
+			Element nodesElement = (Element) elements.item(0);
+			List lNodes = dg.getAllNodes();
+			for (int i = 0; i < lNodes.size(); i++) {
+				wf.model.Node gnode = (wf.model.Node) lNodes.get(i);
 				String nodeName = gnode.getName();
 				String nodeType = gnode.getNodeType();
-				Element nodeEl = doc.createElement("node");
-				nodesEl.appendChild(nodeEl);
-				nodeEl.setAttribute("id", nodeName);
-				nodeEl.setAttribute("type", nodeType);
+				Element nodeElement = doc.createElement("node");
+				nodesElement.appendChild(nodeElement);
+				nodeElement.setAttribute("id", nodeName);
+				nodeElement.setAttribute("type", nodeType);
 				if (nodeType.equals(wf.model.Node.CONTAINER)) {
 					String containee = gnode.getContainee();
-					nodeEl.setAttribute("containee", containee);
+					nodeElement.setAttribute("containee", containee);
 					int containeeVersion = gnode.getContaineeVersion();
 					if (containeeVersion != -1) {
-						nodeEl.setAttribute("containeeVersion", ""
+						nodeElement.setAttribute("containeeVersion", ""
 								+ containeeVersion);
 					}
 				}
 				if (nodeType.equals(wf.model.Node.PROCESS)) {
 					int timeoutMinutes = gnode.getTimeoutMinutes();
 					if (timeoutMinutes != -1) {
-						nodeEl.setAttribute("timeoutMinutes", ""
+						nodeElement.setAttribute("timeoutMinutes", ""
 								+ timeoutMinutes);
 					}
 					String timeoutHandler = gnode.getTimeoutHandler();
 					if (timeoutHandler != null) {
-						nodeEl.setAttribute("timeoutHandler", timeoutHandler);
+						nodeElement.setAttribute("timeoutHandler", timeoutHandler);
 					}
 				}
 			}
-			els = doc.getElementsByTagName("transitions");
-			Element transitionsEl = (Element) els.item(0);
+			elements = doc.getElementsByTagName("transitions");
+			Element transitionsEl = (Element) elements.item(0);
 
 			wf.model.Node rootNode = dg.getRootNode();
 			serializeTransitions(doc, transitionsEl, rootNode);

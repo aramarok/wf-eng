@@ -8,9 +8,8 @@ public class ResumeWorkflow {
 
 	public static void main(String[] args) throws WorkFlowException {
 
-		String wfId = args[0];
-		Integer wfi = new Integer(wfId);
-		Integer workflowId = new Integer(wfi.intValue());
+		Integer wfId = new Integer(args[0]);
+		Integer workflowId = new Integer(wfId.intValue());
 		WorkflowManager.resumeWorkflow(workflowId, new User("rtan", "rtan"));
 		System.out.println("Success");
 	}

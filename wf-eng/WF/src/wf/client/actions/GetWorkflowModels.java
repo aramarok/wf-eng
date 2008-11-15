@@ -9,9 +9,9 @@ public class GetWorkflowModels {
 
 	public static void main(String[] args) throws Exception {
 
-		List v = WorkflowManager.getWorkflowModels(new User("foo", "foo"));
-		for (int i = 0; i < v.size(); i++) {
-			WorkflowModel m = (WorkflowModel) v.get(i);
+		List wfModels = WorkflowManager.getWorkflowModels(new User("foo", "foo"));
+		for (int i = 0; i < wfModels.size(); i++) {
+			WorkflowModel m = (WorkflowModel) wfModels.get(i);
 			System.out.println("\n----- Worklflow Model ------");
 			System.out.println("Name:" + m.name);
 			System.out.println("Version: " + m.version);

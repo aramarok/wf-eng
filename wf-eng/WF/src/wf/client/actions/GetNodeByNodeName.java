@@ -10,12 +10,12 @@ public class GetNodeByNodeName {
 
 	public static void main(String[] args) throws Exception {
 
-		String workflowName = args[0];
-		String versionStr = args[1];
-		int version = new Integer(versionStr).intValue();
+		String workFlowName = args[0];
+		String sVersion = args[1];
+		int version = new Integer(sVersion).intValue();
 		String nodeName = args[2];
 
-		Node node = WorkflowManager.getNodeByName(workflowName, version,
+		Node node = WorkflowManager.getNodeByName(workFlowName, version,
 				nodeName, new User("foo", "foo"));
 		node.print();
 		System.out.println("");
