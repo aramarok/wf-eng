@@ -1,11 +1,9 @@
-
-
 package wf.jms.model;
-
 
 public class GetWorkItemRequest extends WorkflowProcessRequest {
 
-    public Integer workItemId;
-
+	private static final long serialVersionUID = 1L;
+	
+	public Integer workItemId;
 
 }

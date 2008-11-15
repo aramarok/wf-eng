@@ -1,13 +1,11 @@
-
 package wf.jms.model;
 
-
 public class GetNodeByNameRequest extends Request {
-    
-    public String workflowName;
-    public int    version;
-    public String nodeName;
 
-    
+	private static final long serialVersionUID = 1L;
+	
+	public String workflowName;
+	public int version;
+	public String nodeName;
+
 }
- 
