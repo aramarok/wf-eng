@@ -18,8 +18,7 @@ public class AppConfig {
 
 	private AppConfig() {
 		try {
-			URL url = this.getClass().getClassLoader()
-					.getResource(configFile);
+			URL url = this.getClass().getClassLoader().getResource(configFile);
 			if (url == null) {
 				url = Thread.currentThread().getContextClassLoader()
 						.getResource(configFile);
@@ -78,20 +77,23 @@ public class AppConfig {
 	}
 
 	public static final String getInboxTopic() {
-		return getInstance().get("WFTOPIC_INBOX", "topic/WFTOPIC_INBOX");
+		return getInstance().get("WFTOPIC_INBOX",
+				"topic/WFTOPIC_INBOX");
 	}
 
 	public static final String getOutboxQueue() {
-		return getInstance().get("WFQUEUE_OUTBOX", "queue/WFQUEUE_OUTBOX");
+		return getInstance().get("WFQUEUE_OUTBOX",
+				"queue/WFQUEUE_OUTBOX");
 	}
 
 	public static final String getEventsTopic() {
-		return getInstance().get("WFTOPIC_EVENTS", "topic/WFTOPIC_EVENTS");
+		return getInstance().get("WFTOPIC_EVENTS",
+				"topic/WFTOPIC_EVENTS");
 	}
 
 	public static final String getWfQueue() {
-		return getInstance()
-				.get("WFQUEUE_ENGINE", "queue/WFQUEUE_ENGINE");
+		return getInstance().get("WFQUEUE_ENGINE",
+				"queue/WFQUEUE_ENGINE");
 	}
 
 	public static final String getDataSource() {
@@ -99,7 +101,8 @@ public class AppConfig {
 	}
 
 	public static String DB_CREATE_SCRIPT() {
-		return getInstance().get("CREATEDB-SQL", "conf/create_db.sql");
+		return getInstance().get("CREATEDB-SQL",
+				"conf/create_db.sql");
 	}
 
 }

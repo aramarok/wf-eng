@@ -86,7 +86,7 @@ public class WorkflowEngine implements MessageDrivenBean, MessageListener {
 			String userName = request.user.getName();
 			String password = request.user.getPassword();
 			log.info("userName = " + userName + " password = " + password);
-			if (authenticator.authenticate(userName, password) == false) {
+			if (authenticator.authenticateUser(userName, password) == false) {
 				Response authFailedResponse = new Response();
 				authFailedResponse.responseCode = Response.FAILURE;
 				authFailedResponse.message = "Authentication failed for "

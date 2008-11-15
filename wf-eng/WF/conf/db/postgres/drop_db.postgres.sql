@@ -1,7 +1,7 @@
 /*==========================================================================*/
 /* DROP SCRIPT                                                              */
 /*==========================================================================*/
-/* Project Filename:    C:\temp\xflow.dez                                   */
+/* Project Filename:    C:\temp\wfprj.dez                                   */
 /* Project Name:                                                            */
 /* Author:                                                                  */
 /* DBMS:                PostgreSQL 7                                        */

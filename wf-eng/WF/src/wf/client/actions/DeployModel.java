@@ -12,10 +12,8 @@ public class DeployModel {
 
 	public static void main(String[] args) throws Exception {
 
-		String xmlFileName = args[0];
-
-		File f = new File(xmlFileName);
-		BufferedReader in = new BufferedReader(new FileReader(xmlFileName));
+		File xmlInputFile = new File(args[0]);
+		BufferedReader in = new BufferedReader(new FileReader(xmlInputFile));
 		String xml = "";
 		String str;
 		while ((str = in.readLine()) != null) {
