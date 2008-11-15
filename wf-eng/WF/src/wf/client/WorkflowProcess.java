@@ -1,17 +1,13 @@
-
 package wf.client;
 
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
 import java.util.List;
-
 import javax.jms.BytesMessage;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-
 import org.apache.log4j.Logger;
-
 import wf.cfg.AppConfig;
 import wf.client.auth.User;
 import wf.exceptions.WorkFlowException;
@@ -33,129 +29,125 @@ import wf.jms.model.ValidateProcessResponse;
 import wf.model.WorkItem;
 import wf.util.Util;
 
-
 public class WorkflowProcess implements MessageListener {
 
-  private String workflowName;
-  private int    workflowVersion;
-  private String procName;
-  private InboxMessageListener mlistener;
-  private User user;
-  private JMSSubscriber subscriber;
+	private String workflowName;
+	private int workflowVersion;
+	private String procName;
+	private InboxMessageListener mlistener;
+	private User user;
+	private JMSSubscriber subscriber;
 
-  private static Logger log = Logger.getLogger(WorkflowProcess.class);
+	private static Logger log = Logger.getLogger(WorkflowProcess.class);
 
-  public void onMessage (Message msg) {
+	public void onMessage(Message msg) {
 
-    WorkItem workItem = null;
+		WorkItem workItem = null;
 
-    try {
-      BytesMessage bytesMessage = (BytesMessage)msg;
-      byte[] barr = new byte[10000];
-      bytesMessage.readBytes (barr);
+		try {
+			BytesMessage bytesMessage = (BytesMessage) msg;
+			byte[] barr = new byte[10000];
+			bytesMessage.readBytes(barr);
 
-      ByteArrayInputStream in = new ByteArrayInputStream(barr);
-      ObjectInputStream sin = new ObjectInputStream(in);
-      workItem = (WorkItem) sin.readObject();
-    } catch(Throwable t) {
-      log.error("onMessage error", t);
-    }
+			ByteArrayInputStream in = new ByteArrayInputStream(barr);
+			ObjectInputStream sin = new ObjectInputStream(in);
+			workItem = (WorkItem) sin.readObject();
+		} catch (Throwable t) {
+			log.error("onMessage error", t);
+		}
 
-    mlistener.onMessage (workItem);
-  }
+		mlistener.onMessage(workItem);
+	}
 
-  
-  public WorkflowProcess (String wfName, int wfVersion, String processName, InboxMessageListener listener,
-                          User user) throws WorkFlowException {
+	public WorkflowProcess(String wfName, int wfVersion, String processName,
+			InboxMessageListener listener, User user) throws WorkFlowException {
 
-    try {
-      JMSTopicConnection.initialize();
-    } catch (JMSException e) {
-      throw new WorkFlowException (e);
-    }
+		try {
+			JMSTopicConnection.initialize();
+		} catch (JMSException e) {
+			throw new WorkFlowException(e);
+		}
 
-    workflowName = wfName;
-    workflowVersion = wfVersion;
-    procName = processName;
-    mlistener = listener;
-    this.user = user;
-    ValidateProcessRequest req = new ValidateProcessRequest();
-    req.workflowName = workflowName;
-    req.workflowVersion = workflowVersion;
-    req.processName = procName;
-    req.user = user;
+		workflowName = wfName;
+		workflowVersion = wfVersion;
+		procName = processName;
+		mlistener = listener;
+		this.user = user;
+		ValidateProcessRequest req = new ValidateProcessRequest();
+		req.workflowName = workflowName;
+		req.workflowVersion = workflowVersion;
+		req.processName = procName;
+		req.user = user;
 
-    ValidateProcessResponse resp = (ValidateProcessResponse) sendRequest(req);
-    if (!resp.ok) {
-      throw new WorkFlowException ("Unrecognized process name in specified workflow.");
-    }
-    if (listener != null) {
-      subscriber = new JMSSubscriber(this, AppConfig.XFLOW_TOPIC(), "ProcessName in ('" + workflowName +
-          procName + "')");
-    }
-  }
+		ValidateProcessResponse resp = (ValidateProcessResponse) sendRequest(req);
+		if (!resp.ok) {
+			throw new WorkFlowException(
+					"Unrecognized process name in specified workflow.");
+		}
+		if (listener != null) {
+			subscriber = new JMSSubscriber(this, AppConfig.getInboxTopic(),
+					"ProcessName in ('" + workflowName + procName + "')");
+		}
+	}
 
-  
-  public List getWorkItems () throws WorkFlowException {
+	public List getWorkItems() throws WorkFlowException {
 
-    GetWorkItemsRequest req = new GetWorkItemsRequest();
-    req.workflowName = workflowName;
-    req.workflowVersion = workflowVersion;
-    req.processName = procName;
-    req.user = user;
-    GetWorkItemsResponse resp = (GetWorkItemsResponse)sendRequest (req);
-    return resp.workItems;
-  }
+		GetWorkItemsRequest req = new GetWorkItemsRequest();
+		req.workflowName = workflowName;
+		req.workflowVersion = workflowVersion;
+		req.processName = procName;
+		req.user = user;
+		GetWorkItemsResponse resp = (GetWorkItemsResponse) sendRequest(req);
+		return resp.workItems;
+	}
 
-  
-  public WorkItem getNextWorkItem() throws WorkFlowException {
+	public WorkItem getNextWorkItem() throws WorkFlowException {
 
-    GetNextWorkItemRequest req = new GetNextWorkItemRequest();
-    req.workflowName = workflowName;
-    req.workflowVersion = workflowVersion;
-    req.processName = procName;
-    req.user = user;
-    GetNextWorkItemResponse resp = (GetNextWorkItemResponse)sendRequest (req);
-    return resp.workItem;
-  }
+		GetNextWorkItemRequest req = new GetNextWorkItemRequest();
+		req.workflowName = workflowName;
+		req.workflowVersion = workflowVersion;
+		req.processName = procName;
+		req.user = user;
+		GetNextWorkItemResponse resp = (GetNextWorkItemResponse) sendRequest(req);
+		return resp.workItem;
+	}
 
-  
-  public WorkItem getWorkItem(Integer workItemId) throws WorkFlowException {
+	public WorkItem getWorkItem(Integer workItemId) throws WorkFlowException {
 
-    GetWorkItemRequest req = new GetWorkItemRequest();
-    req.workflowName = workflowName;
-    req.workflowVersion = workflowVersion;
-    req.processName = procName;
-    req.user = user;
-    req.workItemId = workItemId;
-    GetWorkItemResponse resp = (GetWorkItemResponse)sendRequest (req);
-    return resp.workItem;
-  }
+		GetWorkItemRequest req = new GetWorkItemRequest();
+		req.workflowName = workflowName;
+		req.workflowVersion = workflowVersion;
+		req.processName = procName;
+		req.user = user;
+		req.workItemId = workItemId;
+		GetWorkItemResponse resp = (GetWorkItemResponse) sendRequest(req);
+		return resp.workItem;
+	}
 
-  
-  public CompleteWorkItemResponse completeWorkItem(WorkItem workItem) throws WorkFlowException {
+	public CompleteWorkItemResponse completeWorkItem(WorkItem workItem)
+			throws WorkFlowException {
 
-    CompleteWorkItemRequest req = new CompleteWorkItemRequest();
-    req.workflowName = workflowName;
-    req.workflowVersion = workflowVersion;
-    req.processName = procName;
-    req.user = user;
-    req.workItem = workItem;
-    CompleteWorkItemResponse resp = (CompleteWorkItemResponse)sendRequest (req);
-    return resp;
-  }
+		CompleteWorkItemRequest req = new CompleteWorkItemRequest();
+		req.workflowName = workflowName;
+		req.workflowVersion = workflowVersion;
+		req.processName = procName;
+		req.user = user;
+		req.workItem = workItem;
+		CompleteWorkItemResponse resp = (CompleteWorkItemResponse) sendRequest(req);
+		return resp;
+	}
 
-  private static Response sendRequest (Request req) throws WorkFlowException {
+	private static Response sendRequest(Request req) throws WorkFlowException {
 
-    req.replyName = Util.generateUniqueStringId();
-    try {
-      Response resp = SynchQueueMessaging.sendRequest (req);
-      if (resp.responseCode != Response.SUCCESS) {
-        throw new WorkFlowException(resp.message);
-      }
-      return resp;
-    } catch (Exception t) {
-      throw new WorkFlowException (t);
-    }
-  }
+		req.replyName = Util.generateUniqueStringId();
+		try {
+			Response resp = SynchQueueMessaging.sendRequest(req);
+			if (resp.responseCode != Response.SUCCESS) {
+				throw new WorkFlowException(resp.message);
+			}
+			return resp;
+		} catch (Exception t) {
+			throw new WorkFlowException(t);
+		}
+	}
 }

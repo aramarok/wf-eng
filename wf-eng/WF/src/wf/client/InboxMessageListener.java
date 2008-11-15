@@ -1,12 +1,8 @@
-
 package wf.client;
-import wf.model.WorkItem;
 
+import wf.model.WorkItem;
 
 public interface InboxMessageListener {
 
-    
-    public void onMessage (WorkItem workItem);
+	public void onMessage(WorkItem workItem);
 }
-
-
