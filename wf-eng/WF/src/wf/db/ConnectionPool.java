@@ -1,5 +1,3 @@
-
-
 package wf.db;
 
 import java.sql.Connection;
@@ -10,85 +8,80 @@ import java.util.Hashtable;
 
 public class ConnectionPool {
 
-    private Hashtable connections;
-    private int increment = 3;
-    private int initialConnections = 3;
-    private String dbURL, user, password;
+	private Hashtable connections;
+	private int increment = 3;
+	private int initialConnections = 3;
+	private String dbURL, user, password;
 
-    public ConnectionPool (String driver, 
-                           String user, 
-                           String password, 
-                           String dbURL)
-                throws SQLException {
+	public ConnectionPool(String driver, String user, String password,
+			String dbURL) throws SQLException {
 
-        this.dbURL = dbURL;
-        this.user  = user;
-        this.password = password;
-        
-        connections = new Hashtable();
-        
-        System.out.println ("JDBC Driver: " + driver);
-        try {
-            Class.forName(driver).newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		this.dbURL = dbURL;
+		this.user = user;
+		this.password = password;
 
-        System.out.println ("DB URL: " + dbURL);
-        for (int i = 0; i < initialConnections; i++) {
-           
-           connections.put (DriverManager.getConnection (dbURL,
-                            user, password), Boolean.FALSE);
-        }
-    }
-    
-    public Connection getConnection () throws SQLException {
+		connections = new Hashtable();
 
-        Connection con = null;
-        Enumeration cons = connections.keys();
+		System.out.println("JDBC Driver: " + driver);
+		try {
+			Class.forName(driver).newInstance();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        synchronized (connections) {
-            while (cons.hasMoreElements()) {
-                con = (Connection)cons.nextElement();
+		System.out.println("DB URL: " + dbURL);
+		for (int i = 0; i < initialConnections; i++) {
 
-                Boolean b = (Boolean)connections.get(con);
-                if (b == Boolean.FALSE) {
-                    try {
-                        con.setAutoCommit(false);
-                    } catch (SQLException e) {
-                        con = DriverManager.getConnection(dbURL, user,
-                                                          password);
-                    }
-                    connections.put(con, Boolean.TRUE);
+			connections.put(DriverManager.getConnection(dbURL, user, password),
+					Boolean.FALSE);
+		}
+	}
 
-                    return con;
-                }
-            }
-        }
-        for (int i = 0; i < increment; i++) {
-           try {
-               Connection c = DriverManager.getConnection(dbURL, user, password);
-               connections.put (c, Boolean.FALSE);
-           } catch (Exception e) {
-               System.err.println ("getConnection FAILED");
-           }
+	public Connection getConnection() throws SQLException {
 
-        }
-        return getConnection();
-    }                       
+		Connection con = null;
+		Enumeration cons = connections.keys();
 
-    public void returnConnection (Connection returned) {
-        Connection con;
-        Enumeration cons = connections.keys();
-        while (cons.hasMoreElements()) {
-            con = (Connection)cons.nextElement();
-            if (con == returned) {
-                connections.put(con, Boolean.FALSE);
-                break;
-            }
-        }
-    }
+		synchronized (connections) {
+			while (cons.hasMoreElements()) {
+				con = (Connection) cons.nextElement();
+
+				Boolean b = (Boolean) connections.get(con);
+				if (b == Boolean.FALSE) {
+					try {
+						con.setAutoCommit(false);
+					} catch (SQLException e) {
+						con = DriverManager
+								.getConnection(dbURL, user, password);
+					}
+					connections.put(con, Boolean.TRUE);
+
+					return con;
+				}
+			}
+		}
+		for (int i = 0; i < increment; i++) {
+			try {
+				Connection c = DriverManager.getConnection(dbURL, user,
+						password);
+				connections.put(c, Boolean.FALSE);
+			} catch (Exception e) {
+				System.err.println("getConnection FAILED");
+			}
+
+		}
+		return getConnection();
+	}
+
+	public void returnConnection(Connection returned) {
+		Connection con;
+		Enumeration cons = connections.keys();
+		while (cons.hasMoreElements()) {
+			con = (Connection) cons.nextElement();
+			if (con == returned) {
+				connections.put(con, Boolean.FALSE);
+				break;
+			}
+		}
+	}
 }
-
-
-
