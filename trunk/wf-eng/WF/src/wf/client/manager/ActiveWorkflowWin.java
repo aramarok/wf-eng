@@ -15,7 +15,7 @@ public class ActiveWorkflowWin extends javax.swing.JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	Admin xFlowAdminUI;
+	Admin wfAdminUI;
 	DesktopPane desktopPane;
 
 	public ActiveWorkflowWin() {
@@ -63,9 +63,9 @@ public class ActiveWorkflowWin extends javax.swing.JInternalFrame {
 		return Integer.parseInt(id);
 	}
 
-	public ActiveWorkflowWin(Admin xFlowAdminUI, DesktopPane desk) {
+	public ActiveWorkflowWin(Admin wfAdminUI, DesktopPane desk) {
 		this();
-		this.xFlowAdminUI = xFlowAdminUI;
+		this.wfAdminUI = wfAdminUI;
 		this.desktopPane = desk;
 	}
 
@@ -110,7 +110,7 @@ public class ActiveWorkflowWin extends javax.swing.JInternalFrame {
 
 	private void refreshBtnActionPerformed(java.awt.event.ActionEvent evt) {
 		try {
-			activeWfTable.setModel(Utilities.createTableModel(xFlowAdminUI
+			activeWfTable.setModel(Utilities.createTableModel(wfAdminUI
 					.getActiveWorkflows()));
 		} catch (Exception e) {
 			e.printStackTrace();

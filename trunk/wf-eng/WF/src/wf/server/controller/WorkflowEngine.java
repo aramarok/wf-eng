@@ -19,7 +19,7 @@ public class WorkflowEngine implements MessageDrivenBean, MessageListener {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String FLOW_TYPE_XFLOW = "XFLOW";
+	public static final String FLOW_TYPE_WF = "WF";
 
 	private static Logger log = Logger.getLogger(WorkflowEngine.class);
 

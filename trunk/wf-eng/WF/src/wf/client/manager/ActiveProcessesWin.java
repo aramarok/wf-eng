@@ -8,16 +8,16 @@ public class ActiveProcessesWin extends javax.swing.JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	
-	Admin xFlowAdminUI;
+	Admin wfAdminUI;
 	private int wfId = -1;
 
 	public ActiveProcessesWin() {
 		initComponents();
 	}
 
-	public ActiveProcessesWin(Admin xFlowAdminUI) {
+	public ActiveProcessesWin(Admin wfAdminUI) {
 		this();
-		this.xFlowAdminUI = xFlowAdminUI;
+		this.wfAdminUI = wfAdminUI;
 	}
 
 	private void initComponents() {
@@ -67,7 +67,7 @@ public class ActiveProcessesWin extends javax.swing.JInternalFrame {
 		if (wfId == -1)
 			return;
 		try {
-			WorkflowState state = xFlowAdminUI.getWorkflowState(wfId);
+			WorkflowState state = wfAdminUI.getWorkflowState(wfId);
 			this.setTitle("Workflow::" + state.getWorkflowName() + "::"
 					+ state.getIsActive());
 			activeProcTable.setModel(Utilities.createTableModel(state

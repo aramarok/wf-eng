@@ -30,7 +30,7 @@ public class Admin {
 		desk.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		desk.setSize(preferences.getInt("MAIN_SCREEN_W", 800), preferences
 				.getInt("MAIN_SCREEN_H", 600));
-		desk.setTitle("XFlow Manager UI");
+		desk.setTitle("WF Manager UI");
 		desk.addWindowListener(new WinListener(preferences, "MAIN_SCREEN"));
 		desk.setVisible(true);
 
@@ -73,16 +73,16 @@ public class Admin {
 	}
 
 	public static void main(String[] args) {
-		final Admin xFlowAdminUI;
+		final Admin wfAdminUI;
 		try {
-			xFlowAdminUI = new Admin(Preferences
+			wfAdminUI = new Admin(Preferences
 					.getInstance("appdata.properties"));
 
 			Runtime.getRuntime().addShutdownHook(new Thread() {
 				public void run() {
 					try {
 						System.out.println("Flushing preferences.");
-						xFlowAdminUI.getPreferences().flush();
+						wfAdminUI.getPreferences().flush();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

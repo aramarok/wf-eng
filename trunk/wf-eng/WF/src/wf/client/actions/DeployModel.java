@@ -23,7 +23,7 @@ public class DeployModel {
 		}
 
 		try {
-			WorkflowManager.deployModel(xml, WorkflowManager.XFLOW, new User(
+			WorkflowManager.deployModel(xml, WorkflowManager.WF, new User(
 					"foo", "foo"));
 			System.out.println("Success");
 		} catch (WorkFlowException xe) {
