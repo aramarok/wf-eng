@@ -7,26 +7,26 @@ import wf.jms.model.SetVariableResponse;
 import wf.server.controller.RequestHandler;
 import wf.server.controller.WorkflowProcessor;
 
+public class SetVariableRequestHandler implements RequestHandler {
 
-public class SetVariableRequestHandler implements RequestHandler{
-
-  public Response handle(Request r) {
-    SetVariableRequest req =(SetVariableRequest) r;
-    if( log.isDebugEnabled() ){
-      log.debug( "In SetVariableRequest:service." +
-          "\n\tworkflowId = " + req.workflowId +
-          "\n\tvariableName = " + req.variableName +
-          "\n\tvariableValue = " + req.variableValue);
-    }    
-    int response = 0;
-    String message = "OK";
-    try {
-      WorkflowProcessor.getInstance().setVariable (req.workflowId, req.variableName, req.variableValue);
-      response = Response.SUCCESS;
-    } catch (Exception e) {
-      response = Response.FAILURE; e.printStackTrace();
-      message = e.getMessage();
-    }
-    return new SetVariableResponse(response, message);
-  }
+	public Response handle(Request r) {
+		SetVariableRequest req = (SetVariableRequest) r;
+		if (log.isDebugEnabled()) {
+			log.debug("In SetVariableRequest:service." + "\n\tworkflowId = "
+					+ req.workflowId + "\n\tvariableName = " + req.variableName
+					+ "\n\tvariableValue = " + req.variableValue);
+		}
+		int response = 0;
+		String message = "OK";
+		try {
+			WorkflowProcessor.getInstance().setVariable(req.workflowId,
+					req.variableName, req.variableValue);
+			response = Response.SUCCESS;
+		} catch (Exception e) {
+			response = Response.FAILURE;
+			e.printStackTrace();
+			message = e.getMessage();
+		}
+		return new SetVariableResponse(response, message);
+	}
 }

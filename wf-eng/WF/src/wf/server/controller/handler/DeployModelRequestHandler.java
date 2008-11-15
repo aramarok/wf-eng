@@ -7,29 +7,28 @@ import wf.jms.model.Response;
 import wf.server.controller.RequestHandler;
 import wf.server.controller.WorkflowProcessor;
 
+public class DeployModelRequestHandler implements RequestHandler {
 
+	public Response handle(Request r) {
+		DeployModelRequest req = (DeployModelRequest) r;
+		if (log.isDebugEnabled()) {
+			log.debug("Servicing DeployModel request:" + req.type + req.xml);
+		}
 
-public class DeployModelRequestHandler implements RequestHandler{
+		int response = 0;
+		String msg = "OK";
+		try {
+			WorkflowProcessor.getInstance().deployModel(req.xml, req.type,
+					req.user.getName());
+			response = Response.SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			response = Response.FAILURE;
+			msg = e.getMessage();
+		}
 
-  public Response handle(Request r) {
-    DeployModelRequest req = (DeployModelRequest) r;
-    if( log.isDebugEnabled() ){
-      log.debug( "Servicing DeployModel request:" + req.type + req.xml );
-    }
+		return new DeployModelResponse(response, msg);
 
-    int response = 0;
-    String msg = "OK";
-    try {
-      WorkflowProcessor.getInstance().deployModel (req.xml, req.type, req.user.getName());
-      response = Response.SUCCESS;
-    } catch (Exception e) {
-      e.printStackTrace();
-      response = Response.FAILURE;
-      msg = e.getMessage();
-    }
-
-    return new DeployModelResponse(response, msg);
-
-  }
+	}
 
 }

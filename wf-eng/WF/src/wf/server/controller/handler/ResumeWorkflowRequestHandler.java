@@ -7,24 +7,25 @@ import wf.jms.model.ResumeWorkflowResponse;
 import wf.server.controller.RequestHandler;
 import wf.server.controller.WorkflowProcessor;
 
+public class ResumeWorkflowRequestHandler implements RequestHandler {
 
-public class ResumeWorkflowRequestHandler implements RequestHandler{
+	public Response handle(Request r) {
+		ResumeWorkflowRequest req = (ResumeWorkflowRequest) r;
+		if (log.isDebugEnabled()) {
+			log.debug("Servicing ResumeWorkflow request.\n\tWorkflow Id = "
+					+ req.workflowId);
+		}
+		int response = 0;
+		String message = "OK";
 
-  public Response handle(Request r) {
-    ResumeWorkflowRequest req = (ResumeWorkflowRequest) r;    
-    if( log.isDebugEnabled() ){
-      log.debug( "Servicing ResumeWorkflow request.\n\tWorkflow Id = " + req.workflowId);
-    }
-    int response = 0;
-    String message = "OK";
-
-    try {
-      WorkflowProcessor.getInstance().resumeWorkflow ( req.workflowId);
-      response = Response.SUCCESS;
-    } catch (Exception e) {
-      response = Response.FAILURE; e.printStackTrace();
-      message = e.getMessage();
-    }
-    return new ResumeWorkflowResponse(response, message);
-  }
+		try {
+			WorkflowProcessor.getInstance().resumeWorkflow(req.workflowId);
+			response = Response.SUCCESS;
+		} catch (Exception e) {
+			response = Response.FAILURE;
+			e.printStackTrace();
+			message = e.getMessage();
+		}
+		return new ResumeWorkflowResponse(response, message);
+	}
 }

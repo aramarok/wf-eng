@@ -1,15 +1,11 @@
-
-
 package wf.xml;
 
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.StringTokenizer;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -21,18 +17,16 @@ import wf.model.DirectedGraph;
 public class GraphXMLParser {
 
 	public static DirectedGraph parseGxl(String xml, String graphName)
-		throws WorkFlowException {
+			throws WorkFlowException {
 
-		
 		DirectedGraph rgraph = new DirectedGraph(graphName);
 
 		HashMap pm = new HashMap();
 		HashMap rootc = new HashMap();
 
-		
 		try {
-			DocumentBuilderFactory factory =
-				DocumentBuilderFactory.newInstance();
+			DocumentBuilderFactory factory = DocumentBuilderFactory
+					.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 
 			StringReader sreader = new StringReader(xml);
@@ -50,13 +44,8 @@ public class GraphXMLParser {
 				String nodeString = node.getNodeValue();
 				wf.model.Node gnode = getNode(nodeString);
 
-				System.out.println(
-					"Putting: "
-						+ nodeId
-						+ " : "
-						+ gnode.getName()
-						+ " "
-						+ gnode.getNodeType());
+				System.out.println("Putting: " + nodeId + " : "
+						+ gnode.getName() + " " + gnode.getNodeType());
 				pm.put(nodeId, gnode);
 			}
 
@@ -67,12 +56,11 @@ public class GraphXMLParser {
 				String fromNodeId = el.getAttribute("from");
 				String toNodeId = el.getAttribute("to");
 				rootc.put(toNodeId, toNodeId);
-				wf.model.Node fromNode =
-					(wf.model.Node) pm.get(fromNodeId);
+				wf.model.Node fromNode = (wf.model.Node) pm.get(fromNodeId);
 				wf.model.Node toNode = (wf.model.Node) pm.get(toNodeId);
 
-				System.out.println(
-					fromNode.getName() + " to " + toNode.getName());
+				System.out.println(fromNode.getName() + " to "
+						+ toNode.getName());
 				NodeList els2 = el.getElementsByTagName("string");
 				Element e = (Element) els2.item(0);
 				String rule = null;
@@ -105,7 +93,7 @@ public class GraphXMLParser {
 	}
 
 	public static String findRootNodeId(HashMap pm, HashMap rootc)
-		throws Exception {
+			throws Exception {
 
 		String result = null;
 
@@ -156,10 +144,8 @@ public class GraphXMLParser {
 		return gnode;
 	}
 
-	
 	public static void main(String[] args) throws Exception {
-		String xml =
-			"<gxl><graph><node id=\"n0\"><attr name=\"Label\"><string>name=Start;type=Start</string></attr></node></graph></gxl>";
+		String xml = "<gxl><graph><node id=\"n0\"><attr name=\"Label\"><string>name=Start;type=Start</string></attr></node></graph></gxl>";
 		DirectedGraph g = parseGxl(xml, args[0]);
 
 	}
