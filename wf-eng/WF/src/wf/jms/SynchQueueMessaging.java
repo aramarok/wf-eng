@@ -1,4 +1,3 @@
-
 package wf.jms;
 
 import java.io.ByteArrayInputStream;
@@ -23,79 +22,78 @@ import wf.exceptions.WorkFlowException;
 import wf.jms.model.Request;
 import wf.jms.model.Response;
 
-
 public class SynchQueueMessaging {
 
-  private static QueueConnection qconn = null;
-  private static QueueSession qsession = null;
-  private static Queue receiveQueue = null;
-  private static Queue wfQueue = null;
+	private static QueueConnection qconn = null;
+	private static QueueSession qsession = null;
+	private static Queue receiveQueue = null;
+	private static Queue wfQueue = null;
 
-  static {
+	static {
 
-    try {
-      
-      InitialContext iniCtx = new InitialContext();
+		try {
 
-      Object tmp = iniCtx.lookup(AppConfig.XFLOW_CONNECTION_FACTORY());
-      QueueConnectionFactory qcf = (QueueConnectionFactory) tmp;
-      qconn = qcf.createQueueConnection();
+			InitialContext iniCtx = new InitialContext();
 
-      qsession = qconn.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
-      receiveQueue = (Queue) iniCtx.lookup(AppConfig.XFLOW_QUEUE());
+			Object tmp = iniCtx.lookup(AppConfig.getConnectionFactory());
+			QueueConnectionFactory qcf = (QueueConnectionFactory) tmp;
+			qconn = qcf.createQueueConnection();
 
-      qconn.start();
+			qsession = qconn.createQueueSession(false,
+					QueueSession.AUTO_ACKNOWLEDGE);
+			receiveQueue = (Queue) iniCtx.lookup(AppConfig.getOutboxQueue());
 
-      wfQueue = (Queue) iniCtx.lookup(AppConfig.WORKFLOWENGINE_QUEUE());
-      JMSShutdownHook shook = new JMSShutdownHook();
-      Runtime.getRuntime().addShutdownHook(shook);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
+			qconn.start();
 
-  public static void close() throws JMSException {
-    qconn.close();
-  }
+			wfQueue = (Queue) iniCtx.lookup(AppConfig.getWfQueue());
+			JMSShutdownHook shook = new JMSShutdownHook();
+			Runtime.getRuntime().addShutdownHook(shook);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-  public static Response sendRequest(Request req) throws JMSException, IOException,
-      ClassNotFoundException,
-      WorkFlowException {
-    ByteArrayOutputStream out = new ByteArrayOutputStream();
-    ObjectOutputStream s = new ObjectOutputStream(out);
+	public static void close() throws JMSException {
+		qconn.close();
+	}
 
-    s.writeObject(req);
-    s.flush();
-    byte[] barr = out.toByteArray();
-    String replyName = req.replyName;
-    QueueReceiver receiver = qsession.createReceiver(receiveQueue,
-        "ReplyName in ('" + replyName + "')");
-    QueueSender sender = qsession.createSender(wfQueue);
+	public static Response sendRequest(Request req) throws JMSException,
+			IOException, ClassNotFoundException, WorkFlowException {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		ObjectOutputStream s = new ObjectOutputStream(out);
 
-    BytesMessage m = qsession.createBytesMessage();
-    m.writeBytes(barr);
-    m.setStringProperty("ReplyName", replyName);
+		s.writeObject(req);
+		s.flush();
+		byte[] barr = out.toByteArray();
+		String replyName = req.replyName;
+		QueueReceiver receiver = qsession.createReceiver(receiveQueue,
+				"ReplyName in ('" + replyName + "')");
+		QueueSender sender = qsession.createSender(wfQueue);
 
-    m.setJMSReplyTo(receiveQueue);
-    sender.send(m);
-    
-    System.out.println("Receiver = " + receiver);
-    System.out.println("Sender = " + sender);
-    
-    Message msg = receiver.receive(5000);
-    Response response = null;
-    if (msg != null) {
-      BytesMessage bytesMessage = (BytesMessage) msg;
-      barr = new byte[10000];
-      bytesMessage.readBytes(barr);
-      ByteArrayInputStream in = new ByteArrayInputStream(barr);
-      ObjectInputStream sin = new ObjectInputStream(in);
-      response = (Response) sin.readObject();
-    } else {
-      throw new WorkFlowException("Response not received from server within 5 seconds.");
-    }
-    return response;
-  }
+		BytesMessage m = qsession.createBytesMessage();
+		m.writeBytes(barr);
+		m.setStringProperty("ReplyName", replyName);
+
+		m.setJMSReplyTo(receiveQueue);
+		sender.send(m);
+
+		System.out.println("Receiver = " + receiver);
+		System.out.println("Sender = " + sender);
+
+		Message msg = receiver.receive(5000);
+		Response response = null;
+		if (msg != null) {
+			BytesMessage bytesMessage = (BytesMessage) msg;
+			barr = new byte[10000];
+			bytesMessage.readBytes(barr);
+			ByteArrayInputStream in = new ByteArrayInputStream(barr);
+			ObjectInputStream sin = new ObjectInputStream(in);
+			response = (Response) sin.readObject();
+		} else {
+			throw new WorkFlowException(
+					"Response not received from server within 5 seconds.");
+		}
+		return response;
+	}
 
 }
-

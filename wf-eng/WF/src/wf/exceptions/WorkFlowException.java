@@ -1,16 +1,18 @@
-
 package wf.exceptions;
 
 public class WorkFlowException extends Exception {
 
-  
-  public WorkFlowException (String msg) { super (msg); }
+	private static final long serialVersionUID = 1L;
 
-  public WorkFlowException(Throwable cause) {
-    super(cause);
-  }
+	public WorkFlowException(String msg) {
+		super(msg);
+	}
 
-  public WorkFlowException(String message, Throwable cause) {
-    super(message, cause);
-  }
+	public WorkFlowException(Throwable cause) {
+		super(cause);
+	}
+
+	public WorkFlowException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }
