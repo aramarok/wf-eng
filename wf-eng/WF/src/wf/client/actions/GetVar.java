@@ -1,25 +1,21 @@
-
-
-
 package wf.client.actions;
 
 import wf.client.WorkflowManager;
 import wf.client.auth.User;
 import wf.exceptions.WorkFlowException;
 
-
-
 public class GetVar {
 
-    public static void main (String[] args) throws WorkFlowException {
+	public static void main(String[] args) throws WorkFlowException {
 
-        String wfId = args[0];
-        String name = args[1];
-        Integer wfi = new Integer(wfId);
+		String wfId = args[0];
+		String name = args[1];
+		Integer wfi = new Integer(wfId);
 
-        Integer workflowId = new Integer(wfi.intValue());
-        Object val = WorkflowManager.getVariable (workflowId, name, new User("rtan", "rtan"));
-        System.out.println ("Var value: " + val);
-    }
+		Integer workflowId = new Integer(wfi.intValue());
+		Object val = WorkflowManager.getVariable(workflowId, name, new User(
+				"rtan", "rtan"));
+		System.out.println("Var value: " + val);
+	}
 
 }
