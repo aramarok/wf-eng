@@ -1,13 +1,13 @@
 <xflow name="case1">
-    <nodes>
-        <node id="StartNode" type="Start"/>
-        <node id="proc1" type="Process"/>
-        <node id="proc2" type="Process"/>
-        <node id="EndNode" type="End"/>
-    </nodes>
-    <transitions>
-        <transition from="StartNode" to="proc1"/>
-        <transition from="proc1" to="proc2"/>
-        <transition from="proc2" to="EndNode"/>
-    </transitions>
+	<nodes>
+		<node id="StartNode" type="Start" />
+		<node id="proc1" type="Process" />
+		<node id="proc2" type="Process" />
+		<node id="EndNode" type="End" />
+	</nodes>
+	<transitions>
+		<transition from="StartNode" to="proc1" />
+		<transition from="proc1" to="proc2" />
+		<transition from="proc2" to="EndNode" />
+	</transitions>
 </xflow>

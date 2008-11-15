@@ -2,44 +2,45 @@ package wf.server.case1;
 
 import java.io.Serializable;
 
+public class TestCase1Payload implements Serializable {
 
-public class TestCase1Payload implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	int id;
+	String name;
+	String descr;
+	double value;
 
-  int id;
-  String name;
-  String descr;
-  double value;
+	public int getId() {
+		return id;
+	}
 
-  public int getId() {
-    return id;
-  }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-  public void setId(int id) {
-    this.id = id;
-  }
+	public String getName() {
+		return name;
+	}
 
-  public String getName() {
-    return name;
-  }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-  public void setName(String name) {
-    this.name = name;
-  }
+	public String getDescr() {
+		return descr;
+	}
 
-  public String getDescr() {
-    return descr;
-  }
+	public void setDescr(String descr) {
+		this.descr = descr;
+	}
 
-  public void setDescr(String descr) {
-    this.descr = descr;
-  }
+	public double getValue() {
+		return value;
+	}
 
-  public double getValue() {
-    return value;
-  }
-
-  public void setValue(double value) {
-    this.value = value;
-  }
+	public void setValue(double value) {
+		this.value = value;
+	}
 
 }

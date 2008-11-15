@@ -2,34 +2,28 @@ package wf.server.controller;
 
 import java.util.Iterator;
 import java.util.List;
-
 import junit.framework.TestCase;
 import wf.db.Persistence;
 import wf.exceptions.WorkFlowException;
 
+public class WorkflowPTest extends TestCase {
 
+	public void testSaveDB() throws WorkFlowException {
+		Persistence.getWorkflowP().saveNewWorkflow(8888, "wf", "testCase", -1);
+	}
 
-public class WorkflowPTest extends TestCase{
+	public void testGetAllWorkflows() throws Exception {
+		List map = Persistence.getWorkflowP().getAllWorkflows();
+		printList(map);
+	}
 
-  public void testSaveDB() throws WorkFlowException {
-    Persistence.getWorkflowP().saveNewWorkflow( 8888, "wf","testCase", -1);
-  }
+	private void printList(List l) {
 
-  public void testGetAllWorkflows() throws Exception {
-    List map = Persistence.getWorkflowP().getAllWorkflows();
-    printList( map );
-  }
+		for (Iterator j = l.iterator(); j.hasNext();) {
 
-  private void printList(List l) {
+			System.out.println("entry = " + j.next());
+		}
 
-    for (Iterator j = l.iterator(); j.hasNext();) {
-
-      System.out.println("entry = " + j.next() );
-    }
-
-  }
-
-
-
+	}
 
 }
