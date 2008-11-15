@@ -168,7 +168,7 @@
 				<pathelement location="${build.dir}" />
 				<path refid="wf.classpath" />
 			</classpath>
-			<arg line="xflow.server.AllTests" />
+			<arg line="wf.server.AllTests" />
 			<sysproperty key="remote" value="${remote}" />
 		</java>
 	</target>

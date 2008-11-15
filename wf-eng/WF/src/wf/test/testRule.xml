@@ -1,4 +1,4 @@
-<xflow name="SimpleWorkflow">
+<wf name="SimpleWorkflow">
 	<nodes>
 		<node id="StartNode" type="Start" />
 		<node id="P1" type="Process" />
@@ -27,5 +27,5 @@
 		<transition from="P6" to="EndNode" />
 		<transition from="AND" to="EndNode" />
 	</transitions>
-</xflow>
+</wf>
 
