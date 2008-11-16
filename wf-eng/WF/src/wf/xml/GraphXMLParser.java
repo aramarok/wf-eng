@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -13,16 +15,19 @@ import org.xml.sax.InputSource;
 
 import wf.exceptions.WorkFlowException;
 import wf.model.DirectedGraph;
+import wf.model.Node;
 
 public class GraphXMLParser {
 
+	private static Logger log = Logger.getLogger(GraphXMLParser.class);
+	
 	public static DirectedGraph parseGxl(String xml, String graphName)
 			throws WorkFlowException {
 
 		DirectedGraph rgraph = new DirectedGraph(graphName);
 
-		HashMap pm = new HashMap();
-		HashMap rootc = new HashMap();
+		HashMap<String, Node> pm = new HashMap<String, Node>();
+		HashMap<String, String> rootc = new HashMap<String, String>();
 
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory
@@ -56,8 +61,8 @@ public class GraphXMLParser {
 				String fromNodeId = el.getAttribute("from");
 				String toNodeId = el.getAttribute("to");
 				rootc.put(toNodeId, toNodeId);
-				wf.model.Node fromNode = (wf.model.Node) pm.get(fromNodeId);
-				wf.model.Node toNode = (wf.model.Node) pm.get(toNodeId);
+				wf.model.Node fromNode = pm.get(fromNodeId);
+				wf.model.Node toNode = pm.get(toNodeId);
 
 				System.out.println(fromNode.getName() + " to "
 						+ toNode.getName());
@@ -82,7 +87,7 @@ public class GraphXMLParser {
 			if (rootNodeId == null) {
 				throw new WorkFlowException("No root node in graph");
 			}
-			wf.model.Node rootNode = (wf.model.Node) pm.get(rootNodeId);
+			wf.model.Node rootNode = pm.get(rootNodeId);
 			rgraph.setRootNode(rootNode);
 			rootNode.traverse();
 		} catch (Exception e) {
@@ -92,14 +97,14 @@ public class GraphXMLParser {
 		return rgraph;
 	}
 
-	public static String findRootNodeId(HashMap pm, HashMap rootc)
+	public static String findRootNodeId(HashMap<String, Node> pm, HashMap<String, String> rootc)
 			throws Exception {
 
 		String result = null;
 
-		Iterator itr = pm.keySet().iterator();
+		Iterator<String> itr = pm.keySet().iterator();
 		while (itr.hasNext()) {
-			String nid = (String) itr.next();
+			String nid = itr.next();
 			if (rootc.get(nid) == null) {
 				if (result == null) {
 					result = nid;
@@ -147,6 +152,6 @@ public class GraphXMLParser {
 	public static void main(String[] args) throws Exception {
 		String xml = "<gxl><graph><node id=\"n0\"><attr name=\"Label\"><string>name=Start;type=Start</string></attr></node></graph></gxl>";
 		DirectedGraph g = parseGxl(xml, args[0]);
-
+		log.info(g.toXML());
 	}
 }
