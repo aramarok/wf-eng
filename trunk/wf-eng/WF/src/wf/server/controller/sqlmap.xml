@@ -8,26 +8,24 @@
 	<properties resource="wf/server/controller/sqlmap.properties" />
 
 	<settings maxTransactions="1000" cacheModelsEnabled="false"
-		enhancementEnabled="false" lazyLoadingEnabled="true"
-		maxRequests="10000" maxSessions="1000" useStatementNamespaces="false" />
+		enhancementEnabled="false" lazyLoadingEnabled="true" maxRequests="12000"
+		maxSessions="2000" useStatementNamespaces="false" />
 
 	<transactionManager type="JDBC">
 
 		<dataSource type="DBCP">
-			<property name="JDBC.Driver" value="${DBDRIVER}" />
-			<property name="JDBC.ConnectionURL" value="${DBURL}" />
-			<property name="JDBC.Username" value="${DBUSER}" />
-			<property name="JDBC.Password" value="${DBPASSWORD}" />
+			<property name="JDBC.Driver" value="${DB_DRIVER}" />
+			<property name="JDBC.ConnectionURL" value="${DB_URL}" />
+			<property name="JDBC.Username" value="${DB_USERNAME}" />
+			<property name="JDBC.Password" value="${DB_PASSWORD}" />
 			<property name="Pool.MaximumActiveConnections" value="1000" />
 			<property name="Pool.MaximumIdleConnections" value="100" />
-			<property name="Pool.MaximumWait" value="6000" />
-			<!-- ??? -->
+			<property name="Pool.MaximumWait" value="6500" />
 			<property name="Pool.PingEnabled" value="false" />
-			<property name="Pool.ValidationQuery"
-				value="select 1 from dbcp_helper" />
+			<property name="Pool.ValidationQuery" value="select 1 from dbcp_helper" />
 			<property name="Pool.LogAbandoned" value="true" />
 			<property name="Pool.RemoveAbandoned" value="true" />
-			<property name="Pool.RemoveAbandonedTimeout" value="500" />
+			<property name="Pool.RemoveAbandonedTimeout" value="600" />
 		</dataSource>
 	</transactionManager>
 

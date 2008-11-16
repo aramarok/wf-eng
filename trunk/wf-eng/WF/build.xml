@@ -20,10 +20,10 @@
 	
 	<target name="database.from.scratch" description="Recreate Database">
 		<property file="conf/app.properties" />
-		<echo message="${DBDRIVER} url=${DBURL} userid=${DBUSER} password=${DBPASSWORD}" />
+		<echo message="${DB_DRIVER} url=${DB_URL} userid=${DB_USERNAME} password=${DB_PASSWORD}" />
 		<!--sql classpathref="wf.classpath"    onerror="continue" autocommit="true"
-             driver="${DBDRIVER}" url="${DBURL}" userid="${DBUSER}" password="${DBPASSWORD}" src="${conf.dir}/${database}/drop_db.${database}.sql"/ -->
-		<sql classpathref="wf.classpath" onerror="continue" autocommit="true" driver="${DBDRIVER}" url="${DBURL}" userid="${DBUSER}" password="${DBPASSWORD}" src="${db.dir}/${database}/create_db.${database}.sql" />
+             driver="${DB_DRIVER}" url="${DB_URL}" userid="${DB_USERNAME}" password="${DB_PASSWORD}" src="${conf.dir}/${database}/drop_db.sql"/ -->
+		<sql classpathref="wf.classpath" onerror="continue" autocommit="true" driver="${DB_DRIVER}" url="${DB_URL}" userid="${DB_USERNAME}" password="${DB_PASSWORD}" src="${db.dir}/${database}/create_db.sql" />
 	</target>
 
 	

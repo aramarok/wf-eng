@@ -102,7 +102,7 @@ public class AppConfig {
 
 	public static String DB_CREATE_SCRIPT() {
 		return getInstance().get("CREATEDB-SQL",
-				"conf/create_db.sql");
+				"conf/db/create_db.sql");
 	}
 
 }
