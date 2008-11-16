@@ -22,8 +22,9 @@ import wf.model.DirectedGraph;
 public class GraphSerializer {
 
 	private static Logger log = Logger.getLogger(GraphSerializer.class);
-	private static String template = "<wf><nodes></nodes><transitions></transitions></wf>";
+	private static String template_test = "<wf><nodes></nodes><transitions></transitions></wf>";
 
+	@SuppressWarnings("unchecked")
 	public static String serialize(DirectedGraph dg) throws WorkFlowException {
 
 		String graphName = dg.getName();
@@ -33,7 +34,7 @@ public class GraphSerializer {
 					.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 
-			StringReader sReader = new StringReader(template);
+			StringReader sReader = new StringReader(template_test);
 			InputSource is = new InputSource(sReader);
 			Document doc = builder.parse(is);
 
@@ -107,6 +108,7 @@ public class GraphSerializer {
 		return serialized;
 	}
 
+	@SuppressWarnings("unchecked")
 	private static void serializeTransitions(Document doc,
 			Element transitionsEl, wf.model.Node gnode) {
 
@@ -146,6 +148,6 @@ public class GraphSerializer {
 		gnode3.addDestination(gnode4, null);
 		gnode4.addDestination(gnode5, "//book/detail/inventory[@copies > 50]");
 
-		System.out.println(dg.toXML());
+		log.info(dg.toXML());
 	}
 }

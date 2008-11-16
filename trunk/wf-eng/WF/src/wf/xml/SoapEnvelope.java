@@ -10,9 +10,12 @@ import org.apache.axis.message.SOAPEnvelope;
 import org.apache.axis.message.SOAPHeaderElement;
 import org.apache.axis.utils.Mapping;
 import org.apache.axis.utils.XMLUtils;
+import org.apache.log4j.Logger;
 
 public class SoapEnvelope {
 
+	private static Logger log = Logger.getLogger(SoapEnvelope.class);
+	
 	static String nameSpace = "http://example.com/uvtwf";
 	static String wfPrefix = "WF";
 
@@ -34,12 +37,13 @@ public class SoapEnvelope {
 
 			AxisClient tmpEngine = new AxisClient(new NullProvider());
 			MessageContext msgContext = new MessageContext(tmpEngine);
-
+			log.info(msgContext.toString());
+			
 			StringWriter writer = new StringWriter();
 			writer.close();
 
 			String s = writer.getBuffer().toString();
-			System.out.println(s);
+			log.info(s);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

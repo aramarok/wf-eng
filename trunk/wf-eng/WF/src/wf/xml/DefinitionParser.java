@@ -12,6 +12,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import wf.exceptions.WorkFlowException;
 import wf.model.DirectedGraph;
+import wf.model.Node;
 
 public class DefinitionParser {
 
@@ -22,8 +23,8 @@ public class DefinitionParser {
 		String graphName = null;
 		DirectedGraph rgraph = null;
 
-		HashMap pm = new HashMap();
-		HashMap rootc = new HashMap();
+		HashMap<String, Node> pm = new HashMap<String, Node>();
+		HashMap<String, String> rootc = new HashMap<String, String>();
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory
 					.newInstance();
@@ -38,13 +39,11 @@ public class DefinitionParser {
 			if (element != null) {
 				graphName = element.getAttribute("name");
 				if (graphName == null) {
-					throw new WorkFlowException(
-							"wf name attribute not found in XML file.");
+					throw new WorkFlowException("wf name was not found in the xml file");
 				}
 				rgraph = new DirectedGraph(graphName);
 			} else {
-				throw new WorkFlowException(
-						"<wf> element not found in XML file.");
+				throw new WorkFlowException("<wf> element was not found in the xml file");
 			}
 
 			elements = doc.getElementsByTagName("node");
@@ -53,11 +52,11 @@ public class DefinitionParser {
 				element = (Element) elements.item(i);
 				String nodeName = element.getAttribute("id");
 				if (nodeName == null) {
-					throw new WorkFlowException("node id is not defined.");
+					throw new WorkFlowException("node id is not defined in the xml file");
 				}
 				String nodeType = element.getAttribute("type");
 				if (nodeType == null) {
-					throw new WorkFlowException("node type is not defined.");
+					throw new WorkFlowException("node type is not defined in the xml file");
 				}
 				wf.model.Node gnode = new wf.model.Node(nodeName, nodeType);
 
@@ -65,20 +64,17 @@ public class DefinitionParser {
 				if (timeOut != null && !timeOut.equals("")) {
 					Integer dTimeOut = new Integer(timeOut);
 					gnode.setTimeoutMinutes(dTimeOut.intValue());
-					String timeOutHandler = element
-							.getAttribute("timeoutHandler");
+					String timeOutHandler = element.getAttribute("timeoutHandler");
 					if (timeOutHandler != null) {
 						gnode.setTimeoutHandler(timeOutHandler);
 					}
 				}
-				log.info("Putting: " + nodeName + " : " + gnode.getName() + " "
-						+ gnode.getNodeType());
+				log.info("Putting: " + nodeName + " : " + gnode.getName() + " " + gnode.getNodeType());
 				pm.put(nodeName, gnode);
 				if (nodeType.equals(wf.model.Node.CONTAINER)) {
 					String containee = element.getAttribute("containee");
 					if (containee == null) {
-						throw new WorkFlowException(
-								"Containee not defined for container process");
+						throw new WorkFlowException("containee is not defined for container process");
 					}
 					gnode.setContainee(containee);
 				}
@@ -91,14 +87,13 @@ public class DefinitionParser {
 				String fromNodeName = element.getAttribute("from");
 				String toNodeName = element.getAttribute("to");
 				rootc.put(toNodeName, toNodeName);
-				log.info("parse transition from [" + fromNodeName + "] to ["
-						+ toNodeName + "]");
-				wf.model.Node fromNode = (wf.model.Node) pm.get(fromNodeName);
+				log.info("parse a transition from node [" + fromNodeName + "] to node ["+ toNodeName + "]");
+				wf.model.Node fromNode = pm.get(fromNodeName);
 				if (fromNode == null)
-					throw new WorkFlowException(fromNodeName + " undefined!");
-				wf.model.Node toNode = (wf.model.Node) pm.get(toNodeName);
+					throw new WorkFlowException("from node [" + fromNodeName + "] is undefined");
+				wf.model.Node toNode = pm.get(toNodeName);
 				if (toNode == null)
-					throw new WorkFlowException(toNode + " undefined!");
+					throw new WorkFlowException("to node [" + toNode + "] is undefined");
 
 				log.info(fromNode.getName() + " to " + toNode.getName());
 				NodeList els2 = element.getElementsByTagName("rule");
@@ -107,7 +102,7 @@ public class DefinitionParser {
 				if (e != null) {
 					org.w3c.dom.Node node = e.getFirstChild();
 					rule = node.getNodeValue();
-					log.info(rule);
+					log.info("Rule: " + rule);
 				}
 
 				fromNode.addDestination(toNode, rule);
@@ -120,9 +115,9 @@ public class DefinitionParser {
 		try {
 			String rootNodeId = findRootNodeId(pm, rootc);
 			if (rootNodeId == null) {
-				throw new WorkFlowException("No root node in graph");
+				throw new WorkFlowException("Root node was not found in graph");
 			}
-			wf.model.Node rootNode = (wf.model.Node) pm.get(rootNodeId);
+			wf.model.Node rootNode = pm.get(rootNodeId);
 			rgraph.setRootNode(rootNode);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -132,19 +127,19 @@ public class DefinitionParser {
 		return rgraph;
 	}
 
-	public static String findRootNodeId(HashMap pm, HashMap rootc)
-			throws Exception {
+	public static String findRootNodeId(HashMap<String, Node> pm,
+			HashMap<String, String> rootc) throws Exception {
 
 		String result = null;
 
-		Iterator itr = pm.keySet().iterator();
+		Iterator<String> itr = pm.keySet().iterator();
 		while (itr.hasNext()) {
-			String nid = (String) itr.next();
+			String nid = itr.next();
 			if (rootc.get(nid) == null) {
 				if (result == null) {
 					result = nid;
 				} else {
-					throw new Exception("Graph has more than one root node");
+					throw new Exception("Error: the graph has more than one root node");
 				}
 			}
 		}
