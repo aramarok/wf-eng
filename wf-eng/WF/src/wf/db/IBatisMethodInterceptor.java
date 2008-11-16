@@ -7,18 +7,7 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 
 public class IBatisMethodInterceptor implements MethodInterceptor {
 
-	int c = 0;
-
-	private void inc() {
-		c++;
-		System.out.println("inc c = " + c);
-	}
-
-	private void dec() {
-		c--;
-		System.out.println("dec c = " + c);
-	}
-
+	@SuppressWarnings("unchecked")
 	public Object intercept(Object o, Method method, Object[] parameters,
 			MethodProxy methodProxy) throws Throwable {
 		boolean close = true;

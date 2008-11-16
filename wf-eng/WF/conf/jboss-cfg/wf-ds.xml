@@ -5,8 +5,8 @@
 		<jndi-name>WFDS</jndi-name>
 		<connection-url>jdbc:postgresql://localhost/wf</connection-url>
 		<driver-class>org.postgresql.Driver</driver-class>
-		<user-name>dbuser</user-name>
-		<password>dbuser</password>
+		<user-name>DB_USERNAME</user-name>
+		<password>DB_USERNAME</password>
 		<check-valid-connection-sql>
 			select * from pg_tables where tablename = ''
 		</check-valid-connection-sql>

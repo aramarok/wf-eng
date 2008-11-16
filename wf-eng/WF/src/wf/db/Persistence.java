@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Map;
 
-import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import net.sf.cglib.proxy.Enhancer;
@@ -33,12 +32,10 @@ import com.ibatis.sqlmap.client.SqlMapClientBuilder;
 public class Persistence {
 	public static final String DB_PROPERTIES = "app.properties";
 	private static Object guard = new Object();
-	private static InitialContext iniCtx;
 	private static DataSource ds;
 	static Logger log = Logger.getLogger(Persistence.class);
 
 	static public void init() {
-
 	}
 
 	public static void execute(IBatisWork work) throws Exception {
@@ -179,11 +176,11 @@ public class Persistence {
 		return (SqlMapClient) threadSqlMap.get();
 	}
 
-	private static Map enhancers = new Hashtable();
+	private static Map<String, Enhancer> enhancers = new Hashtable<String, Enhancer>();
 	private static MethodInterceptor ibatisCallback = new IBatisMethodInterceptor();
 
 	public static Object enhanceInstanceOfClass(Class clazz) {
-		Enhancer en = (Enhancer) enhancers.get(clazz.getName());
+		Enhancer en = enhancers.get(clazz.getName());
 		if (en == null) {
 			if (log.isDebugEnabled()) {
 				log.debug("Create Enhancer for class::" + clazz.getName());
