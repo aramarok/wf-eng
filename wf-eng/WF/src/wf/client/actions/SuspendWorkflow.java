@@ -10,7 +10,7 @@ public class SuspendWorkflow {
 
 		Integer wfId = new Integer(args[0]);
 		Integer workflowId = new Integer(wfId.intValue());
-		WorkflowManager.suspendWorkflow(workflowId, new User("rtan", "rtan"));
+		WorkflowManager.suspendWorkflow(workflowId, new User("user", "password"));
 		System.out.println("Success");
 	}
 

@@ -17,7 +17,7 @@ public class TestEventPublisher {
 
 		System.out.println("Publishing Model Deployed Event");
 		try {
-			ep.publishModelDeployedEvent("CreditApproval", 1, "rtan");
+			ep.publishModelDeployedEvent("CreditApproval", 1, "user");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -25,7 +25,7 @@ public class TestEventPublisher {
 		System.out.println("Publishing WorkflowStarted Event");
 		try {
 			ep.publishWorkflowStartedEvent("CreditApproval", -1, new Integer(
-					123), new Integer(-1), "rtan", wi);
+					123), new Integer(-1), "user", wi);
 		} catch (WorkFlowException e) {
 			System.out.println(e.getMessage());
 		}
@@ -41,7 +41,7 @@ public class TestEventPublisher {
 		System.out.println("Publishing Workflow Suspended Event");
 		try {
 			ep.publishWorkflowSuspendedEvent("CreditApproval", -1, new Integer(
-					123), "rtan");
+					123), "user");
 		} catch (WorkFlowException e) {
 			System.out.println(e.getMessage());
 		}
@@ -49,7 +49,7 @@ public class TestEventPublisher {
 		System.out.println("Publishing Workflow Resumed Event");
 		try {
 			ep.publishWorkflowResumedEvent("CreditApproval", -1, new Integer(
-					123), "rtan");
+					123), "user");
 		} catch (WorkFlowException e) {
 			System.out.println(e.getMessage());
 		}
@@ -57,7 +57,7 @@ public class TestEventPublisher {
 		System.out.println("Publishing Workflow Aborted Event");
 		try {
 			ep.publishWorkflowAbortedEvent("CreditApproval", -1, new Integer(
-					123), "rtan");
+					123), "user");
 		} catch (WorkFlowException e) {
 			System.out.println(e.getMessage());
 		}
@@ -65,7 +65,7 @@ public class TestEventPublisher {
 		System.out.println("Publishing Workflow Completed Event");
 		try {
 			ep.publishWorkflowCompletedEvent("CreditApproval", -1, new Integer(
-					123), "rtan");
+					123), "user");
 		} catch (WorkFlowException e) {
 			System.out.println(e.getMessage());
 		}

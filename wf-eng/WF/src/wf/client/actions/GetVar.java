@@ -12,7 +12,7 @@ public class GetVar {
 		String varName = args[1];
 		Integer workflowId = new Integer(wfId.intValue());
 		Object val = WorkflowManager.getVariable(workflowId, varName, new User(
-				"rtan", "rtan"));
+				"user", "password"));
 		System.out.println("Var value: " + val);
 	}
 

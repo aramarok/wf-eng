@@ -56,7 +56,7 @@ public class SetGetVariableWS {
 		Integer wfId = new Integer(args[0]);
 		String varName = args[1];
 		String varVal = args[2];
-		User user = new User("rtan", "rtan");
+		User user = new User("user", "password");
 
 		call.invoke(new Object[] { wfId, varName, varVal, user });
 

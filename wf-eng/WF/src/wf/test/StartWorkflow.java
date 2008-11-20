@@ -12,7 +12,7 @@ public class StartWorkflow {
 		String wfName = null;
 		
 		if (args.length ==0 ){
-			wfName = "SimpleWorkflow";
+			wfName = "case_and";
 		} else {
 			wfName = args[0];
 		}

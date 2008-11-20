@@ -11,7 +11,7 @@ public class SetVar {
 		Integer wfId = new Integer(args[0]);
 		String varName = args[1];
 		String varValue = args[2];
-		User user = new User("rtan", "rtan");
+		User user = new User("user", "password");
 
 		Integer workflowId = new Integer(wfId.intValue());
 		WorkflowManager.setVariable(workflowId, varName, varValue, user);

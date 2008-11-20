@@ -12,7 +12,7 @@ public class TestSetVar {
 		String name = args[1];
 		String value = args[2];
 		Integer wfi = new Integer(wfId);
-		User user = new User("rtan", "rtan");
+		User user = new User("user", "password");
 
 		Integer workflowId = new Integer(wfi.intValue());
 		WorkflowManager.setVariable(workflowId, name, value, user);
