@@ -11,6 +11,7 @@ import java.util.Map;
 import wf.db.Persistence;
 import wf.server.controller.IBatisWork;
 import wf.util.Util;
+import wf.xml.WFXMLTagAndAttributeConstants;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
@@ -110,21 +111,21 @@ public class Node implements Serializable {
 	public String getContainee() {
 		String containee = null;
 		if (nodeType.equals(Node.CONTAINER)) {
-			containee = (String) properties.get("containee");
+			containee = (String) properties.get(WFXMLTagAndAttributeConstants.CONTAINEE_ATTRIBUTE);
 		}
 		return containee;
 	}
 
 	public void setContainee(String graphName) {
 		if (nodeType.equals(Node.CONTAINER)) {
-			properties.put("containee", graphName);
+			properties.put(WFXMLTagAndAttributeConstants.CONTAINEE_ATTRIBUTE, graphName);
 		}
 	}
 
 	public int getContaineeVersion() {
 		int version = -1;
 		if (nodeType.equals(Node.CONTAINER)) {
-			Integer iObj = (Integer) properties.get("containeeVersion");
+			Integer iObj = (Integer) properties.get(WFXMLTagAndAttributeConstants.CONTAINEEVERSION_ATTRIBUTE);
 			if (iObj != null) {
 				version = iObj.intValue();
 			}
@@ -134,7 +135,7 @@ public class Node implements Serializable {
 
 	public void setContaineeVersion(int version) {
 		if (nodeType.equals(Node.CONTAINER)) {
-			properties.put("containeeVersion", new Integer(version));
+			properties.put(WFXMLTagAndAttributeConstants.CONTAINEEVERSION_ATTRIBUTE, new Integer(version));
 		}
 	}
 
@@ -157,7 +158,7 @@ public class Node implements Serializable {
 				for (Iterator j = params.iterator(); j.hasNext();) {
 					Map entry = (Map) j.next();
 					properties
-							.put(Util.getValue(entry, "name"), Util
+							.put(Util.getValue(entry, WFXMLTagAndAttributeConstants.NAME_ATTRIBUTE), Util
 									.objFromXML((String) Util.getValue(entry,
 											"value")));
 				}
@@ -460,14 +461,14 @@ public class Node implements Serializable {
 		if (!nodeType.equals(PROCESS)) {
 			return;
 		}
-		properties.put("timeoutMinutes", new Integer(timeoutMinutes));
+		properties.put(WFXMLTagAndAttributeConstants.TIMEOUTMINUTES_ATTRIBUTE, new Integer(timeoutMinutes));
 	}
 
 	public int getTimeoutMinutes() {
 		if (!nodeType.equals(PROCESS)) {
 			return -1;
 		}
-		Integer tout = (Integer) properties.get("timeoutMinutes");
+		Integer tout = (Integer) properties.get(WFXMLTagAndAttributeConstants.TIMEOUTMINUTES_ATTRIBUTE);
 		if (tout != null) {
 			return tout.intValue();
 		} else {
@@ -479,14 +480,14 @@ public class Node implements Serializable {
 		if (!nodeType.equals(PROCESS)) {
 			return;
 		}
-		properties.put("timeoutHandler", timeoutHandler);
+		properties.put(WFXMLTagAndAttributeConstants.TIMEOUTHANDLER_ATTRIBUTE, timeoutHandler);
 	}
 
 	public String getTimeoutHandler() {
 		if (!nodeType.equals(PROCESS)) {
 			return null;
 		}
-		String handler = (String) properties.get("timeoutHandler");
+		String handler = (String) properties.get(WFXMLTagAndAttributeConstants.TIMEOUTHANDLER_ATTRIBUTE);
 		return handler;
 	}
 

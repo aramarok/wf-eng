@@ -1,6 +1,6 @@
 package wf.client.manager;
 
-import wf.client.WFClientConstants;
+import wf.client.WFConstants;
 import wf.client.Admin;
 import wf.client.manager.ActiveProcessesWin;
 import wf.client.manager.ActiveWorkflowWin;
@@ -39,7 +39,7 @@ public class DesktopPane extends javax.swing.JFrame {
 		jMenu2.setMnemonic('w');
 		jMenu2.setText("Show window");
 		jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource(
-				WFClientConstants.CLIENT_ICON_LOCATION + "types.gif")));
+				WFConstants.CLIENT_ICON_LOCATION + "types.gif")));
 		jMenuItem1.setMnemonic('t');
 		jMenuItem1.setText("Workflow Types");
 		jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -51,7 +51,7 @@ public class DesktopPane extends javax.swing.JFrame {
 		jMenu2.add(jMenuItem1);
 
 		jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource(
-				WFClientConstants.CLIENT_ICON_LOCATION + "execute.gif")));
+				WFConstants.CLIENT_ICON_LOCATION + "execute.gif")));
 		jMenuItem2.setMnemonic('c');
 		jMenuItem2.setText("Active Workflow");
 		jMenuItem2.addActionListener(new java.awt.event.ActionListener() {

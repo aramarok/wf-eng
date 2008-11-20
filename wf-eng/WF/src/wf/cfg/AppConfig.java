@@ -2,13 +2,15 @@ package wf.cfg;
 
 import org.apache.log4j.Logger;
 
+import wf.client.WFConstants;
+
 import java.util.Properties;
 import java.net.URL;
 import java.io.InputStream;
 
 public class AppConfig {
 
-	public static final String configFile = "app.properties";
+	public static final String configFile = WFConstants.APP_PROPERTIES_FILE_NAME;
 
 	private static Logger log = Logger.getLogger(AppConfig.class);
 
@@ -72,37 +74,36 @@ public class AppConfig {
 	}
 
 	public static final String getConnectionFactory() {
-		return getInstance().get("WF_CONNECTIONFACTORY",
-				"ConnectionFactory");
+		return getInstance().get(WFConstants.WF_CONNECTIONFACTORY_FIELD,
+				WFConstants.WF_CONNECTIONFACTORY_VALUE);
 	}
 
 	public static final String getInboxTopic() {
-		return getInstance().get("WFTOPIC_INBOX",
-				"topic/WFTOPIC_INBOX");
+		return getInstance().get(WFConstants.WF_TOPIC_INBOX_FIELD,
+				WFConstants.WF_TOPIC_INBOX_VALUE);
 	}
 
 	public static final String getOutboxQueue() {
-		return getInstance().get("WFQUEUE_OUTBOX",
-				"queue/WFQUEUE_OUTBOX");
+		return getInstance().get(WFConstants.WF_QUEUE_OUTBOX_FIELD,
+				WFConstants.WF_QUEUE_OUTBOX_VALUE);
 	}
 
 	public static final String getEventsTopic() {
-		return getInstance().get("WFTOPIC_EVENTS",
-				"topic/WFTOPIC_EVENTS");
+		return getInstance().get(WFConstants.WF_TOPIC_EVENTS_FIELD,
+				WFConstants.WF_TOPIC_EVENTS_VALUE);
 	}
 
 	public static final String getWfQueue() {
-		return getInstance().get("WFQUEUE_ENGINE",
-				"queue/WFQUEUE_ENGINE");
+		return getInstance().get(WFConstants.WF_QUEUE_ENGINE_FIELD,
+				WFConstants.WF_QUEUE_ENGINE_VALUE);
 	}
 
 	public static final String getDataSource() {
-		return getInstance().get("WFDS", "java:/WFDS");
+		return getInstance().get(WFConstants.WFDS_FIELD, WFConstants.WFDS_VALUE);
 	}
 
 	public static String DB_CREATE_SCRIPT() {
-		return getInstance().get("CREATEDB-SQL",
-				"conf/db/create_db.sql");
+		return getInstance().get("CREATEDB-SQL", "conf/db/create_db.sql");
 	}
 
 }

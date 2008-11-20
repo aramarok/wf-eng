@@ -1,16 +1,20 @@
 package wf.jms;
 
+import java.util.Iterator;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
 import wf.cfg.AppConfig;
 import wf.exceptions.WorkFlowException;
 import wf.model.WorkItem;
 import wf.xml.GraphSerializer;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.util.Iterator;
-import java.util.List;
+import wf.xml.WFXMLTagAndAttributeConstants;
 
 public class EventsPublisher {
 
@@ -158,7 +162,7 @@ public class EventsPublisher {
 
 		Element payload = doc.createElementNS(docNS, "Payload");
 		String ptype = witem.getPayloadType();
-		payload.setAttribute("type", ptype);
+		payload.setAttribute(WFXMLTagAndAttributeConstants.TYPE_ATTRIBUTE, ptype);
 		Object pd = witem.getPayload();
 		if (pd == null) {
 			wkItem.appendChild(payload);
@@ -537,8 +541,8 @@ public class EventsPublisher {
 			n = doc.createTextNode(wf.util.HexUtil
 					.hexEncodeObject(variableValue));
 			var.appendChild(n);
-			var.setAttribute("name", variableName);
-			var.setAttribute("type", type);
+			var.setAttribute(WFXMLTagAndAttributeConstants.NAME_ATTRIBUTE, variableName);
+			var.setAttribute(WFXMLTagAndAttributeConstants.TYPE_ATTRIBUTE, type);
 			event.appendChild(var);
 			String xmlString = GraphSerializer.serialize(doc
 					.getDocumentElement());

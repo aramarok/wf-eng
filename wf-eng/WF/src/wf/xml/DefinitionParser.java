@@ -34,10 +34,10 @@ public class DefinitionParser {
 			InputSource is = new InputSource(sreader);
 			Document doc = builder.parse(is);
 
-			NodeList elements = doc.getElementsByTagName("wf");
+			NodeList elements = doc.getElementsByTagName(WFXMLTagAndAttributeConstants.WF_TAG);
 			Element element = (Element) elements.item(0);
 			if (element != null) {
-				graphName = element.getAttribute("name");
+				graphName = element.getAttribute(WFXMLTagAndAttributeConstants.NAME_ATTRIBUTE);
 				if (graphName == null) {
 					throw new WorkFlowException("wf name was not found in the xml file");
 				}
@@ -46,25 +46,25 @@ public class DefinitionParser {
 				throw new WorkFlowException("<wf> element was not found in the xml file");
 			}
 
-			elements = doc.getElementsByTagName("node");
+			elements = doc.getElementsByTagName(WFXMLTagAndAttributeConstants.NODE_TAG);
 			int count = elements.getLength();
 			for (int i = 0; i < count; i++) {
 				element = (Element) elements.item(i);
-				String nodeName = element.getAttribute("id");
+				String nodeName = element.getAttribute(WFXMLTagAndAttributeConstants.ID_ATTRIBUTE);
 				if (nodeName == null) {
 					throw new WorkFlowException("node id is not defined in the xml file");
 				}
-				String nodeType = element.getAttribute("type");
+				String nodeType = element.getAttribute(WFXMLTagAndAttributeConstants.TYPE_ATTRIBUTE);
 				if (nodeType == null) {
 					throw new WorkFlowException("node type is not defined in the xml file");
 				}
 				wf.model.Node gnode = new wf.model.Node(nodeName, nodeType);
 
-				String timeOut = element.getAttribute("timeoutMinutes");
+				String timeOut = element.getAttribute(WFXMLTagAndAttributeConstants.TIMEOUTMINUTES_ATTRIBUTE);
 				if (timeOut != null && !timeOut.equals("")) {
 					Integer dTimeOut = new Integer(timeOut);
 					gnode.setTimeoutMinutes(dTimeOut.intValue());
-					String timeOutHandler = element.getAttribute("timeoutHandler");
+					String timeOutHandler = element.getAttribute(WFXMLTagAndAttributeConstants.TIMEOUTHANDLER_ATTRIBUTE);
 					if (timeOutHandler != null) {
 						gnode.setTimeoutHandler(timeOutHandler);
 					}
@@ -72,7 +72,7 @@ public class DefinitionParser {
 				log.info("Putting: " + nodeName + " : " + gnode.getName() + " " + gnode.getNodeType());
 				pm.put(nodeName, gnode);
 				if (nodeType.equals(wf.model.Node.CONTAINER)) {
-					String containee = element.getAttribute("containee");
+					String containee = element.getAttribute(WFXMLTagAndAttributeConstants.CONTAINEE_ATTRIBUTE);
 					if (containee == null) {
 						throw new WorkFlowException("containee is not defined for container process");
 					}
@@ -80,12 +80,12 @@ public class DefinitionParser {
 				}
 			}
 
-			elements = doc.getElementsByTagName("transition");
+			elements = doc.getElementsByTagName(WFXMLTagAndAttributeConstants.TRANSITION_TAG);
 			count = elements.getLength();
 			for (int i = 0; i < count; i++) {
 				element = (Element) elements.item(i);
-				String fromNodeName = element.getAttribute("from");
-				String toNodeName = element.getAttribute("to");
+				String fromNodeName = element.getAttribute(WFXMLTagAndAttributeConstants.FROM_ATTRIBUTE);
+				String toNodeName = element.getAttribute(WFXMLTagAndAttributeConstants.TO_ATTRIBUTE);
 				rootc.put(toNodeName, toNodeName);
 				log.info("parse a transition from node [" + fromNodeName + "] to node ["+ toNodeName + "]");
 				wf.model.Node fromNode = pm.get(fromNodeName);
@@ -96,7 +96,7 @@ public class DefinitionParser {
 					throw new WorkFlowException("to node [" + toNode + "] is undefined");
 
 				log.info(fromNode.getName() + " to " + toNode.getName());
-				NodeList els2 = element.getElementsByTagName("rule");
+				NodeList els2 = element.getElementsByTagName(WFXMLTagAndAttributeConstants.RULE_TAG);
 				Element e = (Element) els2.item(0);
 				String rule = null;
 				if (e != null) {

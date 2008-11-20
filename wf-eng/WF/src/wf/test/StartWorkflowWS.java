@@ -50,7 +50,7 @@ public class StartWorkflowWS {
 		Integer version = new Integer(-1);
 		WorkItem witem = new WorkItem();
 		witem.setPayload(new Integer(1));
-		User user = new User("foo", "foo");
+		User user = new User("user", "password");
 		call.invoke(new Object[] { workflowName, version, witem, user });
 
 		System.out.println("Workflow started.");

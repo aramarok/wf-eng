@@ -12,15 +12,15 @@ public class ConnectionPool {
 	private Hashtable connections;
 	private int increment = 3;
 	private int initialConnections = 3;
-	private String DB_URL, user, password;
+	private String db_url, db_user, db_password;
 
 	@SuppressWarnings("unchecked")
 	public ConnectionPool(String driver, String user, String password,
-			String DB_URL) throws SQLException {
+			String db_url) throws SQLException {
 
-		this.DB_URL = DB_URL;
-		this.user = user;
-		this.password = password;
+		this.db_url = db_url;
+		this.db_user = user;
+		this.db_password = password;
 
 		connections = new Hashtable();
 
@@ -31,11 +31,11 @@ public class ConnectionPool {
 			e.printStackTrace();
 		}
 
-		System.out.println("DB URL: " + DB_URL);
+		System.out.println("DB URL: " + db_url);
 		for (int i = 0; i < initialConnections; i++) {
 
 			connections.put(
-					DriverManager.getConnection(DB_URL, user, password),
+					DriverManager.getConnection(db_url, user, password),
 					Boolean.FALSE);
 		}
 	}
@@ -55,8 +55,8 @@ public class ConnectionPool {
 					try {
 						con.setAutoCommit(false);
 					} catch (SQLException e) {
-						con = DriverManager.getConnection(DB_URL, user,
-								password);
+						con = DriverManager.getConnection(db_url, db_user,
+								db_password);
 					}
 					connections.put(con, Boolean.TRUE);
 
@@ -66,8 +66,8 @@ public class ConnectionPool {
 		}
 		for (int i = 0; i < increment; i++) {
 			try {
-				Connection c = DriverManager.getConnection(DB_URL, user,
-						password);
+				Connection c = DriverManager.getConnection(db_url, db_user,
+						db_password);
 				connections.put(c, Boolean.FALSE);
 			} catch (Exception e) {
 				System.err.println("getConnection FAILED");
