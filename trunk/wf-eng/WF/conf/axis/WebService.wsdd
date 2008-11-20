@@ -1,0 +1,19 @@
+<deployment xmlns="http://xml.apache.org/axis/wsdd/"
+	xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="WfService" provider="java:RPC">
+		<parameter name="className" value="wf.webservice.WfService" />
+		<parameter name="allowedMethods" value="*" />
+		<beanMapping qname="myNS:User" xmlns:myNS="urn:WfService"
+			languageSpecificType="java:wf.client.User" />
+		<beanMapping qname="myNS:WorkItem" xmlns:myNS="urn:WfService"
+			languageSpecificType="java:wf.model.WorkItem" />
+		<beanMapping qname="myNS:WorkflowState"
+			xmlns:myNS="urn:WfService"
+			languageSpecificType="java:wf.model.WorkflowState" />
+		<beanMapping qname="myNS:ProcessState"
+			xmlns:myNS="urn:WfService"
+			languageSpecificType="java:wf.model.ProcessState" />
+		<beanMapping qname="myNS:AAA" xmlns:myNS="urn:WfService"
+			languageSpecificType="java:wf.model.AAA" />
+	</service>
+</deployment>
