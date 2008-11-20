@@ -16,7 +16,7 @@ import net.sf.cglib.proxy.MethodInterceptor;
 
 import org.apache.log4j.Logger;
 
-import wf.client.WFConstants;
+import wf.cfg.WFConstants;
 import wf.server.controller.DirectedGraphP;
 import wf.server.controller.IBatisWork;
 import wf.server.controller.InboxP;

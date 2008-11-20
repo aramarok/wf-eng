@@ -3,7 +3,7 @@ package wf.db;
 import java.sql.Connection;
 import java.util.Properties;
 
-import wf.client.WFConstants;
+import wf.cfg.WFConstants;
 
 public class Db {
 

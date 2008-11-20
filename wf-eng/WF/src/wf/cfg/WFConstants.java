@@ -1,4 +1,4 @@
-package wf.client;
+package wf.cfg;
 
 public interface WFConstants {
 
