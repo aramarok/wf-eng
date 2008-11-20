@@ -1,6 +1,6 @@
 package wf.client.manager;
 
-import wf.client.WFClientConstants;
+import wf.client.WFConstants;
 import wf.client.Admin;
 import wf.exceptions.WorkFlowException;
 
@@ -83,7 +83,7 @@ public class ActiveWorkflowWin extends javax.swing.JInternalFrame {
 		setTitle("Active Workflows");
 		jToolBar1.setFloatable(false);
 		refreshBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource(
-				WFClientConstants.CLIENT_ICON_LOCATION + "refresh.gif")));
+				WFConstants.CLIENT_ICON_LOCATION + "refresh.gif")));
 		refreshBtn.setMnemonic('r');
 		refreshBtn.setText("refresh");
 		refreshBtn.addActionListener(new java.awt.event.ActionListener() {

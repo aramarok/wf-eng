@@ -9,7 +9,7 @@ public class GetWorkflowModels {
 
 	public static void main(String[] args) throws Exception {
 
-		List wfModels = WorkflowManager.getWorkflowModels(new User("foo", "foo"));
+		List wfModels = WorkflowManager.getWorkflowModels(new User("user", "password"));
 		for (int i = 0; i < wfModels.size(); i++) {
 			WorkflowModel m = (WorkflowModel) wfModels.get(i);
 			System.out.println("\n----- Worklflow Model ------");

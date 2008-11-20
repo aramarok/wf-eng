@@ -16,6 +16,7 @@ import net.sf.cglib.proxy.MethodInterceptor;
 
 import org.apache.log4j.Logger;
 
+import wf.client.WFConstants;
 import wf.server.controller.DirectedGraphP;
 import wf.server.controller.IBatisWork;
 import wf.server.controller.InboxP;
@@ -30,7 +31,7 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 import com.ibatis.sqlmap.client.SqlMapClientBuilder;
 
 public class Persistence {
-	public static final String DB_PROPERTIES = "app.properties";
+	public static final String DB_PROPERTIES = WFConstants.APP_PROPERTIES_FILE_NAME;
 	private static Object guard = new Object();
 	private static DataSource ds;
 	static Logger log = Logger.getLogger(Persistence.class);
@@ -54,7 +55,7 @@ public class Persistence {
 	}
 
 	private static SqlMapClient initSQLSqlMap() throws IOException {
-		String resource = "wf/server/controller/sqlmap.xml";
+		String resource = WFConstants.SQL_MAP_LOCATION;
 		Reader reader = Resources.getResourceAsReader(resource);
 		SqlMapClient sqlMap = SqlMapClientBuilder.buildSqlMapClient(reader);
 		return sqlMap;
@@ -179,16 +180,16 @@ public class Persistence {
 	private static Map<String, Enhancer> enhancers = new Hashtable<String, Enhancer>();
 	private static MethodInterceptor ibatisCallback = new IBatisMethodInterceptor();
 
-	public static Object enhanceInstanceOfClass(Class clazz) {
-		Enhancer en = enhancers.get(clazz.getName());
+	public static Object enhanceInstanceOfClass(Class classType) {
+		Enhancer en = enhancers.get(classType.getName());
 		if (en == null) {
 			if (log.isDebugEnabled()) {
-				log.debug("Create Enhancer for class::" + clazz.getName());
+				log.debug("Create Enhancer for class::" + classType.getName());
 			}
 			en = new Enhancer();
-			en.setSuperclass(clazz);
+			en.setSuperclass(classType);
 			en.setCallbacks(new MethodInterceptor[] { ibatisCallback });
-			enhancers.put(clazz.getName(), en);
+			enhancers.put(classType.getName(), en);
 		}
 		return en.create();
 	}

@@ -10,7 +10,7 @@ public class GetActiveWorkflowInstances {
 
 	public static void main(String[] args) throws Exception {
 
-		List activeWFs = WorkflowManager.getActiveWorkflows(new User("foo", "foo"));
+		List activeWFs = WorkflowManager.getActiveWorkflows(new User("user", "password"));
 		for (int i = 0; i < activeWFs.size(); i++) {
 
 			WorkflowState ws = (WorkflowState) activeWFs.get(i);

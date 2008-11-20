@@ -1,6 +1,6 @@
 package wf.client.manager;
 
-import wf.client.WFClientConstants;
+import wf.client.WFConstants;
 import wf.client.Admin;
 import wf.model.WorkflowState;
 
@@ -34,7 +34,7 @@ public class ActiveProcessesWin extends javax.swing.JInternalFrame {
 		setTitle("Active Processes");
 		jToolBar1.setFloatable(false);
 		refreshBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource(
-				WFClientConstants.CLIENT_ICON_LOCATION + "refresh.gif")));
+				WFConstants.CLIENT_ICON_LOCATION + "refresh.gif")));
 		refreshBtn.setMnemonic('r');
 		refreshBtn.setText("refresh");
 		refreshBtn.addActionListener(new java.awt.event.ActionListener() {

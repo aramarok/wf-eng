@@ -22,7 +22,7 @@ public class DeployModel {
 
 		try {
 			WorkflowManager.deployModel(xml, WorkflowManager.WF, new User(
-					"foo", "foo"));
+					"user", "password"));
 			System.out.println("Success");
 		} catch (WorkFlowException xe) {
 			System.out.println(xe);

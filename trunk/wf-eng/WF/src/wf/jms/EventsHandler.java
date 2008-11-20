@@ -7,20 +7,24 @@ import java.io.StringReader;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
+
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+
 import wf.cfg.AppConfig;
 import wf.db.Db;
 import wf.exceptions.WorkFlowException;
+import wf.xml.WFXMLTagAndAttributeConstants;
 
 public class EventsHandler implements MessageListener {
 
@@ -154,8 +158,8 @@ public class EventsHandler implements MessageListener {
 		int eventId;
 		Element var = (Element) event.getElementsByTagName("Variable").item(0);
 
-		String name = var.getAttribute("name");
-		String type = var.getAttribute("type");
+		String name = var.getAttribute(WFXMLTagAndAttributeConstants.NAME_ATTRIBUTE);
+		String type = var.getAttribute(WFXMLTagAndAttributeConstants.TYPE_ATTRIBUTE);
 		String value = var.getFirstChild().getNodeValue();
 
 		eventId = insertEventTable(event);
@@ -441,7 +445,7 @@ public class EventsHandler implements MessageListener {
 		Element pld = (Element) workItem.getElementsByTagName("Payload")
 				.item(0);
 
-		info[1] = pld.getAttribute("type");
+		info[1] = pld.getAttribute(WFXMLTagAndAttributeConstants.TYPE_ATTRIBUTE);
 
 		NodeList plist = pld.getChildNodes();
 		info[2] = "";

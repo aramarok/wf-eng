@@ -38,43 +38,43 @@ public class GraphSerializer {
 			InputSource is = new InputSource(sReader);
 			Document doc = builder.parse(is);
 
-			NodeList elements = doc.getElementsByTagName("wf");
+			NodeList elements = doc.getElementsByTagName(WFXMLTagAndAttributeConstants.WF_TAG);
 			Element wfElement = (Element) elements.item(0);
-			wfElement.setAttribute("name", graphName);
+			wfElement.setAttribute(WFXMLTagAndAttributeConstants.NAME_ATTRIBUTE, graphName);
 
-			elements = doc.getElementsByTagName("nodes");
+			elements = doc.getElementsByTagName(WFXMLTagAndAttributeConstants.NODES_TAG);
 			Element nodesElement = (Element) elements.item(0);
 			List lNodes = dg.getAllNodes();
 			for (int i = 0; i < lNodes.size(); i++) {
 				wf.model.Node gnode = (wf.model.Node) lNodes.get(i);
 				String nodeName = gnode.getName();
 				String nodeType = gnode.getNodeType();
-				Element nodeElement = doc.createElement("node");
+				Element nodeElement = doc.createElement(WFXMLTagAndAttributeConstants.NODE_TAG);
 				nodesElement.appendChild(nodeElement);
-				nodeElement.setAttribute("id", nodeName);
-				nodeElement.setAttribute("type", nodeType);
+				nodeElement.setAttribute(WFXMLTagAndAttributeConstants.ID_ATTRIBUTE, nodeName);
+				nodeElement.setAttribute(WFXMLTagAndAttributeConstants.TYPE_ATTRIBUTE, nodeType);
 				if (nodeType.equals(wf.model.Node.CONTAINER)) {
 					String containee = gnode.getContainee();
-					nodeElement.setAttribute("containee", containee);
+					nodeElement.setAttribute(WFXMLTagAndAttributeConstants.CONTAINEE_ATTRIBUTE, containee);
 					int containeeVersion = gnode.getContaineeVersion();
 					if (containeeVersion != -1) {
-						nodeElement.setAttribute("containeeVersion", ""
+						nodeElement.setAttribute(WFXMLTagAndAttributeConstants.CONTAINEEVERSION_ATTRIBUTE, ""
 								+ containeeVersion);
 					}
 				}
 				if (nodeType.equals(wf.model.Node.PROCESS)) {
 					int timeoutMinutes = gnode.getTimeoutMinutes();
 					if (timeoutMinutes != -1) {
-						nodeElement.setAttribute("timeoutMinutes", ""
+						nodeElement.setAttribute(WFXMLTagAndAttributeConstants.TIMEOUTMINUTES_ATTRIBUTE, ""
 								+ timeoutMinutes);
 					}
 					String timeoutHandler = gnode.getTimeoutHandler();
 					if (timeoutHandler != null) {
-						nodeElement.setAttribute("timeoutHandler", timeoutHandler);
+						nodeElement.setAttribute(WFXMLTagAndAttributeConstants.TIMEOUTHANDLER_ATTRIBUTE, timeoutHandler);
 					}
 				}
 			}
-			elements = doc.getElementsByTagName("transitions");
+			elements = doc.getElementsByTagName(WFXMLTagAndAttributeConstants.TRANSITIONS_TAG);
 			Element transitionsEl = (Element) elements.item(0);
 
 			wf.model.Node rootNode = dg.getRootNode();
@@ -115,12 +115,12 @@ public class GraphSerializer {
 		List destinations = gnode.getDestinations();
 		for (int i = 0; i < destinations.size(); i++) {
 			Destination d = (Destination) destinations.get(i);
-			Element transEl = doc.createElement("transition");
+			Element transEl = doc.createElement(WFXMLTagAndAttributeConstants.TRANSITION_TAG);
 			transitionsEl.appendChild(transEl);
-			transEl.setAttribute("from", gnode.getName());
-			transEl.setAttribute("to", d.node.getName());
+			transEl.setAttribute(WFXMLTagAndAttributeConstants.FROM_ATTRIBUTE, gnode.getName());
+			transEl.setAttribute(WFXMLTagAndAttributeConstants.TO_ATTRIBUTE, d.node.getName());
 			if (d.rule != null) {
-				Element ruleEl = doc.createElement("rule");
+				Element ruleEl = doc.createElement(WFXMLTagAndAttributeConstants.RULE_TAG);
 				Text textEl = doc.createTextNode(d.rule);
 				ruleEl.appendChild(textEl);
 				transEl.appendChild(ruleEl);

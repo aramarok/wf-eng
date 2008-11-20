@@ -14,10 +14,10 @@ public class GetAllWorkflowInstances {
 		List v;
 		if (args.length > 0) {
 			wfName = args[0];
-			v = WorkflowManager.getAllWorkflowsByName(wfName, new User("foo",
-					"foo"));
+			v = WorkflowManager.getAllWorkflowsByName(wfName, new User("user",
+					"password"));
 		} else {
-			v = WorkflowManager.getAllWorkflows(new User("foo", "foo"));
+			v = WorkflowManager.getAllWorkflows(new User("user", "password"));
 		}
 
 		for (int i = 0; i < v.size(); i++) {

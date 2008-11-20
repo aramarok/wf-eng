@@ -38,12 +38,12 @@ public class GraphXMLParser {
 			InputSource is = new InputSource(sreader);
 			Document doc = builder.parse(is);
 
-			NodeList elements = doc.getElementsByTagName("node");
+			NodeList elements = doc.getElementsByTagName(WFXMLTagAndAttributeConstants.NODE_TAG);
 			int count = elements.getLength();
 			for (int i = 0; i < count; i++) {
 				Element element = (Element) elements.item(i);
-				String nodeId = element.getAttribute("id");
-				NodeList elements2 = element.getElementsByTagName("string");
+				String nodeId = element.getAttribute(WFXMLTagAndAttributeConstants.ID_ATTRIBUTE);
+				NodeList elements2 = element.getElementsByTagName(WFXMLTagAndAttributeConstants.STRING_TAG);
 				Element elem = (Element) elements2.item(0);
 				org.w3c.dom.Node node = elem.getFirstChild();
 				String nodeString = node.getNodeValue();
@@ -54,19 +54,19 @@ public class GraphXMLParser {
 				pm.put(nodeId, gnode);
 			}
 
-			elements = doc.getElementsByTagName("edge");
+			elements = doc.getElementsByTagName(WFXMLTagAndAttributeConstants.EDGE_TAG);
 			count = elements.getLength();
 			for (int i = 0; i < count; i++) {
 				Element el = (Element) elements.item(i);
-				String fromNodeId = el.getAttribute("from");
-				String toNodeId = el.getAttribute("to");
+				String fromNodeId = el.getAttribute(WFXMLTagAndAttributeConstants.FROM_ATTRIBUTE);
+				String toNodeId = el.getAttribute(WFXMLTagAndAttributeConstants.TO_ATTRIBUTE);
 				rootc.put(toNodeId, toNodeId);
 				wf.model.Node fromNode = pm.get(fromNodeId);
 				wf.model.Node toNode = pm.get(toNodeId);
 
 				System.out.println(fromNode.getName() + " to "
 						+ toNode.getName());
-				NodeList els2 = el.getElementsByTagName("string");
+				NodeList els2 = el.getElementsByTagName(WFXMLTagAndAttributeConstants.STRING_TAG);
 				Element e = (Element) els2.item(0);
 				String rule = null;
 				if (e != null) {
@@ -130,14 +130,14 @@ public class GraphXMLParser {
 			String rhs = strtok2.nextToken();
 			lhs = lhs.trim();
 			rhs = rhs.trim();
-			if (lhs.equals("name")) {
+			if (lhs.equals(WFXMLTagAndAttributeConstants.NAME_ATTRIBUTE)) {
 				nodeName = rhs;
-			} else if (lhs.equals("type")) {
+			} else if (lhs.equals(WFXMLTagAndAttributeConstants.TYPE_ATTRIBUTE)) {
 				nodeType = rhs;
 				if (nodeType.equals(wf.model.Node.AND)) {
 					nodeName = "And";
 				}
-			} else if (lhs.equals("containee")) {
+			} else if (lhs.equals(WFXMLTagAndAttributeConstants.CONTAINEE_ATTRIBUTE)) {
 				containee = rhs;
 			}
 		}

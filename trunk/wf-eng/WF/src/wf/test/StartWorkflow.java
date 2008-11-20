@@ -9,7 +9,14 @@ public class StartWorkflow {
 
 	public static void main(String[] args) throws WorkFlowException {
 
-		String wfName = args[0];
+		String wfName = null;
+		
+		if (args.length ==0 ){
+			wfName = "SimpleWorkflow";
+		} else {
+			wfName = args[0];
+		}
+		
 		WorkItem witem = new WorkItem();
 		witem.setProperty("PropA", "XXXX");
 		witem.setProperty("PropB", "YYYY");
@@ -17,7 +24,7 @@ public class StartWorkflow {
 		String xml = "<a><b>100</b></a>";
 		witem.setPayloadXML(xml);
 		Integer wfId = WorkflowManager.startWorkflow(wfName, witem, new User(
-				"rtan", "rtan"));
+				"user", "password"));
 		System.out.println("Started. Workflow ID: " + wfId);
 	}
 

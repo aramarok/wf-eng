@@ -16,7 +16,7 @@ public class GetNodeByNodeName {
 		String nodeName = args[2];
 
 		Node node = WorkflowManager.getNodeByName(workFlowName, version,
-				nodeName, new User("foo", "foo"));
+				nodeName, new User("user", "password"));
 		node.print();
 		System.out.println("");
 		System.out.println("Nodes which transition into this node: ");

@@ -3,6 +3,8 @@ package wf.db;
 import java.sql.Connection;
 import java.util.Properties;
 
+import wf.client.WFConstants;
+
 public class Db {
 
 	public static ConnectionPool connectionPool;
@@ -12,10 +14,10 @@ public class Db {
 	public static String db_url = null;
 
 	public static void init(Properties prop) {
-		db_userName = prop.getProperty("DB_USERNAME");
-		db_password = prop.getProperty("DB_PASSWORD");
-		db_driver = prop.getProperty("DB_DRIVER");
-		db_url = prop.getProperty("DB_URL");
+		db_userName = prop.getProperty(WFConstants.DB_USERNAME_FIELD);
+		db_password = prop.getProperty(WFConstants.DB_PASSWORD_FIELD);
+		db_driver = prop.getProperty(WFConstants.DB_DRIVER_FIELD);
+		db_url = prop.getProperty(WFConstants.DB_URL_FIELD);
 	}
 
 	public static Connection getConnection() {
