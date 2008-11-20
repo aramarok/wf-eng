@@ -10,7 +10,7 @@ public class ResumeWorkflow {
 
 		Integer wfId = new Integer(args[0]);
 		Integer workflowId = new Integer(wfId.intValue());
-		WorkflowManager.resumeWorkflow(workflowId, new User("rtan", "rtan"));
+		WorkflowManager.resumeWorkflow(workflowId, new User("user", "password"));
 		System.out.println("Success");
 	}
 

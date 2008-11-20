@@ -144,10 +144,15 @@ public class WorkflowState implements Serializable {
 			result += " Value: " + val + "\n";
 		}
 
-		result += "Processes: \n";
-		for (int i = 0; i < activeProcesses.size(); i++) {
-			ProcessState ps = (ProcessState) activeProcesses.get(i);
-			result += ps.toString();
+		result += "Processes: ";
+		if (activeProcesses!=null){
+			result += activeProcesses.size() + "\n";
+			for (int i = 0; i < activeProcesses.size(); i++) {
+				ProcessState ps = (ProcessState) activeProcesses.get(i);
+				result += ps.toString();
+			}
+		} else {
+			result += "0\n";
 		}
 
 		return result;

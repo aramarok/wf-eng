@@ -8,7 +8,11 @@ import wf.exceptions.WorkFlowException;
 
 public class WorkflowPTest extends TestCase {
 
-	public void testSaveDB() throws WorkFlowException {
+	public static void main(String args[]) throws WorkFlowException{
+		testSaveDB();
+	}
+	
+	public static void testSaveDB() throws WorkFlowException {
 		Persistence.getWorkflowP().saveNewWorkflow(8888, "wf", "testCase", -1);
 	}
 

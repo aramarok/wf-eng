@@ -10,7 +10,7 @@ public class AbortWorkflow {
 
 		Integer wfId = new Integer(args[0]);
 		Integer workFlowId = new Integer(wfId.intValue());
-		WorkflowManager.abortWorkflow(workFlowId, new User("rtan", "rtan"));
+		WorkflowManager.abortWorkflow(workFlowId, new User("user", "password"));
 		System.out.println("Success");
 	}
 

@@ -49,10 +49,10 @@ public class ProcessState implements Serializable {
 
 	public String toString() {
 		String result = "";
-		result += "Workflow ID: " + workflowId + "\n";
-		result += "Process Name: " + processName + "\n";
-		result += "Time Started: " + timeStarted + "\n";
-		result += "Work Item ID: " + workItemId + "\n";
+		result += "  Workflow ID: " + workflowId + "\n";
+		result += "  Process Name: " + processName + "\n";
+		result += "  Time Started: " + timeStarted + "\n";
+		result += "  Work Item ID: " + workItemId + "\n";
 		return result;
 	}
 }

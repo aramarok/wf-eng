@@ -43,7 +43,7 @@ public class ProcAgent implements InboxMessageListener {
 
 	public void start() throws WorkFlowException {
 		wp = new WorkflowProcess(workflowName, -1, procName, this, new User(
-				"rtan", "rtan"));
+				"user", "password"));
 	}
 
 	public static void main(String[] args) throws WorkFlowException,

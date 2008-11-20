@@ -11,11 +11,9 @@ public class SetVariableRequestHandler implements RequestHandler {
 
 	public Response handle(Request r) {
 		SetVariableRequest req = (SetVariableRequest) r;
-		if (log.isDebugEnabled()) {
-			log.debug("In SetVariableRequest:service." + "\n\tworkflowId = "
+		log.info("In SetVariableRequest:service." + "\n\tworkflowId = "
 					+ req.workflowId + "\n\tvariableName = " + req.variableName
 					+ "\n\tvariableValue = " + req.variableValue);
-		}
 		int response = 0;
 		String message = "OK";
 		try {

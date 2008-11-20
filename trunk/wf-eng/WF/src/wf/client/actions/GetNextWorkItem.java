@@ -21,7 +21,7 @@ public class GetNextWorkItem {
 
 	public void start() throws WorkFlowException {
 		wp = new WorkflowProcess(workflowName, -1, procName, null, new User(
-				"rtan", "rtan"));
+				"user", "password"));
 		WorkItem wi = wp.getNextWorkItem();
 		System.out.println("Work Item: " + wi);
 

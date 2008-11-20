@@ -46,7 +46,14 @@ public class StartWorkflowWS {
 		call.addParameter("op3", qn1, ParameterMode.IN);
 		call.addParameter("op4", qn2, ParameterMode.IN);
 
-		String workflowName = args[0];
+		String workflowName = null;
+		
+		if (args.length ==0 ){
+			workflowName = "case_and";
+		} else {
+			workflowName = args[0];
+		}
+		
 		Integer version = new Integer(-1);
 		WorkItem witem = new WorkItem();
 		witem.setPayload(new Integer(1));
