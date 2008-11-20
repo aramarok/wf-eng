@@ -17,8 +17,11 @@
 		<fileset dir="${jboss.home}/server/default/lib" includes="*.jar" />
 		<fileset dir="lib/" includes="*.jar" />
 	</path>
-	
-	<target name="database.from.scratch" description="Recreate Database">
+
+	<!-- ********************************************************************** -->
+	<!-- Create/drop database                                                   -->
+	<!-- ********************************************************************** -->
+	<target name="database-from-scratch" description="Recreate Database">
 		<property file="conf/app.properties" />
 		<echo message="${DB_DRIVER} url=${DB_URL} userid=${DB_USERNAME} password=${DB_PASSWORD}" />
 		<!--sql classpathref="wf.classpath"    onerror="continue" autocommit="true"
@@ -26,8 +29,42 @@
 		<sql classpathref="wf.classpath" onerror="continue" autocommit="true" driver="${DB_DRIVER}" url="${DB_URL}" userid="${DB_USERNAME}" password="${DB_PASSWORD}" src="${db.dir}/${database}/create_db.sql" />
 	</target>
 
-	
-	<target name="clean.build.and.deploy" depends="wf-ejb-jar, deploy">
+	<!-- ********************************************************************** -->
+	<!-- Clean build dir, build, clean jboss, deploy and deploy axis                                   -->
+	<!-- ********************************************************************** -->
+	<target name="_all-in-one" depends="wf-ejb-jar, clean-jboss, deploy, deploy-axis">
+	</target>
+
+	<!-- ********************************************************************** -->
+	<!-- Clean, build, deploy                                                   -->
+	<!-- ********************************************************************** -->
+	<target name="deploy-axis" depends="compile">
+		<copy todir="${jboss.home}/server/${server}/deploy/axis.war/WEB-INF/classes/wf/client/auth">
+			<fileset dir="${build.dir}/wf/client/auth" includes="User.class" />
+		</copy>
+		<copy todir="${jboss.home}/server/${server}/deploy/axis.war/WEB-INF/classes/wf/model">
+			<fileset dir="${build.dir}/wf/model" includes="ProcessState.class, WorkflowModel.class, WorkflowState.class, WorkItem.class" />
+		</copy>
+		<copy todir="${jboss.home}/server/${server}/deploy/axis.war/WEB-INF/classes/wf/webservice">
+			<fileset dir="${build.dir}/wf/webservice" includes="WfService.class" />
+		</copy>
+		<copy todir="${jboss.home}/server/${server}/deploy/axis.war/WEB-INF">
+			<!-- fileset dir="${src.dir}/wf/webservice" includes="server-config.wsdd, WebService.wsdd, web.xml" / -->
+			<fileset dir="${conf.dir}/axis" includes="server-config.wsdd, WebService.wsdd" />
+			<fileset dir="${src.dir}/wf/webservice" includes="web.xml" />
+		</copy>
+	</target>
+
+	<!-- ********************************************************************** -->
+	<!-- Clean jboss  			                                                -->
+	<!-- ********************************************************************** -->
+	<target name="clean-jboss">
+		<delete dir="${jboss.home}/server/${server}/deploy/${app.name}" />
+		<delete dir="${jboss.home}/server/${server}/deploy/axis.war" />
+		<delete file="${jboss.home}/server/${server}/deploy/jms/wf-jms-service.xml" />
+		<delete dir="${jboss.home}/server/${server}/log" />
+		<delete dir="${jboss.home}/server/${server}/tmp" />
+		<delete dir="${jboss.home}/server/${server}/work" />
 	</target>
 
 	<!-- ********************************************************************** -->
@@ -39,9 +76,9 @@
 		<mkdir dir="build/test_classes" />
 	</target>
 
-	<!-- =================================================================== -->
-	<!-- Compile package                                                     -->
-	<!-- =================================================================== -->
+	<!-- ********************************************************************* -->
+	<!-- Compile package                                                       -->
+	<!-- ********************************************************************* -->
 	<target name="compile">
 		<javac srcdir="${src.dir}" destdir="${build.dir}" debug="on">
 			<classpath refid="wf.classpath" />
@@ -131,7 +168,7 @@
 		</copy>
 	</target>
 
-	
+
 	<target name="start_ui">
 		<java classname="wf.client.Admin" fork="true">
 			<classpath>
