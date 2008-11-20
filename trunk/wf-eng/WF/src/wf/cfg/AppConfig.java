@@ -2,7 +2,6 @@ package wf.cfg;
 
 import org.apache.log4j.Logger;
 
-import wf.client.WFConstants;
 
 import java.util.Properties;
 import java.net.URL;

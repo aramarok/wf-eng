@@ -1,6 +1,6 @@
 package wf.client.manager;
 
-import wf.client.WFConstants;
+import wf.cfg.WFConstants;
 import wf.client.Admin;
 import wf.client.manager.ActiveProcessesWin;
 import wf.client.manager.ActiveWorkflowWin;
