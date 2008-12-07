@@ -1,5 +1,3 @@
-#summary One-sentence summary of this page.
-
 = WF XML Parsing =
 
 [http://docs.google.com/Doc?id=dcqwxd9s_25cbsrvcd7 Google Document]
