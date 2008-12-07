@@ -1,3 +1,3 @@
-= WF XML Parsing =
 
-[http://docs.google.com/Doc?id=dcqwxd9s_25cbsrvcd7 Google Document]
+= Wf XML Parsing =
+See this document for more info: [http://docs.google.com/Doc?id=dcqwxd9s_25cbsrvcd7 Google Document]
