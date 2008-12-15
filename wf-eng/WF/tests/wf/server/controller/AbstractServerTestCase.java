@@ -144,7 +144,7 @@ public class AbstractServerTestCase extends TestCase {
 	}
 
 	protected Response handleRequest(Request req) {
-		if ("yes".equalsIgnoreCase(System.getProperty("remote"))) {
+		//if ("yes".equalsIgnoreCase(System.getProperty("remote"))) {
 			try {
 				req.replyName = Util.generateUniqueStringId();
 				req.user = new User("kosta", "kosta");
@@ -157,9 +157,9 @@ public class AbstractServerTestCase extends TestCase {
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-		} else {
-			return getWorkflowEngine().handle(req);
-		}
+		//} else {
+	//		return getWorkflowEngine().handle(req);
+	//	}
 
 	}
 }

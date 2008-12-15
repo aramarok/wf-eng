@@ -74,32 +74,37 @@
 		</schema>
 	</wsdl:types>
 
+	<wsdl:message name="getVariableRequest">
+		<wsdl:part name="in0" type="xsd:int" />
+		<wsdl:part name="in1" type="xsd:string" />
+		<wsdl:part name="in2" type="tns1:User" />
+	</wsdl:message>
 	<wsdl:message name="getVariableResponse">
 		<wsdl:part name="getVariableReturn" type="xsd:anyType" />
 	</wsdl:message>
-	<wsdl:message name="startWorkflowResponse" />
+	
 	<wsdl:message name="setVariableRequest">
 		<wsdl:part name="in0" type="xsd:int" />
 		<wsdl:part name="in1" type="xsd:string" />
 		<wsdl:part name="in2" type="xsd:anyType" />
 		<wsdl:part name="in3" type="tns1:User" />
 	</wsdl:message>
-	<wsdl:message name="abortWorkflowResponse" />
+	<wsdl:message name="setVariableResponse" />
+	
 	<wsdl:message name="abortWorkflowRequest">
 		<wsdl:part name="in0" type="xsd:int" />
 	</wsdl:message>
-	<wsdl:message name="setVariableResponse" />
+	<wsdl:message name="abortWorkflowResponse" />
+		
 	<wsdl:message name="startWorkflowRequest">
 		<wsdl:part name="in0" type="xsd:string" />
 		<wsdl:part name="in1" type="xsd:int" />
 		<wsdl:part name="in2" type="tns1:WorkItem" />
 		<wsdl:part name="in3" type="tns1:User" />
 	</wsdl:message>
-	<wsdl:message name="getVariableRequest">
-		<wsdl:part name="in0" type="xsd:int" />
-		<wsdl:part name="in1" type="xsd:string" />
-		<wsdl:part name="in2" type="tns1:User" />
-	</wsdl:message>
+	<wsdl:message name="startWorkflowResponse" />
+	
+	
 
 	<wsdl:portType name="WfService">
 		<wsdl:operation name="getVariable"

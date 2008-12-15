@@ -196,7 +196,7 @@
 
 
 	<target name="test" depends="compile" description="Run wf tests, suply -Dremote=yes if want to run tests against remote server">
-		<property name="remote" value="no" />
+		<property name="remote" value="yes" />
 		<java classname="junit.textui.TestRunner">
 			<classpath>
 				<pathelement location="conf" />
