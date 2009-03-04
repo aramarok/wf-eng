@@ -110,7 +110,7 @@ public class WorkflowDesigner extends JApplet implements
 		frame.getContentPane().add(new WorkflowDesigner());
 		// Fetch URL to Icon Resource
 		URL jgraphUrl = WorkflowDesigner.class.getClassLoader().getResource(
-				"com/uvt/wf/designer/gui/images/jgraph.gif");
+				Images.JGRAPH);
 		// If Valid URL
 		if (jgraphUrl != null) {
 			// Load Icon
@@ -837,8 +837,8 @@ public class WorkflowDesigner extends JApplet implements
 		toolbar.setFloatable(false);
 
 		// Export
-		URL exportUrl = getClass().getClassLoader().getResource(Images.PLUS);
-		ImageIcon exportIcon = new ImageIcon(exportUrl);
+		File exportUrl = new File(Images.PLUS);
+		ImageIcon exportIcon = new ImageIcon(exportUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", exportIcon) {
 			public void actionPerformed(ActionEvent e) {
 				exportGraph2XML();
@@ -846,33 +846,33 @@ public class WorkflowDesigner extends JApplet implements
 		});
 		toolbar.addSeparator();
 		// Insert Start
-		URL insertStartUrl = getClass().getClassLoader().getResource(
-				Images.START);
-		ImageIcon insertStartIcon = new ImageIcon(insertStartUrl);
+		File insertStartUrl = new File(Images.START);
+		ImageIcon insertStartIcon = new ImageIcon(insertStartUrl
+				.getAbsolutePath());
 		toolbar.add(new AbstractAction("", insertStartIcon) {
 			public void actionPerformed(ActionEvent e) {
 				insertStartNode(new Point(10, 10));
 			}
 		});
 		// Insert End
-		URL insertEndUrl = getClass().getClassLoader().getResource(Images.END);
-		ImageIcon insertEndIcon = new ImageIcon(insertEndUrl);
+		File insertEndUrl = new File(Images.END);
+		ImageIcon insertEndIcon = new ImageIcon(insertEndUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", insertEndIcon) {
 			public void actionPerformed(ActionEvent e) {
 				insertEndNode(new Point(10, 10));
 			}
 		});
 		// Insert And
-		URL insertAndUrl = getClass().getClassLoader().getResource(Images.AND);
-		ImageIcon insertAndIcon = new ImageIcon(insertAndUrl);
+		File insertAndUrl = new File(Images.AND);
+		ImageIcon insertAndIcon = new ImageIcon(insertAndUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", insertAndIcon) {
 			public void actionPerformed(ActionEvent e) {
 				insertAndNode(new Point(10, 10));
 			}
 		});
 		// Insert Or
-		URL insertOrUrl = getClass().getClassLoader().getResource(Images.OR);
-		ImageIcon insertOrIcon = new ImageIcon(insertOrUrl);
+		File insertOrUrl = new File(Images.OR);
+		ImageIcon insertOrIcon = new ImageIcon(insertOrUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", insertOrIcon) {
 			public void actionPerformed(ActionEvent e) {
 				insertOrNode(new Point(10, 10));
@@ -880,8 +880,8 @@ public class WorkflowDesigner extends JApplet implements
 		});
 
 		// Insert
-		URL insertUrl = getClass().getClassLoader().getResource(Images.PROCESS);
-		ImageIcon insertIcon = new ImageIcon(insertUrl);
+		File insertUrl = new File(Images.PROCESS);
+		ImageIcon insertIcon = new ImageIcon(insertUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", insertIcon) {
 			public void actionPerformed(ActionEvent e) {
 				insertDefaultNode(new Point(10, 10));
@@ -889,9 +889,8 @@ public class WorkflowDesigner extends JApplet implements
 		});
 
 		// Toggle Connect Mode
-		URL connectUrl = getClass().getClassLoader().getResource(
-				Images.CONNECTION);
-		ImageIcon connectIcon = new ImageIcon(connectUrl);
+		File connectUrl = new File(Images.CONNECTION);
+		ImageIcon connectIcon = new ImageIcon(connectUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", connectIcon) {
 			public void actionPerformed(ActionEvent e) {
 				graph.setPortsVisible(!graph.isPortsVisible());
@@ -909,8 +908,8 @@ public class WorkflowDesigner extends JApplet implements
 
 		// Undo
 		toolbar.addSeparator();
-		URL undoUrl = getClass().getClassLoader().getResource(Images.UNDO);
-		ImageIcon undoIcon = new ImageIcon(undoUrl);
+		File undoUrl = new File(Images.UNDO);
+		ImageIcon undoIcon = new ImageIcon(undoUrl.getAbsolutePath());
 		undo = new AbstractAction("", undoIcon) {
 			public void actionPerformed(ActionEvent e) {
 				undo();
@@ -920,8 +919,8 @@ public class WorkflowDesigner extends JApplet implements
 		toolbar.add(undo);
 
 		// Redo
-		URL redoUrl = getClass().getClassLoader().getResource(Images.REDO);
-		ImageIcon redoIcon = new ImageIcon(redoUrl);
+		File redoUrl = new File(Images.REDO);
+		ImageIcon redoIcon = new ImageIcon(redoUrl.getAbsolutePath());
 		redo = new AbstractAction("", redoIcon) {
 			public void actionPerformed(ActionEvent e) {
 				redo();
@@ -935,26 +934,29 @@ public class WorkflowDesigner extends JApplet implements
 		//
 		toolbar.addSeparator();
 		Action action;
-		URL url;
+		File url;
 
 		// Copy
 		action = javax.swing.TransferHandler.getCopyAction();
-		url = getClass().getClassLoader().getResource(Images.COPY);
-		toolbar.add(copy = new EventRedirector(action, new ImageIcon(url)));
+		url = new File(Images.COPY);
+		toolbar.add(copy = new EventRedirector(action, new ImageIcon(url
+				.getAbsolutePath())));
 
 		// Paste
 		action = javax.swing.TransferHandler.getPasteAction();
-		url = getClass().getClassLoader().getResource(Images.PASTE);
-		toolbar.add(paste = new EventRedirector(action, new ImageIcon(url)));
+		url = new File(Images.PASTE);
+		toolbar.add(paste = new EventRedirector(action, new ImageIcon(url
+				.getAbsolutePath())));
 
 		// Cut
 		action = javax.swing.TransferHandler.getCutAction();
-		url = getClass().getClassLoader().getResource(Images.CUT);
-		toolbar.add(cut = new EventRedirector(action, new ImageIcon(url)));
+		url = new File(Images.CUT);
+		toolbar.add(cut = new EventRedirector(action, new ImageIcon(url
+				.getAbsolutePath())));
 
 		// Remove
-		URL removeUrl = getClass().getClassLoader().getResource(Images.DELETE);
-		ImageIcon removeIcon = new ImageIcon(removeUrl);
+		File removeUrl = new File(Images.DELETE);
+		ImageIcon removeIcon = new ImageIcon(removeUrl.getAbsolutePath());
 		remove = new AbstractAction("", removeIcon) {
 			public void actionPerformed(ActionEvent e) {
 				if (!graph.isSelectionEmpty()) {
@@ -969,9 +971,8 @@ public class WorkflowDesigner extends JApplet implements
 
 		// To Front
 		toolbar.addSeparator();
-		URL toFrontUrl = getClass().getClassLoader()
-				.getResource(Images.TOFRONT);
-		ImageIcon toFrontIcon = new ImageIcon(toFrontUrl);
+		File toFrontUrl = new File(Images.TOFRONT);
+		ImageIcon toFrontIcon = new ImageIcon(toFrontUrl.getAbsolutePath());
 		tofront = new AbstractAction("", toFrontIcon) {
 			public void actionPerformed(ActionEvent e) {
 				if (!graph.isSelectionEmpty())
@@ -982,8 +983,8 @@ public class WorkflowDesigner extends JApplet implements
 		toolbar.add(tofront);
 
 		// To Back
-		URL toBackUrl = getClass().getClassLoader().getResource(Images.TOBACK);
-		ImageIcon toBackIcon = new ImageIcon(toBackUrl);
+		File toBackUrl = new File(Images.TOBACK);
+		ImageIcon toBackIcon = new ImageIcon(toBackUrl.getAbsolutePath());
 		toback = new AbstractAction("", toBackIcon) {
 			public void actionPerformed(ActionEvent e) {
 				if (!graph.isSelectionEmpty())
@@ -995,25 +996,24 @@ public class WorkflowDesigner extends JApplet implements
 
 		// Zoom Std
 		toolbar.addSeparator();
-		URL zoomUrl = getClass().getClassLoader().getResource(Images.ZOOM);
-		ImageIcon zoomIcon = new ImageIcon(zoomUrl);
+		File zoomUrl = new File(Images.ZOOM);
+		ImageIcon zoomIcon = new ImageIcon(zoomUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", zoomIcon) {
 			public void actionPerformed(ActionEvent e) {
 				graph.setScale(1.0);
 			}
 		});
 		// Zoom In
-		URL zoomInUrl = getClass().getClassLoader().getResource(Images.ZOOMIN);
-		ImageIcon zoomInIcon = new ImageIcon(zoomInUrl);
+		File zoomInUrl = new File(Images.ZOOMIN);
+		ImageIcon zoomInIcon = new ImageIcon(zoomInUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", zoomInIcon) {
 			public void actionPerformed(ActionEvent e) {
 				graph.setScale(2 * graph.getScale());
 			}
 		});
 		// Zoom Out
-		URL zoomOutUrl = getClass().getClassLoader()
-				.getResource(Images.ZOOMOUT);
-		ImageIcon zoomOutIcon = new ImageIcon(zoomOutUrl);
+		File zoomOutUrl = new File(Images.ZOOMOUT);
+		ImageIcon zoomOutIcon = new ImageIcon(zoomOutUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", zoomOutIcon) {
 			public void actionPerformed(ActionEvent e) {
 				graph.setScale(graph.getScale() / 2);
@@ -1022,8 +1022,8 @@ public class WorkflowDesigner extends JApplet implements
 
 		// Group
 		toolbar.addSeparator();
-		URL groupUrl = getClass().getClassLoader().getResource(Images.GROUP);
-		ImageIcon groupIcon = new ImageIcon(groupUrl);
+		File groupUrl = new File(Images.GROUP);
+		ImageIcon groupIcon = new ImageIcon(groupUrl.getAbsolutePath());
 		group = new AbstractAction("", groupIcon) {
 			public void actionPerformed(ActionEvent e) {
 				group(graph.getSelectionCells());
@@ -1033,9 +1033,8 @@ public class WorkflowDesigner extends JApplet implements
 		toolbar.add(group);
 
 		// Ungroup
-		URL ungroupUrl = getClass().getClassLoader()
-				.getResource(Images.UNGROUP);
-		ImageIcon ungroupIcon = new ImageIcon(ungroupUrl);
+		File ungroupUrl = new File(Images.UNGROUP);
+		ImageIcon ungroupIcon = new ImageIcon(ungroupUrl.getAbsolutePath());
 		ungroup = new AbstractAction("", ungroupIcon) {
 			public void actionPerformed(ActionEvent e) {
 				ungroup(graph.getSelectionCells());
@@ -1073,8 +1072,10 @@ public class WorkflowDesigner extends JApplet implements
 						line = "ProcessNode";
 					} else if (cell instanceof DefaultEdge) {
 						DefaultEdge dedge = (DefaultEdge) cell;
-						DefaultGraphCell source=(DefaultGraphCell)dedge.getSource();
-						DefaultGraphCell target=(DefaultGraphCell)dedge.getTarget();
+						DefaultGraphCell source = (DefaultGraphCell) dedge
+								.getSource();
+						DefaultGraphCell target = (DefaultGraphCell) dedge
+								.getTarget();
 						line = source.getAttributes() + "-"
 								+ target.getAttributes();
 					}
