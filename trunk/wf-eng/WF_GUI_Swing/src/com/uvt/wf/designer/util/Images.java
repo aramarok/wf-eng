@@ -1,7 +1,7 @@
 package com.uvt.wf.designer.util;
 
 public class Images {
-	private static String baseDir = "com/uvt/wf/designer/gui/images/";
+	private static String baseDir = "img/";
 	public static final String PLUS = baseDir + "plus.gif";
 	public static final String START = baseDir + "insertStart.gif";
 	public static final String END = baseDir + "insertEnd.gif";
@@ -23,4 +23,5 @@ public class Images {
 	public static final String ZOOMOUT = baseDir + "zoomout.gif";
 	public static final String GROUP = baseDir + "group.gif";
 	public static final String UNGROUP = baseDir + "ungroup.gif";
+	public static final String JGRAPH = baseDir + "jgraph.gif";
 }
