@@ -842,7 +842,7 @@ public class WorkflowDesigner extends JApplet implements
 		toolbar.setFloatable(false);
 
 		// Open, Save
-		File openURL = new File(Images.SAVE);
+		File openURL = new File(Images.OPEN);
 		ImageIcon openIcon = new ImageIcon(openURL.getAbsolutePath());
 		toolbar.add(new AbstractAction("", openIcon) {
 			public void actionPerformed(ActionEvent e) {
