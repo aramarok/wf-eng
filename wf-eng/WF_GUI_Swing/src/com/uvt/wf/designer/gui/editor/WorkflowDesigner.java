@@ -856,13 +856,13 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		});
 		toolbar.addSeparator();
-		
+
 		// Export
 		File exportUrl = new File(ToolbarIcons.PLUS);
 		ImageIcon exportIcon = new ImageIcon(exportUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", exportIcon) {
 			public void actionPerformed(ActionEvent e) {
-				//exportGraph2XML();
+				// exportGraph2XML();
 				exportGraph2XML();
 			}
 		});
@@ -1068,12 +1068,12 @@ public class WorkflowDesigner extends JApplet implements
 		return toolbar;
 	}
 
-	protected void saveToFile(){
+	protected void saveToFile() {
 		int returnVal = fc.showSaveDialog(this);
-		
+
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
-			if(!file.exists()){
+			if (!file.exists()) {
 				try {
 					file.createNewFile();
 				} catch (IOException e) {
@@ -1094,8 +1094,8 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		}
 	}
-	
-	protected void openFromFile(){
+
+	protected void openFromFile() {
 		int returnVal = fc.showOpenDialog(this);
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -1115,8 +1115,10 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		}
 	}
-	
-	
+
+	/**
+	 * Exports the graph layout to an XML file
+	 */
 	protected void exportGraph2XML() {
 		int returnVal = fc.showSaveDialog(this);
 
@@ -1132,52 +1134,62 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		}
 	}
-	
-	private String generateXMLContentsFromGraph(JGraph graph){
+
+	/**
+	 * Generates XML Content from the Graph Layout Cache
+	 * 
+	 * @param graph
+	 * @return
+	 */
+	private String generateXMLContentsFromGraph(JGraph graph) {
 		StringBuilder sb_main = new StringBuilder();
 		StringBuilder sb_nodes = new StringBuilder();
-		StringBuilder sb_transitions= new StringBuilder();
-		
-		String workFlowName = "name"; // TODO: to set this from a global variable
-		sb_main.append("<wf name=\""+workFlowName+"\">\n");
+		StringBuilder sb_transitions = new StringBuilder();
+
+		String workFlowName = "name"; // TODO: to set this from a global
+		// variable
+		sb_main.append("<wf name=\"" + workFlowName + "\">\n");
 		sb_nodes.append("\t<nodes>\n");
 		sb_transitions.append("\t<transitions>\n");
-		
+
 		GraphLayoutCache glc = graph.getGraphLayoutCache();
-		
+
 		// extract only the vertices, without edges
 		Object[] vertices = glc.getCells(false, true, false, false);
 		for (int i = 0; i < vertices.length; i++) {
-			DefaultGraphCell currentNode = (DefaultGraphCell)vertices[i];
-			String currentNodeName = (String)currentNode.getUserObject();
+			DefaultGraphCell currentNode = (DefaultGraphCell) vertices[i];
+			String currentNodeName = (String) currentNode.getUserObject();
 			String currentNodeType = "";
-			if (currentNode instanceof StartNode){
+			if (currentNode instanceof StartNode) {
 				currentNodeType = NodeType.START;
-			} else if (currentNode instanceof EndNode){
+			} else if (currentNode instanceof EndNode) {
 				currentNodeType = NodeType.END;
-			} else if (currentNode instanceof AndNode){
+			} else if (currentNode instanceof AndNode) {
 				currentNodeType = NodeType.AND;
-			} else if (currentNode instanceof OrNode){
+			} else if (currentNode instanceof OrNode) {
 				currentNodeType = NodeType.OR;
-			} else if (currentNode instanceof ProcessNode){
+			} else if (currentNode instanceof ProcessNode) {
 				currentNodeType = NodeType.PROCESS;
 			}
-			
-			sb_nodes.append("\t\t<node id=\""+ currentNodeName +"\" type=\""+ currentNodeType +"\" />\n");
-			
-			List<DefaultGraphCell> neighbours = (List<DefaultGraphCell>)glc.getNeighbours(currentNode, null, true, true);
-			for (DefaultGraphCell neighbour: neighbours){
-				String neighbourNodeName = (String)neighbour.getUserObject();
-				sb_transitions.append("\t\t<transition from=\""+ currentNode +"\" to=\""+ neighbourNodeName +"\" />\n");
+
+			sb_nodes.append("\t\t<node id=\"" + currentNodeName + "\" type=\""
+					+ currentNodeType + "\" />\n");
+
+			List<DefaultGraphCell> neighbours = (List<DefaultGraphCell>) glc
+					.getNeighbours(currentNode, null, true, true);
+			for (DefaultGraphCell neighbour : neighbours) {
+				String neighbourNodeName = (String) neighbour.getUserObject();
+				sb_transitions.append("\t\t<transition from=\"" + currentNode
+						+ "\" to=\"" + neighbourNodeName + "\" />\n");
 			}
 		}
-		
+
 		sb_transitions.append("\t</transitions>\n");
 		sb_nodes.append("\t</nodes>\n");
 		sb_main.append(sb_nodes);
 		sb_main.append(sb_transitions);
 		sb_main.append("</wf>");
-		
+
 		return sb_main.toString();
 	}
 
