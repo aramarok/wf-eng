@@ -75,7 +75,6 @@ import com.uvt.wf.designer.nodes.EndNode;
 import com.uvt.wf.designer.nodes.OrNode;
 import com.uvt.wf.designer.nodes.ProcessNode;
 import com.uvt.wf.designer.nodes.StartNode;
-import com.uvt.wf.designer.util.Images;
 
 /**
  * @author Flavius
@@ -115,7 +114,7 @@ public class WorkflowDesigner extends JApplet implements
 		frame.getContentPane().add(new WorkflowDesigner());
 		// Fetch URL to Icon Resource
 		URL jgraphUrl = WorkflowDesigner.class.getClassLoader().getResource(
-				Images.JGRAPH);
+				ToolbarIcons.JGRAPH);
 		// If Valid URL
 		if (jgraphUrl != null) {
 			// Load Icon
@@ -842,14 +841,14 @@ public class WorkflowDesigner extends JApplet implements
 		toolbar.setFloatable(false);
 
 		// Open, Save
-		File openURL = new File(Images.OPEN);
+		File openURL = new File(ToolbarIcons.OPEN);
 		ImageIcon openIcon = new ImageIcon(openURL.getAbsolutePath());
 		toolbar.add(new AbstractAction("", openIcon) {
 			public void actionPerformed(ActionEvent e) {
 				openFromFile();
 			}
 		});
-		File saveURL = new File(Images.SAVE);
+		File saveURL = new File(ToolbarIcons.SAVE);
 		ImageIcon saveIcon = new ImageIcon(saveURL.getAbsolutePath());
 		toolbar.add(new AbstractAction("", saveIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -859,7 +858,7 @@ public class WorkflowDesigner extends JApplet implements
 		toolbar.addSeparator();
 		
 		// Export
-		File exportUrl = new File(Images.PLUS);
+		File exportUrl = new File(ToolbarIcons.PLUS);
 		ImageIcon exportIcon = new ImageIcon(exportUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", exportIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -869,7 +868,7 @@ public class WorkflowDesigner extends JApplet implements
 		});
 		toolbar.addSeparator();
 		// Insert Start
-		File insertStartUrl = new File(Images.START);
+		File insertStartUrl = new File(ToolbarIcons.START);
 		ImageIcon insertStartIcon = new ImageIcon(insertStartUrl
 				.getAbsolutePath());
 		toolbar.add(new AbstractAction("", insertStartIcon) {
@@ -878,7 +877,7 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		});
 		// Insert End
-		File insertEndUrl = new File(Images.END);
+		File insertEndUrl = new File(ToolbarIcons.END);
 		ImageIcon insertEndIcon = new ImageIcon(insertEndUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", insertEndIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -886,7 +885,7 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		});
 		// Insert And
-		File insertAndUrl = new File(Images.AND);
+		File insertAndUrl = new File(ToolbarIcons.AND);
 		ImageIcon insertAndIcon = new ImageIcon(insertAndUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", insertAndIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -894,7 +893,7 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		});
 		// Insert Or
-		File insertOrUrl = new File(Images.OR);
+		File insertOrUrl = new File(ToolbarIcons.OR);
 		ImageIcon insertOrIcon = new ImageIcon(insertOrUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", insertOrIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -903,7 +902,7 @@ public class WorkflowDesigner extends JApplet implements
 		});
 
 		// Insert
-		File insertUrl = new File(Images.PROCESS);
+		File insertUrl = new File(ToolbarIcons.PROCESS);
 		ImageIcon insertIcon = new ImageIcon(insertUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", insertIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -912,7 +911,7 @@ public class WorkflowDesigner extends JApplet implements
 		});
 
 		// Toggle Connect Mode
-		File connectUrl = new File(Images.CONNECTION);
+		File connectUrl = new File(ToolbarIcons.CONNECTION);
 		ImageIcon connectIcon = new ImageIcon(connectUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", connectIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -920,10 +919,10 @@ public class WorkflowDesigner extends JApplet implements
 				URL connectUrl;
 				if (graph.isPortsVisible())
 					connectUrl = getClass().getClassLoader().getResource(
-							Images.CONNECTION);
+							ToolbarIcons.CONNECTION);
 				else
 					connectUrl = getClass().getClassLoader().getResource(
-							Images.CONNECTIONOFF);
+							ToolbarIcons.CONNECTIONOFF);
 				ImageIcon connectIcon = new ImageIcon(connectUrl);
 				putValue(SMALL_ICON, connectIcon);
 			}
@@ -931,7 +930,7 @@ public class WorkflowDesigner extends JApplet implements
 
 		// Undo
 		toolbar.addSeparator();
-		File undoUrl = new File(Images.UNDO);
+		File undoUrl = new File(ToolbarIcons.UNDO);
 		ImageIcon undoIcon = new ImageIcon(undoUrl.getAbsolutePath());
 		undo = new AbstractAction("", undoIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -942,7 +941,7 @@ public class WorkflowDesigner extends JApplet implements
 		toolbar.add(undo);
 
 		// Redo
-		File redoUrl = new File(Images.REDO);
+		File redoUrl = new File(ToolbarIcons.REDO);
 		ImageIcon redoIcon = new ImageIcon(redoUrl.getAbsolutePath());
 		redo = new AbstractAction("", redoIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -961,24 +960,24 @@ public class WorkflowDesigner extends JApplet implements
 
 		// Copy
 		action = javax.swing.TransferHandler.getCopyAction();
-		url = new File(Images.COPY);
+		url = new File(ToolbarIcons.COPY);
 		toolbar.add(copy = new EventRedirector(action, new ImageIcon(url
 				.getAbsolutePath())));
 
 		// Paste
 		action = javax.swing.TransferHandler.getPasteAction();
-		url = new File(Images.PASTE);
+		url = new File(ToolbarIcons.PASTE);
 		toolbar.add(paste = new EventRedirector(action, new ImageIcon(url
 				.getAbsolutePath())));
 
 		// Cut
 		action = javax.swing.TransferHandler.getCutAction();
-		url = new File(Images.CUT);
+		url = new File(ToolbarIcons.CUT);
 		toolbar.add(cut = new EventRedirector(action, new ImageIcon(url
 				.getAbsolutePath())));
 
 		// Remove
-		File removeUrl = new File(Images.DELETE);
+		File removeUrl = new File(ToolbarIcons.DELETE);
 		ImageIcon removeIcon = new ImageIcon(removeUrl.getAbsolutePath());
 		remove = new AbstractAction("", removeIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -994,7 +993,7 @@ public class WorkflowDesigner extends JApplet implements
 
 		// To Front
 		toolbar.addSeparator();
-		File toFrontUrl = new File(Images.TOFRONT);
+		File toFrontUrl = new File(ToolbarIcons.TOFRONT);
 		ImageIcon toFrontIcon = new ImageIcon(toFrontUrl.getAbsolutePath());
 		tofront = new AbstractAction("", toFrontIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -1006,7 +1005,7 @@ public class WorkflowDesigner extends JApplet implements
 		toolbar.add(tofront);
 
 		// To Back
-		File toBackUrl = new File(Images.TOBACK);
+		File toBackUrl = new File(ToolbarIcons.TOBACK);
 		ImageIcon toBackIcon = new ImageIcon(toBackUrl.getAbsolutePath());
 		toback = new AbstractAction("", toBackIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -1019,7 +1018,7 @@ public class WorkflowDesigner extends JApplet implements
 
 		// Zoom Std
 		toolbar.addSeparator();
-		File zoomUrl = new File(Images.ZOOM);
+		File zoomUrl = new File(ToolbarIcons.ZOOM);
 		ImageIcon zoomIcon = new ImageIcon(zoomUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", zoomIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -1027,7 +1026,7 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		});
 		// Zoom In
-		File zoomInUrl = new File(Images.ZOOMIN);
+		File zoomInUrl = new File(ToolbarIcons.ZOOMIN);
 		ImageIcon zoomInIcon = new ImageIcon(zoomInUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", zoomInIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -1035,7 +1034,7 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		});
 		// Zoom Out
-		File zoomOutUrl = new File(Images.ZOOMOUT);
+		File zoomOutUrl = new File(ToolbarIcons.ZOOMOUT);
 		ImageIcon zoomOutIcon = new ImageIcon(zoomOutUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", zoomOutIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -1045,7 +1044,7 @@ public class WorkflowDesigner extends JApplet implements
 
 		// Group
 		toolbar.addSeparator();
-		File groupUrl = new File(Images.GROUP);
+		File groupUrl = new File(ToolbarIcons.GROUP);
 		ImageIcon groupIcon = new ImageIcon(groupUrl.getAbsolutePath());
 		group = new AbstractAction("", groupIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -1056,7 +1055,7 @@ public class WorkflowDesigner extends JApplet implements
 		toolbar.add(group);
 
 		// Ungroup
-		File ungroupUrl = new File(Images.UNGROUP);
+		File ungroupUrl = new File(ToolbarIcons.UNGROUP);
 		ImageIcon ungroupIcon = new ImageIcon(ungroupUrl.getAbsolutePath());
 		ungroup = new AbstractAction("", ungroupIcon) {
 			public void actionPerformed(ActionEvent e) {
