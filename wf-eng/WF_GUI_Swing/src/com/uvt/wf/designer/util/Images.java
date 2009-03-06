@@ -2,7 +2,7 @@ package com.uvt.wf.designer.util;
 
 public class Images {
 	private static String baseDir = "img/";
-	public static final String OPEN = baseDir + "open.gif";
+	public static final String OPEN = baseDir + "open.JPG";
 	public static final String SAVE = baseDir + "save.JPG";
 	public static final String PLUS = baseDir + "plus.gif";
 	public static final String START = baseDir + "insertStart.gif";
