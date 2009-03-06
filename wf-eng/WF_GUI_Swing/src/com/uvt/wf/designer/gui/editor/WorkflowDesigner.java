@@ -15,11 +15,15 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -836,12 +840,30 @@ public class WorkflowDesigner extends JApplet implements
 		JToolBar toolbar = new JToolBar();
 		toolbar.setFloatable(false);
 
+		// Open, Save
+		File openURL = new File(Images.SAVE);
+		ImageIcon openIcon = new ImageIcon(openURL.getAbsolutePath());
+		toolbar.add(new AbstractAction("", openIcon) {
+			public void actionPerformed(ActionEvent e) {
+				openFromFile();
+			}
+		});
+		File saveURL = new File(Images.SAVE);
+		ImageIcon saveIcon = new ImageIcon(saveURL.getAbsolutePath());
+		toolbar.add(new AbstractAction("", saveIcon) {
+			public void actionPerformed(ActionEvent e) {
+				saveToFile();
+			}
+		});
+		toolbar.addSeparator();
+		
 		// Export
 		File exportUrl = new File(Images.PLUS);
 		ImageIcon exportIcon = new ImageIcon(exportUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", exportIcon) {
 			public void actionPerformed(ActionEvent e) {
-				exportGraph2XML();
+				//exportGraph2XML();
+				exportGraph2XML_v2();
 			}
 		});
 		toolbar.addSeparator();
@@ -1046,6 +1068,54 @@ public class WorkflowDesigner extends JApplet implements
 		return toolbar;
 	}
 
+	protected void saveToFile(){
+		int returnVal = fc.showSaveDialog(this);
+		
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File file = fc.getSelectedFile();
+			if(!file.exists()){
+				try {
+					file.createNewFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			String filename = file.getAbsolutePath();
+			try {
+				FileOutputStream fout = new FileOutputStream(filename);
+				ObjectOutputStream oos = new ObjectOutputStream(fout);
+				oos.writeObject(graph);
+				oos = new ObjectOutputStream(fout);
+				oos.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	protected void openFromFile(){
+		int returnVal = fc.showOpenDialog(this);
+
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File file = fc.getSelectedFile();
+			String filename = file.getAbsolutePath();
+			try {
+				FileInputStream fin = new FileInputStream(filename);
+				ObjectInputStream ois = new ObjectInputStream(fin);
+				graph = (JGraph) ois.readObject();
+				ois.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	protected void exportGraph2XML() {
 		int returnVal = fc.showSaveDialog(this);
 
@@ -1087,7 +1157,56 @@ public class WorkflowDesigner extends JApplet implements
 			}
 
 		}
+	}
+	
+	protected void exportGraph2XML_v2() {
+		int returnVal = fc.showSaveDialog(this);
 
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File file = fc.getSelectedFile();
+			String Filename = file.getAbsolutePath();
+			try {
+				BufferedWriter bw = new BufferedWriter(new FileWriter(Filename));
+				bw.write(generateXMLFromGraph(graph));
+				bw.close();
+			} catch (IOException exc) {
+				exc.printStackTrace();
+			}
+		}
+	}
+	
+	private String generateXMLFromGraph(JGraph graph){
+		StringBuilder sb_main = new StringBuilder();
+		StringBuilder sb_nodes = new StringBuilder();
+		StringBuilder sb_transitions= new StringBuilder();
+		
+		String workFlowName = "";
+		sb_main.append("<wf name=\""+workFlowName+"\">\n");
+		sb_nodes.append("\t<nodes>\n");
+		sb_transitions.append("\t<transitions>\n");
+		
+		Object[] nodes = graph.getRoots();
+		for (int i = 0; i < nodes.length; i++) {
+			DefaultGraphCell currentNode = (DefaultGraphCell)nodes[i];
+			String currentNodeName = "";
+			String currentNodeType = "";
+			
+			sb_nodes.append("\t\t<node id=\""+ currentNodeName +"\" type=\""+ currentNodeType +"\" />\n");
+			
+			for (DefaultGraphCell child: (List<DefaultGraphCell>)currentNode.getChildren()){
+				String childNodeName = "";
+				sb_transitions.append("\t\t<transition from=\""+ currentNodeName +"\" to=\""+ childNodeName +"\" />\n");
+			}
+		}
+			//if (nodes[i] instanceof StartNode)
+		
+		sb_transitions.append("\t</transitions>\n");
+		sb_nodes.append("\t</nodes>\n");
+		sb_main.append(sb_nodes);
+		sb_main.append(sb_transitions);
+		sb_main.append("</wf>");
+		
+		return sb_main.toString();
 	}
 
 	/**
