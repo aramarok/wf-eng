@@ -24,7 +24,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.AbstractAction;
@@ -62,6 +61,7 @@ import org.jgraph.graph.EdgeRenderer;
 import org.jgraph.graph.EdgeView;
 import org.jgraph.graph.GraphConstants;
 import org.jgraph.graph.GraphContext;
+import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphUndoManager;
 import org.jgraph.graph.Port;
 import org.jgraph.graph.PortRenderer;
@@ -1180,25 +1180,43 @@ public class WorkflowDesigner extends JApplet implements
 		StringBuilder sb_nodes = new StringBuilder();
 		StringBuilder sb_transitions= new StringBuilder();
 		
-		String workFlowName = "";
+		String workFlowName = "name"; // TODO: to set this from a global variable
 		sb_main.append("<wf name=\""+workFlowName+"\">\n");
 		sb_nodes.append("\t<nodes>\n");
 		sb_transitions.append("\t<transitions>\n");
 		
+	
+		
 		Object[] nodes = graph.getRoots();
 		for (int i = 0; i < nodes.length; i++) {
 			DefaultGraphCell currentNode = (DefaultGraphCell)nodes[i];
-			String currentNodeName = "";
+			String currentNodeName = (String)currentNode.getUserObject();
 			String currentNodeType = "";
-			
-			sb_nodes.append("\t\t<node id=\""+ currentNodeName +"\" type=\""+ currentNodeType +"\" />\n");
-			
-			for (DefaultGraphCell child: (List<DefaultGraphCell>)currentNode.getChildren()){
-				String childNodeName = "";
+			if (currentNode instanceof StartNode){
+				currentNodeType = NodeType.START;
+			} else if (currentNode instanceof EndNode){
+				currentNodeType = NodeType.END;
+			} else if (currentNode instanceof AndNode){
+				currentNodeType = NodeType.AND;
+			} else if (currentNode instanceof OrNode){
+				currentNodeType = NodeType.OR;
+			} else if (currentNode instanceof ProcessNode){
+				currentNodeType = NodeType.PROCESS;
+			} else if (currentNode instanceof DefaultEdge) {
+				
+				//graph.getGraphLayoutCache().insertEdge(edge, source, target);
+				
+				System.out.println("----: " + ((DefaultEdge)currentNode).toString());
+				
+				String childNodeName = (String)((DefaultGraphCell)((DefaultEdge)currentNode).getTarget()).getUserObject();
 				sb_transitions.append("\t\t<transition from=\""+ currentNodeName +"\" to=\""+ childNodeName +"\" />\n");
 			}
+			
+			if (!(currentNode instanceof DefaultEdge)) {
+				// Nu luam in calcul sagetile de legatura
+				sb_nodes.append("\t\t<node id=\""+ currentNodeName +"\" type=\""+ currentNodeType +"\" />\n");
+			}
 		}
-			//if (nodes[i] instanceof StartNode)
 		
 		sb_transitions.append("\t</transitions>\n");
 		sb_nodes.append("\t</nodes>\n");
