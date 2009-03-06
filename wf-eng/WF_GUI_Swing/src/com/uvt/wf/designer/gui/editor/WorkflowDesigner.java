@@ -24,6 +24,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.AbstractAction;
@@ -1185,11 +1186,12 @@ public class WorkflowDesigner extends JApplet implements
 		sb_nodes.append("\t<nodes>\n");
 		sb_transitions.append("\t<transitions>\n");
 		
-	
+		GraphLayoutCache glc = graph.getGraphLayoutCache();
 		
-		Object[] nodes = graph.getRoots();
-		for (int i = 0; i < nodes.length; i++) {
-			DefaultGraphCell currentNode = (DefaultGraphCell)nodes[i];
+		// extract only the vertices, without edges
+		Object[] vertices = glc.getCells(false, true, false, false);
+		for (int i = 0; i < vertices.length; i++) {
+			DefaultGraphCell currentNode = (DefaultGraphCell)vertices[i];
 			String currentNodeName = (String)currentNode.getUserObject();
 			String currentNodeType = "";
 			if (currentNode instanceof StartNode){
@@ -1202,19 +1204,14 @@ public class WorkflowDesigner extends JApplet implements
 				currentNodeType = NodeType.OR;
 			} else if (currentNode instanceof ProcessNode){
 				currentNodeType = NodeType.PROCESS;
-			} else if (currentNode instanceof DefaultEdge) {
-				
-				//graph.getGraphLayoutCache().insertEdge(edge, source, target);
-				
-				System.out.println("----: " + ((DefaultEdge)currentNode).toString());
-				
-				String childNodeName = (String)((DefaultGraphCell)((DefaultEdge)currentNode).getTarget()).getUserObject();
-				sb_transitions.append("\t\t<transition from=\""+ currentNodeName +"\" to=\""+ childNodeName +"\" />\n");
 			}
 			
-			if (!(currentNode instanceof DefaultEdge)) {
-				// Nu luam in calcul sagetile de legatura
-				sb_nodes.append("\t\t<node id=\""+ currentNodeName +"\" type=\""+ currentNodeType +"\" />\n");
+			sb_nodes.append("\t\t<node id=\""+ currentNodeName +"\" type=\""+ currentNodeType +"\" />\n");
+			
+			List<DefaultGraphCell> neighbours = (List<DefaultGraphCell>)glc.getNeighbours(currentNode, null, true, true);
+			for (DefaultGraphCell neighbour: neighbours){
+				String neighbourNodeName = (String)neighbour.getUserObject();
+				sb_transitions.append("\t\t<transition from=\""+ currentNode +"\" to=\""+ neighbourNodeName +"\" />\n");
 			}
 		}
 		
