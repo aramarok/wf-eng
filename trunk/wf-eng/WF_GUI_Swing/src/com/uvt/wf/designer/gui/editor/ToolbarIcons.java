@@ -1,6 +1,6 @@
-package com.uvt.wf.designer.util;
+package com.uvt.wf.designer.gui.editor;
 
-public class Images {
+public class ToolbarIcons {
 	private static String baseDir = "img/";
 	public static final String OPEN = baseDir + "open.JPG";
 	public static final String SAVE = baseDir + "save.JPG";
