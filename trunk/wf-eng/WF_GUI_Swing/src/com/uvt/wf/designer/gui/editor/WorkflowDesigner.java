@@ -864,7 +864,7 @@ public class WorkflowDesigner extends JApplet implements
 		toolbar.add(new AbstractAction("", exportIcon) {
 			public void actionPerformed(ActionEvent e) {
 				//exportGraph2XML();
-				exportGraph2XML_v2();
+				exportGraph2XML();
 			}
 		});
 		toolbar.addSeparator();
@@ -1117,6 +1117,7 @@ public class WorkflowDesigner extends JApplet implements
 		}
 	}
 	
+	
 	protected void exportGraph2XML() {
 		int returnVal = fc.showSaveDialog(this);
 
@@ -1125,50 +1126,7 @@ public class WorkflowDesigner extends JApplet implements
 			String Filename = file.getAbsolutePath();
 			try {
 				BufferedWriter bw = new BufferedWriter(new FileWriter(Filename));
-				Object[] cells = graph.getRoots();
-				String line = null;
-				for (int i = 0; i < cells.length; i++) {
-					Object cell = cells[i];
-					DefaultGraphCell dcell = (DefaultGraphCell) cell;
-					// Cell type
-					if (cell instanceof StartNode) {
-						line = "Start";
-					} else if (cell instanceof EndNode) {
-						line = "EndNode";
-					} else if (cell instanceof AndNode) {
-						line = "AndNode";
-					} else if (cell instanceof OrNode) {
-						line = "OrNode";
-					} else if (cell instanceof ProcessNode) {
-						line = "ProcessNode";
-					} else if (cell instanceof DefaultEdge) {
-						DefaultEdge dedge = (DefaultEdge) cell;
-						DefaultGraphCell source = (DefaultGraphCell) dedge
-								.getSource();
-						DefaultGraphCell target = (DefaultGraphCell) dedge
-								.getTarget();
-						line = source.getAttributes() + "-"
-								+ target.getAttributes();
-					}
-					bw.write(line + "\n");
-				}
-				bw.close();
-			} catch (IOException exc) {
-				exc.printStackTrace();
-			}
-
-		}
-	}
-	
-	protected void exportGraph2XML_v2() {
-		int returnVal = fc.showSaveDialog(this);
-
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = fc.getSelectedFile();
-			String Filename = file.getAbsolutePath();
-			try {
-				BufferedWriter bw = new BufferedWriter(new FileWriter(Filename));
-				bw.write(generateXMLFromGraph(graph));
+				bw.write(generateXMLContentsFromGraph(graph));
 				bw.close();
 			} catch (IOException exc) {
 				exc.printStackTrace();
@@ -1176,7 +1134,7 @@ public class WorkflowDesigner extends JApplet implements
 		}
 	}
 	
-	private String generateXMLFromGraph(JGraph graph){
+	private String generateXMLContentsFromGraph(JGraph graph){
 		StringBuilder sb_main = new StringBuilder();
 		StringBuilder sb_nodes = new StringBuilder();
 		StringBuilder sb_transitions= new StringBuilder();
