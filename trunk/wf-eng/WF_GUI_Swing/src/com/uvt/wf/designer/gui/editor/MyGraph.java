@@ -26,9 +26,9 @@ public class MyGraph extends JGraph {
 		setPortsVisible(true);
 		// Use the Grid
 		setGridEnabled(true);
+		setGridMode(JGraph.DOT_GRID_MODE);
 		setGridVisible(true);
 		setGridColor(Color.BLUE);
-		// Set the Grid Size to 10 Pixel
 		setGridSize(6);
 		// Set the Tolerance to 2 Pixel
 		setTolerance(2);
@@ -38,5 +38,7 @@ public class MyGraph extends JGraph {
 		setCloneable(true);
 		// Jump to default port on connect
 		setJumpToDefaultPort(true);
+
+		
 	}
 }
