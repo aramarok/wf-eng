@@ -1159,7 +1159,7 @@ public class WorkflowDesigner extends JApplet implements
 
 	protected void openFromFileAsk() {
 		int r = JOptionPane.showConfirmDialog(null,
-				"Are you sure that you want to open a graph from file?",
+				"Are you sure that you want to open a workflow from file?",
 				"Open Workflow", JOptionPane.YES_NO_OPTION);
 		if (r == JOptionPane.OK_OPTION) {
 			openFromFile();
