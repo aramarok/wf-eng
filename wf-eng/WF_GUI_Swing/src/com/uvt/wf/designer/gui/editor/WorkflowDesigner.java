@@ -1099,12 +1099,14 @@ public class WorkflowDesigner extends JApplet implements
 	 * Creates New and Empty Workflow
 	 */
 	protected void createNewWorkflow() {
-		int r = JOptionPane.showConfirmDialog(this.getContentPane(),
-				"Are you sure that you want to create a new workflow?",
-				"New Workflow", JOptionPane.YES_NO_OPTION);
-		if (r == JOptionPane.OK_OPTION) {
-			// graph = createGraph();
-			resetGraph();
+		if (getCellCount(graph) > 0) {
+			int r = JOptionPane.showConfirmDialog(this.getContentPane(),
+					"Are you sure that you want to create a new workflow?",
+					"New Workflow", JOptionPane.YES_NO_OPTION);
+			if (r == JOptionPane.OK_OPTION) {
+				// graph = createGraph();
+				resetGraph();
+			}
 		}
 	}
 
@@ -1158,12 +1160,15 @@ public class WorkflowDesigner extends JApplet implements
 	}
 
 	protected void openFromFileAsk() {
-		int r = JOptionPane.showConfirmDialog(null,
-				"Are you sure that you want to open a workflow from file?",
-				"Open Workflow", JOptionPane.YES_NO_OPTION);
-		if (r == JOptionPane.OK_OPTION) {
+		if (getCellCount(graph) > 0) {
+			int r = JOptionPane.showConfirmDialog(null,
+					"Are you sure that you want to open a workflow from file?",
+					"Open Workflow", JOptionPane.YES_NO_OPTION);
+			if (r == JOptionPane.OK_OPTION) {
+				openFromFile();
+			}
+		} else
 			openFromFile();
-		}
 	}
 
 	protected void openFromFile() {
