@@ -266,8 +266,8 @@ public class WorkflowDesigner extends JApplet implements
 	}
 
 	private Point2D getRandomPoint() {
-		int maxx = this.getContentPane().getWidth() / 2;
-		int maxy = this.getContentPane().getHeight() / 2;
+		double maxx = this.getContentPane().getWidth() / 1.5;
+		double maxy = this.getContentPane().getHeight() / 1.5;
 		int x = (int) (maxx * Math.random());
 		int y = (int) (maxy * Math.random());
 		return new Point(x, y);
@@ -405,7 +405,7 @@ public class WorkflowDesigner extends JApplet implements
 	public Map createEdgeAttributes() {
 		Map map = new Hashtable();
 		// Add a Line End Attribute
-		GraphConstants.setLineEnd(map, GraphConstants.ARROW_SIMPLE);
+		GraphConstants.setLineEnd(map, GraphConstants.ARROW_TECHNICAL);
 		// Add a label along edge attribute
 		GraphConstants.setLabelAlongEdge(map, true);
 		return map;
@@ -943,14 +943,13 @@ public class WorkflowDesigner extends JApplet implements
 		toolbar.add(new AbstractAction("", connectIcon) {
 			public void actionPerformed(ActionEvent e) {
 				graph.setPortsVisible(!graph.isPortsVisible());
-				URL connectUrl;
+				File connectUrl;
 				if (graph.isPortsVisible())
-					connectUrl = getClass().getClassLoader().getResource(
-							ToolbarIcons.CONNECTION);
+					connectUrl = new File(ToolbarIcons.CONNECTION);
 				else
-					connectUrl = getClass().getClassLoader().getResource(
-							ToolbarIcons.CONNECTIONOFF);
-				ImageIcon connectIcon = new ImageIcon(connectUrl);
+					connectUrl = new File(ToolbarIcons.CONNECTIONOFF);
+				ImageIcon connectIcon = new ImageIcon(connectUrl
+						.getAbsolutePath());
 				putValue(SMALL_ICON, connectIcon);
 			}
 		});
