@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.BufferedWriter;
@@ -123,8 +125,14 @@ public class WorkflowDesigner extends JApplet implements
 			frame.setIconImage(jgraphIcon.getImage());
 		}
 		// Set Default Size
-		frame.setSize(640, 480);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(800, 600);
+
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				closeApplication();
+			}
+		});
 		// Show Frame
 		frame.setVisible(true);
 	}
@@ -254,6 +262,14 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		}
 		return result;
+	}
+
+	private Point2D getRandomPoint() {
+		int maxx = this.getContentPane().getWidth() / 2;
+		int maxy = this.getContentPane().getHeight() / 2;
+		int x = (int) (maxx * Math.random());
+		int y = (int) (maxy * Math.random());
+		return new Point(x, y);
 	}
 
 	public void insertStartNode(Point2D point) {
@@ -839,8 +855,16 @@ public class WorkflowDesigner extends JApplet implements
 	public JToolBar createToolBar() {
 		JToolBar toolbar = new JToolBar();
 		toolbar.setFloatable(false);
+		// New
+		File newURL = new File(ToolbarIcons.NEW);
+		ImageIcon newIcon = new ImageIcon(newURL.getAbsolutePath());
+		toolbar.add(new AbstractAction("", newIcon) {
+			public void actionPerformed(ActionEvent e) {
+				createNewWorkflow();
+			}
+		});
 
-		// Open, Save
+		// Open
 		File openURL = new File(ToolbarIcons.OPEN);
 		ImageIcon openIcon = new ImageIcon(openURL.getAbsolutePath());
 		toolbar.add(new AbstractAction("", openIcon) {
@@ -848,6 +872,8 @@ public class WorkflowDesigner extends JApplet implements
 				openFromFile();
 			}
 		});
+
+		// Save
 		File saveURL = new File(ToolbarIcons.SAVE);
 		ImageIcon saveIcon = new ImageIcon(saveURL.getAbsolutePath());
 		toolbar.add(new AbstractAction("", saveIcon) {
@@ -858,7 +884,7 @@ public class WorkflowDesigner extends JApplet implements
 		toolbar.addSeparator();
 
 		// Export
-		File exportUrl = new File(ToolbarIcons.PLUS);
+		File exportUrl = new File(ToolbarIcons.EXPORT);
 		ImageIcon exportIcon = new ImageIcon(exportUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", exportIcon) {
 			public void actionPerformed(ActionEvent e) {
@@ -873,7 +899,7 @@ public class WorkflowDesigner extends JApplet implements
 				.getAbsolutePath());
 		toolbar.add(new AbstractAction("", insertStartIcon) {
 			public void actionPerformed(ActionEvent e) {
-				insertStartNode(new Point(10, 10));
+				insertStartNode(getRandomPoint());
 			}
 		});
 		// Insert End
@@ -881,7 +907,7 @@ public class WorkflowDesigner extends JApplet implements
 		ImageIcon insertEndIcon = new ImageIcon(insertEndUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", insertEndIcon) {
 			public void actionPerformed(ActionEvent e) {
-				insertEndNode(new Point(10, 10));
+				insertEndNode(getRandomPoint());
 			}
 		});
 		// Insert And
@@ -889,7 +915,7 @@ public class WorkflowDesigner extends JApplet implements
 		ImageIcon insertAndIcon = new ImageIcon(insertAndUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", insertAndIcon) {
 			public void actionPerformed(ActionEvent e) {
-				insertAndNode(new Point(10, 10));
+				insertAndNode(getRandomPoint());
 			}
 		});
 		// Insert Or
@@ -897,7 +923,7 @@ public class WorkflowDesigner extends JApplet implements
 		ImageIcon insertOrIcon = new ImageIcon(insertOrUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", insertOrIcon) {
 			public void actionPerformed(ActionEvent e) {
-				insertOrNode(new Point(10, 10));
+				insertOrNode(getRandomPoint());
 			}
 		});
 
@@ -906,7 +932,7 @@ public class WorkflowDesigner extends JApplet implements
 		ImageIcon insertIcon = new ImageIcon(insertUrl.getAbsolutePath());
 		toolbar.add(new AbstractAction("", insertIcon) {
 			public void actionPerformed(ActionEvent e) {
-				insertDefaultNode(new Point(10, 10));
+				insertDefaultNode(getRandomPoint());
 			}
 		});
 
@@ -1066,6 +1092,34 @@ public class WorkflowDesigner extends JApplet implements
 		toolbar.add(ungroup);
 
 		return toolbar;
+	}
+
+	/**
+	 * Creates New and Empty Workflow
+	 */
+	protected void createNewWorkflow() {
+		int r = JOptionPane.showConfirmDialog(this.getContentPane(),
+				"Are you sure that you want to create a new workflow?",
+				"New Workflow", JOptionPane.YES_NO_OPTION);
+		if (r == JOptionPane.OK_OPTION) {
+			// graph = createGraph();
+			GraphLayoutCache glc = graph.getGraphLayoutCache();
+			Object[] all = glc.getCells(true, true, true, true);
+			graph.getGraphLayoutCache().remove(all);
+			cellCount = 0;
+		}
+	}
+
+	/**
+	 * Closes application
+	 */
+	protected static void closeApplication() {
+		int r = JOptionPane.showConfirmDialog(null,
+				"Are you sure that you want to close the application?",
+				"New Workflow", JOptionPane.YES_NO_OPTION);
+		if (r == JOptionPane.OK_OPTION) {
+			System.exit(0);
+		}
 	}
 
 	protected void saveToFile() {
