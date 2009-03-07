@@ -26,6 +26,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -869,7 +870,7 @@ public class WorkflowDesigner extends JApplet implements
 		ImageIcon openIcon = new ImageIcon(openURL.getAbsolutePath());
 		toolbar.add(new AbstractAction("", openIcon) {
 			public void actionPerformed(ActionEvent e) {
-				openFromFile();
+				openFromFileAsk();
 			}
 		});
 
@@ -1103,11 +1104,15 @@ public class WorkflowDesigner extends JApplet implements
 				"New Workflow", JOptionPane.YES_NO_OPTION);
 		if (r == JOptionPane.OK_OPTION) {
 			// graph = createGraph();
-			GraphLayoutCache glc = graph.getGraphLayoutCache();
-			Object[] all = glc.getCells(true, true, true, true);
-			graph.getGraphLayoutCache().remove(all);
-			cellCount = 0;
+			resetGraph();
 		}
+	}
+
+	private void resetGraph() {
+		GraphLayoutCache glc = graph.getGraphLayoutCache();
+		Object[] all = glc.getCells(true, true, true, true);
+		graph.getGraphLayoutCache().remove(all);
+		cellCount = 0;
 	}
 
 	/**
@@ -1138,7 +1143,10 @@ public class WorkflowDesigner extends JApplet implements
 			try {
 				FileOutputStream fout = new FileOutputStream(filename);
 				ObjectOutputStream oos = new ObjectOutputStream(fout);
-				oos.writeObject(graph);
+				// Save graph cells
+				GraphLayoutCache glc = graph.getGraphLayoutCache();
+				Object[] cells = glc.getCells(true, true, true, true);
+				oos.writeObject(cells);
 				oos = new ObjectOutputStream(fout);
 				oos.close();
 			} catch (FileNotFoundException e) {
@@ -1146,6 +1154,15 @@ public class WorkflowDesigner extends JApplet implements
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+
+	protected void openFromFileAsk() {
+		int r = JOptionPane.showConfirmDialog(null,
+				"Are you sure that you want to open a graph from file?",
+				"Open Workflow", JOptionPane.YES_NO_OPTION);
+		if (r == JOptionPane.OK_OPTION) {
+			openFromFile();
 		}
 	}
 
@@ -1158,7 +1175,14 @@ public class WorkflowDesigner extends JApplet implements
 			try {
 				FileInputStream fin = new FileInputStream(filename);
 				ObjectInputStream ois = new ObjectInputStream(fin);
-				graph = (JGraph) ois.readObject();
+				// Read graph cells
+				Object[] cells = (Object[]) ois.readObject();
+				// Reset Graph
+				resetGraph();
+				// insert cells in Graph Cache
+				for (Object cell : cells) {
+					graph.getGraphLayoutCache().insert(cell);
+				}
 				ois.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
