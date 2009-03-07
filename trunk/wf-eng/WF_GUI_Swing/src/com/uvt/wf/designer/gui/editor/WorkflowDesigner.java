@@ -1114,6 +1114,8 @@ public class WorkflowDesigner extends JApplet implements
 		Object[] all = glc.getCells(true, true, true, true);
 		graph.getGraphLayoutCache().remove(all);
 		cellCount = 0;
+		undoManager.discardAllEdits();
+		updateHistoryButtons();
 	}
 
 	/**
