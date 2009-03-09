@@ -69,15 +69,15 @@ public class BenzinarieTest extends AbstractServerTestCase{
 	
 	static public junit.framework.Test suite() {
 		junit.framework.TestSuite newSuite = new junit.framework.TestSuite();
-		//newSuite.addTest(new BenzinarieTest("testClearDB"));
-		//newSuite.addTest(new BenzinarieTest("testDeployWF"));
+//		newSuite.addTest(new BenzinarieTest("testClearDB"));
+//		newSuite.addTest(new BenzinarieTest("testDeployWF"));
 //		newSuite.addTest(new BenzinarieTest("testStartWF"));
+//		newSuite.addTest(new BenzinarieTest("testMasina"));
+//		newSuite.addTest(new BenzinarieTest("testAltceva"));
+//		newSuite.addTest(new BenzinarieTest("testUmplere"));
 		//newSuite.addTest(new BenzinarieTest("testMasina"));
-		//newSuite.addTest(new BenzinarieTest("testAltceva"));
-		//newSuite.addTest(new BenzinarieTest("testUmplere"));
 		//newSuite.addTest(new BenzinarieTest("testMasina"));
-		//newSuite.addTest(new BenzinarieTest("testMasina"));
-		newSuite.addTest(new BenzinarieTest("testPlecare"));
+//		newSuite.addTest(new BenzinarieTest("testPlecare"));
 		return newSuite;
 	};
 	

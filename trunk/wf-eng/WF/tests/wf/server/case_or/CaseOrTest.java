@@ -52,11 +52,11 @@ public class CaseOrTest extends AbstractServerTestCase {
 
 	static public junit.framework.Test suite() {
 		junit.framework.TestSuite newSuite = new junit.framework.TestSuite();
-		newSuite.addTest(new CaseOrTest("testClearDB"));
-		newSuite.addTest(new CaseOrTest("testDeployWF"));
-		newSuite.addTest(new CaseOrTest("testStartWF"));
-		newSuite.addTest(new CaseOrTest("testRunWF"));
-		newSuite.addTest(new CaseOrTest("testFinalNode"));
+//		newSuite.addTest(new CaseOrTest("testClearDB"));
+//		newSuite.addTest(new CaseOrTest("testDeployWF"));
+//		newSuite.addTest(new CaseOrTest("testStartWF"));
+//		newSuite.addTest(new CaseOrTest("testRunWF"));
+//		newSuite.addTest(new CaseOrTest("testFinalNode"));
 		return newSuite;
 	};
 
