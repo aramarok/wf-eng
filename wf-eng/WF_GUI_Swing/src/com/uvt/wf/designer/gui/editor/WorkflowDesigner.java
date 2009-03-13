@@ -98,6 +98,8 @@ public class WorkflowDesigner extends JApplet implements
 	// cell count that gets put in cell label
 	protected int cellCount = 0;
 
+	protected String workFlowName = "Workflow1";
+
 	// Status Bar
 	protected StatusBarGraphListener statusBar;
 
@@ -1203,6 +1205,9 @@ public class WorkflowDesigner extends JApplet implements
 	 * Exports the graph layout to an XML file
 	 */
 	protected void exportGraph2XML() {
+		String newWorkflowName = JOptionPane.showInputDialog(null,
+				"Enter Workflow Name", workFlowName);
+		workFlowName = newWorkflowName;
 		int returnVal = fc.showSaveDialog(this);
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -1229,7 +1234,6 @@ public class WorkflowDesigner extends JApplet implements
 		StringBuilder sb_nodes = new StringBuilder();
 		StringBuilder sb_transitions = new StringBuilder();
 
-		String workFlowName = "name"; // TODO: to set this from a global
 		// variable
 		sb_main.append("<wf name=\"" + workFlowName + "\">\n");
 		sb_nodes.append("\t<nodes>\n");
