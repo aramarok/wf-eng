@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -98,9 +99,6 @@ public class WorkflowDesigner extends JApplet implements
 	// Actions which Change State
 	protected Action undo, redo, remove, group, ungroup, tofront, toback, cut,
 			copy, paste;
-
-	// cell count that gets put in cell label
-	protected int cellCount = 0;
 
 	protected String workFlowName = "Workflow1";
 
@@ -260,6 +258,9 @@ public class WorkflowDesigner extends JApplet implements
 		JOptionPane.showMessageDialog(this, msg);
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean isStartNode() {
 		boolean result = false;
 		Object[] cells = graph.getRoots();
@@ -271,6 +272,9 @@ public class WorkflowDesigner extends JApplet implements
 		return result;
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean isEndNode() {
 		boolean result = false;
 		Object[] cells = graph.getRoots();
@@ -282,6 +286,9 @@ public class WorkflowDesigner extends JApplet implements
 		return result;
 	}
 
+	/**
+	 * @return
+	 */
 	private Point2D getRandomPoint() {
 		double maxx = this.getContentPane().getWidth() / 1.5;
 		double maxy = this.getContentPane().getHeight() / 1.5;
@@ -290,28 +297,31 @@ public class WorkflowDesigner extends JApplet implements
 		return new Point(x, y);
 	}
 
+	/**
+	 * @param point
+	 */
 	public void insertStartNode(Point2D point) {
-		if (!isStartNode()) {
-			DefaultGraphCell vertex = createStartNode();
-			vertex.getAttributes().applyMap(
-					createCellAttributes(point, Color.GREEN, Color.BLACK,
-							Color.YELLOW));
-			graph.getGraphLayoutCache().insert(vertex);
-		} else
-			showMessage("A start node already exists!");
+		DefaultGraphCell vertex = createStartNode();
+		vertex.getAttributes().applyMap(
+				createCellAttributes(point, Color.GREEN, Color.BLACK,
+						Color.YELLOW));
+		graph.getGraphLayoutCache().insert(vertex);
 	}
 
+	/**
+	 * @param point
+	 */
 	public void insertEndNode(Point2D point) {
-		if (!isEndNode()) {
-			DefaultGraphCell vertex = createEndNode();
-			vertex.getAttributes().applyMap(
-					createCellAttributes(point, Color.RED, Color.BLACK,
-							Color.ORANGE));
-			graph.getGraphLayoutCache().insert(vertex);
-		} else
-			showMessage("An end node already exists!");
+		DefaultGraphCell vertex = createEndNode();
+		vertex.getAttributes().applyMap(
+				createCellAttributes(point, Color.RED, Color.BLACK,
+						Color.ORANGE));
+		graph.getGraphLayoutCache().insert(vertex);
 	}
 
+	/**
+	 * @param point
+	 */
 	public void insertAndNode(Point2D point) {
 		DefaultGraphCell vertex = createAndNode();
 		vertex.getAttributes().applyMap(
@@ -320,6 +330,9 @@ public class WorkflowDesigner extends JApplet implements
 		graph.getGraphLayoutCache().insert(vertex);
 	}
 
+	/**
+	 * @param point
+	 */
 	public void insertOrNode(Point2D point) {
 		DefaultGraphCell vertex = createOrNode();
 		vertex.getAttributes().applyMap(
@@ -367,8 +380,7 @@ public class WorkflowDesigner extends JApplet implements
 	}
 
 	protected DefaultGraphCell createDefaultNode() {
-		DefaultGraphCell cell = new ProcessNode("Proc "
-				+ new Integer(cellCount++));
+		DefaultGraphCell cell = new ProcessNode("Proc ");
 		// Add one Floating Port
 		cell.addPort();
 		return cell;
@@ -1130,7 +1142,6 @@ public class WorkflowDesigner extends JApplet implements
 		GraphLayoutCache glc = graph.getGraphLayoutCache();
 		Object[] all = glc.getCells(true, true, true, true);
 		graph.getGraphLayoutCache().remove(all);
-		cellCount = 0;
 		undoManager.discardAllEdits();
 		updateHistoryButtons();
 	}
@@ -1216,6 +1227,7 @@ public class WorkflowDesigner extends JApplet implements
 	 * Exports the graph layout to an XML file
 	 */
 	protected void exportGraph2XML() {
+		showMessage(validateWorkflow());
 		String newWorkflowName = JOptionPane.showInputDialog(null,
 				"Enter Workflow Name", workFlowName);
 		workFlowName = newWorkflowName;
@@ -1234,6 +1246,112 @@ public class WorkflowDesigner extends JApplet implements
 				exc.printStackTrace();
 			}
 		}
+	}
+
+	private String getNodeType(DefaultGraphCell currentNode) {
+		String nodeType = "";
+		if (currentNode instanceof StartNode) {
+			nodeType = NodeType.START;
+		} else if (currentNode instanceof EndNode) {
+			nodeType = NodeType.END;
+		} else if (currentNode instanceof AndNode) {
+			nodeType = NodeType.AND;
+		} else if (currentNode instanceof OrNode) {
+			nodeType = NodeType.OR;
+		} else if (currentNode instanceof ProcessNode) {
+			nodeType = NodeType.PROCESS;
+		}
+		return nodeType;
+	}
+
+	private String validateWorkflow() {
+		String isValidWorkflow = "Workflow is Valid";
+		int startNodes = 0;
+		int endNodes = 0;
+
+		GraphLayoutCache glc = graph.getGraphLayoutCache();
+
+		Object[] nodes = glc.getCells(false, true, false, false);
+		for (int i = 0; i < nodes.length; i++) {
+			DefaultGraphCell currentNode = (DefaultGraphCell) nodes[i];
+			String nodeType = getNodeType(currentNode);
+
+			List<DefaultGraphCell> transOut = (List<DefaultGraphCell>) glc
+					.getNeighbours(currentNode, null, true, true);
+			List<DefaultGraphCell> transAll = (List<DefaultGraphCell>) glc
+					.getNeighbours(currentNode, null, false, true);
+			List<DefaultGraphCell> transIn = new ArrayList<DefaultGraphCell>();
+			for (DefaultGraphCell transition : transAll) {
+				if (!transOut.contains(transition))
+					transIn.add(transition);
+			}
+
+			// Start Nodes
+			if (nodeType.equals(NodeType.START)) {
+				startNodes++;
+				// Only one start node
+				if (startNodes > 1)
+					return "Workflow cannot have more than 1 start node!";
+				// No transitions going in the Start Node
+				if (transIn.size() > 0)
+					return "Workflow cannot have transitions going in the start node!";
+				// Must have transitions going out
+				if (transOut.size() == 0)
+					return "Workflow must have transitions going out of the start node!";
+				else
+					// All transitions must go into Process Nodes
+					for (DefaultGraphCell transition : transOut) {
+						String destNodeType = getNodeType(transition);
+						if (!destNodeType.equals(NodeType.PROCESS))
+							return "Every transition going out of the start node must go into a process node!";
+					}
+			}
+
+			// End Node
+			if (nodeType.equals(NodeType.END)) {
+				endNodes++;
+				// Only one end node
+				if (endNodes > 1)
+					return "Workflow cannot have more than 1 end node!";
+				// No transitions going out of the End Node
+				if (transOut.size() > 0)
+					return "Workflow cannot have transitions going out of the end node!";
+				// Must have transitions going in
+				if (transIn.size() == 0)
+					return "Workflow must have transitions going in the end node!";
+			}
+
+			// And Node
+			if (nodeType.equals(NodeType.AND)) {
+				// 2 or more transitions in
+				if (transIn.size() < 2)
+					return "An And node must have two or more transitions going into it!";
+				// at least 1 transition out
+				if (transOut.size() == 0)
+					return "An And node must have at least one transition going out of it!";
+			}
+			// Or Node
+			if (nodeType.equals(NodeType.OR)) {
+				// 2 or more transitions in
+				if (transIn.size() < 2)
+					return "An Or node must have two or more transitions going into it!";
+				// at least 1 transition out
+				if (transOut.size() == 0)
+					return "An Or node must have at least one transition going out of it!";
+			}
+			// Process Node
+			if (nodeType.equals(NodeType.PROCESS)) {
+				// at least 1 transition out
+				if (transOut.size() == 0)
+					return "A Process node must have at least one transition going out of it!";
+			}
+		}
+
+		if (startNodes == 0)
+			return "No start node present!";
+		if (endNodes == 0)
+			return "No end node present!";
+		return isValidWorkflow;
 	}
 
 	/**
