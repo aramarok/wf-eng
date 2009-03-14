@@ -87,6 +87,7 @@ import com.uvt.wf.designer.nodes.StartNode;
 public class WorkflowDesigner extends JApplet implements
 		GraphSelectionListener, KeyListener {
 
+	private static final String VALID = "Workflow is Valid";
 	private static final String XML = "xml";
 	private static final String WF = "wf";
 
@@ -1227,23 +1228,28 @@ public class WorkflowDesigner extends JApplet implements
 	 * Exports the graph layout to an XML file
 	 */
 	protected void exportGraph2XML() {
-		showMessage(validateWorkflow());
-		String newWorkflowName = JOptionPane.showInputDialog(null,
-				"Enter Workflow Name", workFlowName);
-		workFlowName = newWorkflowName;
-		int returnVal = fcExport.showSaveDialog(this);
+		String workflowStatus = validateWorkflow();
+		if (!workflowStatus.equals(VALID))
+			showMessage("Workflow is not valid!\n" + workflowStatus);
+		else {
+			String newWorkflowName = JOptionPane.showInputDialog(null,
+					"Enter Workflow Name", workFlowName);
+			workFlowName = newWorkflowName;
+			int returnVal = fcExport.showSaveDialog(this);
 
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = fcExport.getSelectedFile();
-			String Filename = file.getAbsolutePath();
-			if (!Filename.endsWith("." + XML))
-				Filename += "." + XML;
-			try {
-				BufferedWriter bw = new BufferedWriter(new FileWriter(Filename));
-				bw.write(generateXMLContentsFromGraph(graph));
-				bw.close();
-			} catch (IOException exc) {
-				exc.printStackTrace();
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fcExport.getSelectedFile();
+				String Filename = file.getAbsolutePath();
+				if (!Filename.endsWith("." + XML))
+					Filename += "." + XML;
+				try {
+					BufferedWriter bw = new BufferedWriter(new FileWriter(
+							Filename));
+					bw.write(generateXMLContentsFromGraph(graph));
+					bw.close();
+				} catch (IOException exc) {
+					exc.printStackTrace();
+				}
 			}
 		}
 	}
@@ -1265,7 +1271,7 @@ public class WorkflowDesigner extends JApplet implements
 	}
 
 	private String validateWorkflow() {
-		String isValidWorkflow = "Workflow is Valid";
+		String isValidWorkflow = VALID;
 		int startNodes = 0;
 		int endNodes = 0;
 
