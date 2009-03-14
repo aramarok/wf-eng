@@ -46,6 +46,7 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.UndoableEditEvent;
+import javax.swing.filechooser.FileFilter;
 
 import org.jgraph.JGraph;
 import org.jgraph.event.GraphModelEvent;
@@ -85,6 +86,9 @@ import com.uvt.wf.designer.nodes.StartNode;
 public class WorkflowDesigner extends JApplet implements
 		GraphSelectionListener, KeyListener {
 
+	private static final String XML = "xml";
+	private static final String WF = "wf";
+
 	// JGraph instance
 	protected JGraph graph;
 
@@ -103,7 +107,8 @@ public class WorkflowDesigner extends JApplet implements
 	// Status Bar
 	protected StatusBarGraphListener statusBar;
 
-	private JFileChooser fc = new JFileChooser();
+	private static JFileChooser fcOpenSave = new JFileChooser();
+	private static JFileChooser fcExport = new JFileChooser();
 
 	/**
 	 * @param args
@@ -126,6 +131,8 @@ public class WorkflowDesigner extends JApplet implements
 			// Use in Window
 			frame.setIconImage(jgraphIcon.getImage());
 		}
+
+		setFileChoosers();
 		// Set Default Size
 		frame.setSize(800, 600);
 
@@ -137,6 +144,15 @@ public class WorkflowDesigner extends JApplet implements
 		});
 		// Show Frame
 		frame.setVisible(true);
+	}
+
+	private static void setFileChoosers() {
+		FileFilter wf = new ExtensionFileFilter("Workflow", new String[] { WF });
+		FileFilter xml = new ExtensionFileFilter("XML File",
+				new String[] { XML });
+		fcOpenSave.setFileFilter(wf);
+		fcExport.setFileFilter(xml);
+
 	}
 
 	/**
@@ -1132,18 +1148,13 @@ public class WorkflowDesigner extends JApplet implements
 	}
 
 	protected void saveToFile() {
-		int returnVal = fc.showSaveDialog(this);
+		int returnVal = fcOpenSave.showSaveDialog(this);
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = fc.getSelectedFile();
-			if (!file.exists()) {
-				try {
-					file.createNewFile();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+			File file = fcOpenSave.getSelectedFile();
 			String filename = file.getAbsolutePath();
+			if (!filename.endsWith("." + WF))
+				filename += "." + WF;
 			try {
 				FileOutputStream fout = new FileOutputStream(filename);
 				ObjectOutputStream oos = new ObjectOutputStream(fout);
@@ -1174,10 +1185,10 @@ public class WorkflowDesigner extends JApplet implements
 	}
 
 	protected void openFromFile() {
-		int returnVal = fc.showOpenDialog(this);
+		int returnVal = fcOpenSave.showOpenDialog(this);
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = fc.getSelectedFile();
+			File file = fcOpenSave.getSelectedFile();
 			String filename = file.getAbsolutePath();
 			try {
 				FileInputStream fin = new FileInputStream(filename);
@@ -1208,11 +1219,13 @@ public class WorkflowDesigner extends JApplet implements
 		String newWorkflowName = JOptionPane.showInputDialog(null,
 				"Enter Workflow Name", workFlowName);
 		workFlowName = newWorkflowName;
-		int returnVal = fc.showSaveDialog(this);
+		int returnVal = fcExport.showSaveDialog(this);
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = fc.getSelectedFile();
+			File file = fcExport.getSelectedFile();
 			String Filename = file.getAbsolutePath();
+			if (!Filename.endsWith("." + XML))
+				Filename += "." + XML;
 			try {
 				BufferedWriter bw = new BufferedWriter(new FileWriter(Filename));
 				bw.write(generateXMLContentsFromGraph(graph));
