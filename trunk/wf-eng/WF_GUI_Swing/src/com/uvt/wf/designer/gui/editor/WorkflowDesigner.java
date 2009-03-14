@@ -131,7 +131,7 @@ public class WorkflowDesigner extends JApplet implements
 			frame.setIconImage(jgraphIcon.getImage());
 		}
 
-		setFileChoosers();
+		setFiltersfoFileChoosers();
 		// Set Default Size
 		frame.setSize(800, 600);
 
@@ -145,7 +145,7 @@ public class WorkflowDesigner extends JApplet implements
 		frame.setVisible(true);
 	}
 
-	private static void setFileChoosers() {
+	private static void setFiltersfoFileChoosers() {
 		FileFilter wf = new ExtensionFileFilter("Workflow", new String[] { WF });
 		FileFilter xml = new ExtensionFileFilter("XML File",
 				new String[] { XML });
@@ -262,34 +262,6 @@ public class WorkflowDesigner extends JApplet implements
 	/**
 	 * @return
 	 */
-	public boolean isStartNode() {
-		boolean result = false;
-		Object[] cells = graph.getRoots();
-		for (int i = 0; i < cells.length; i++) {
-			if (cells[i] instanceof StartNode) {
-				return true;
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * @return
-	 */
-	public boolean isEndNode() {
-		boolean result = false;
-		Object[] cells = graph.getRoots();
-		for (int i = 0; i < cells.length; i++) {
-			if (cells[i] instanceof EndNode) {
-				return true;
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * @return
-	 */
 	private Point2D getRandomPoint() {
 		double maxx = this.getContentPane().getWidth() / 1.5;
 		double maxy = this.getContentPane().getHeight() / 1.5;
@@ -381,7 +353,7 @@ public class WorkflowDesigner extends JApplet implements
 	}
 
 	protected DefaultGraphCell createDefaultNode() {
-		DefaultGraphCell cell = new ProcessNode("Proc ");
+		DefaultGraphCell cell = new ProcessNode("Proc");
 		// Add one Floating Port
 		cell.addPort();
 		return cell;
