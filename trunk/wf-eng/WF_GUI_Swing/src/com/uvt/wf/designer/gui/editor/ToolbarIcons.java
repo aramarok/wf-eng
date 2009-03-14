@@ -1,5 +1,9 @@
 package com.uvt.wf.designer.gui.editor;
 
+/**
+ * @author Flavius
+ *
+ */
 public class ToolbarIcons {
 	private static String baseDir = "img/";
 	public static final String NEW = baseDir + "new.JPG";
