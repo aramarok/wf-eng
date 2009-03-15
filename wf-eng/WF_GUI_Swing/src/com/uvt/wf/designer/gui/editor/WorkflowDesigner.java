@@ -336,7 +336,7 @@ public class WorkflowDesigner extends JApplet implements
 		} else {
 			point = (Point2D) point.clone();
 		}
-		GraphConstants.setFont(map, new Font("sansserif", Font.BOLD, 32));
+		GraphConstants.setFont(map, new Font("sansserif", Font.BOLD, 18));
 		// Add a Bounds Attribute to the Map
 		GraphConstants.setBounds(map, new Rectangle2D.Double(point.getX(),
 				point.getY(), 0, 0));
