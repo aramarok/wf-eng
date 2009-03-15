@@ -107,8 +107,8 @@ public class WorkflowDesigner extends JApplet implements
 	// Status Bar
 	protected StatusBarGraphListener statusBar;
 
-	private static JFileChooser fcOpenSave = new JFileChooser();
-	private static JFileChooser fcExport = new JFileChooser();
+	private static JFileChooser fcOpenSave = new JFileChooser(".");
+	private static JFileChooser fcExport = new JFileChooser(".");
 
 	/**
 	 * @param args
