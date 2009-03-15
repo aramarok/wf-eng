@@ -35,6 +35,7 @@ import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JApplet;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -234,7 +235,7 @@ public class WorkflowDesigner extends JApplet implements
 	 */
 	protected void installListeners(JGraph graph) {
 		// Add Listeners to Graph
-		//
+
 		// Register UndoManager with the Model
 		graph.getModel().addUndoableEditListener(undoManager);
 		// Update ToolBar based on Selection Changes
@@ -495,9 +496,7 @@ public class WorkflowDesigner extends JApplet implements
 		cut.setEnabled(enabled);
 	}
 
-	//
 	// KeyListener for Delete KeyStroke
-	//
 	public void keyReleased(KeyEvent e) {
 	}
 
@@ -510,13 +509,6 @@ public class WorkflowDesigner extends JApplet implements
 			// Execute Remove Action on Delete Key Press
 			remove.actionPerformed(null);
 	}
-
-	//
-	// Custom Model
-	//
-
-	//
-	// Custom MarqueeHandler
 
 	// MarqueeHandler that Connects Vertices and Displays PopupMenus
 	public class MyMarqueeHandler extends BasicMarqueeHandler {
@@ -780,23 +772,9 @@ public class WorkflowDesigner extends JApplet implements
 					(int) (r.getWidth() + 2 * s), (int) (r.getHeight() + 2 * s));
 		}
 
-	} // End of Editor.MyMarqueeHandler
+	}
 
-	//
-	//
-	//
-
-	//
-	// PopupMenu and ToolBar
-	//
-
-	//
-	//
-	//
-
-	//
 	// PopupMenu
-	//
 	public JPopupMenu createPopupMenu(final Point pt, final Object cell) {
 		JPopupMenu menu = new JPopupMenu();
 		if (cell != null) {
@@ -852,109 +830,137 @@ public class WorkflowDesigner extends JApplet implements
 		return menu;
 	}
 
-	//
 	// ToolBar
-	//
 	public JToolBar createToolBar() {
 		JToolBar toolbar = new JToolBar();
 		toolbar.setFloatable(false);
 		// New
 		File newURL = new File(ToolbarIcons.NEW);
 		ImageIcon newIcon = new ImageIcon(newURL.getAbsolutePath());
-		toolbar.add(new AbstractAction("", newIcon) {
+		JButton newButton = new JButton(new AbstractAction("", newIcon) {
 			public void actionPerformed(ActionEvent e) {
 				createNewWorkflow();
 			}
 		});
+		newButton.setToolTipText("New Workflow");
+		toolbar.add(newButton);
 
 		// Open
 		File openURL = new File(ToolbarIcons.OPEN);
 		ImageIcon openIcon = new ImageIcon(openURL.getAbsolutePath());
-		toolbar.add(new AbstractAction("", openIcon) {
+		JButton openButton = new JButton(new AbstractAction("", openIcon) {
 			public void actionPerformed(ActionEvent e) {
 				openFromFileAsk();
 			}
 		});
+		openButton.setToolTipText("Open Workflow");
+		toolbar.add(openButton);
 
 		// Save
 		File saveURL = new File(ToolbarIcons.SAVE);
 		ImageIcon saveIcon = new ImageIcon(saveURL.getAbsolutePath());
-		toolbar.add(new AbstractAction("", saveIcon) {
+		JButton saveButton = new JButton(new AbstractAction("", saveIcon) {
 			public void actionPerformed(ActionEvent e) {
 				saveToFile();
 			}
 		});
+		saveButton.setToolTipText("Save Workflow");
+		toolbar.add(saveButton);
 		toolbar.addSeparator();
 
 		// Export
 		File exportUrl = new File(ToolbarIcons.EXPORT);
 		ImageIcon exportIcon = new ImageIcon(exportUrl.getAbsolutePath());
-		toolbar.add(new AbstractAction("", exportIcon) {
+		JButton exportButton = new JButton(new AbstractAction("", exportIcon) {
 			public void actionPerformed(ActionEvent e) {
 				// exportGraph2XML();
 				exportGraph2XML();
 			}
 		});
+		exportButton.setToolTipText("Export Workflow to XML");
+		toolbar.add(exportButton);
 		toolbar.addSeparator();
+
 		// Insert Start
 		File insertStartUrl = new File(ToolbarIcons.START);
 		ImageIcon insertStartIcon = new ImageIcon(insertStartUrl
 				.getAbsolutePath());
-		toolbar.add(new AbstractAction("", insertStartIcon) {
+		JButton insertStartButton = new JButton(new AbstractAction("",
+				insertStartIcon) {
 			public void actionPerformed(ActionEvent e) {
 				insertStartNode(getRandomPoint());
 			}
 		});
+		insertStartButton.setToolTipText("Insert Start Node");
+		toolbar.add(insertStartButton);
+
 		// Insert End
 		File insertEndUrl = new File(ToolbarIcons.END);
 		ImageIcon insertEndIcon = new ImageIcon(insertEndUrl.getAbsolutePath());
-		toolbar.add(new AbstractAction("", insertEndIcon) {
+		JButton insertEndButton = new JButton(new AbstractAction("",
+				insertEndIcon) {
 			public void actionPerformed(ActionEvent e) {
 				insertEndNode(getRandomPoint());
 			}
 		});
+		insertEndButton.setToolTipText("Insert End Node");
+		toolbar.add(insertEndButton);
+
 		// Insert And
 		File insertAndUrl = new File(ToolbarIcons.AND);
 		ImageIcon insertAndIcon = new ImageIcon(insertAndUrl.getAbsolutePath());
-		toolbar.add(new AbstractAction("", insertAndIcon) {
+		JButton insertAndButton = new JButton(new AbstractAction("",
+				insertAndIcon) {
 			public void actionPerformed(ActionEvent e) {
 				insertAndNode(getRandomPoint());
 			}
 		});
+		insertAndButton.setToolTipText("Insert And Node");
+		toolbar.add(insertAndButton);
+
 		// Insert Or
 		File insertOrUrl = new File(ToolbarIcons.OR);
 		ImageIcon insertOrIcon = new ImageIcon(insertOrUrl.getAbsolutePath());
-		toolbar.add(new AbstractAction("", insertOrIcon) {
+		JButton insertOrButton = new JButton(new AbstractAction("",
+				insertOrIcon) {
 			public void actionPerformed(ActionEvent e) {
 				insertOrNode(getRandomPoint());
 			}
 		});
+		insertOrButton.setToolTipText("Insert Or Node");
+		toolbar.add(insertOrButton);
 
 		// Insert
 		File insertUrl = new File(ToolbarIcons.PROCESS);
 		ImageIcon insertIcon = new ImageIcon(insertUrl.getAbsolutePath());
-		toolbar.add(new AbstractAction("", insertIcon) {
+		JButton insertProcessButton = new JButton(new AbstractAction("",
+				insertIcon) {
 			public void actionPerformed(ActionEvent e) {
 				insertDefaultNode(getRandomPoint());
 			}
 		});
+		insertProcessButton.setToolTipText("Insert Process Node");
+		toolbar.add(insertProcessButton);
 
 		// Toggle Connect Mode
 		File connectUrl = new File(ToolbarIcons.CONNECTION);
 		ImageIcon connectIcon = new ImageIcon(connectUrl.getAbsolutePath());
-		toolbar.add(new AbstractAction("", connectIcon) {
-			public void actionPerformed(ActionEvent e) {
-				graph.setPortsVisible(!graph.isPortsVisible());
-				File connectUrl;
-				if (graph.isPortsVisible())
-					connectUrl = new File(ToolbarIcons.CONNECTION);
-				else
-					connectUrl = new File(ToolbarIcons.CONNECTIONOFF);
-				ImageIcon connectIcon = new ImageIcon(connectUrl
-						.getAbsolutePath());
-				putValue(SMALL_ICON, connectIcon);
-			}
-		});
+		JButton connectButton = new JButton(
+				new AbstractAction("", connectIcon) {
+					public void actionPerformed(ActionEvent e) {
+						graph.setPortsVisible(!graph.isPortsVisible());
+						File connectUrl;
+						if (graph.isPortsVisible())
+							connectUrl = new File(ToolbarIcons.CONNECTION);
+						else
+							connectUrl = new File(ToolbarIcons.CONNECTIONOFF);
+						ImageIcon connectIcon = new ImageIcon(connectUrl
+								.getAbsolutePath());
+						putValue(SMALL_ICON, connectIcon);
+					}
+				});
+		connectButton.setToolTipText("Toggle Transition Mode");
+		toolbar.add(connectButton);
 
 		// Undo
 		toolbar.addSeparator();
@@ -966,7 +972,9 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		};
 		undo.setEnabled(false);
-		toolbar.add(undo);
+		JButton undoButton = new JButton(undo);
+		undoButton.setToolTipText("Undo");
+		toolbar.add(undoButton);
 
 		// Redo
 		File redoUrl = new File(ToolbarIcons.REDO);
@@ -977,11 +985,10 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		};
 		redo.setEnabled(false);
-		toolbar.add(redo);
+		JButton redoButton = new JButton(redo);
+		redoButton.setToolTipText("Redo");
+		toolbar.add(redoButton);
 
-		//
-		// Edit Block
-		//
 		toolbar.addSeparator();
 		Action action;
 		File url;
@@ -989,20 +996,26 @@ public class WorkflowDesigner extends JApplet implements
 		// Copy
 		action = javax.swing.TransferHandler.getCopyAction();
 		url = new File(ToolbarIcons.COPY);
-		toolbar.add(copy = new EventRedirector(action, new ImageIcon(url
-				.getAbsolutePath())));
+		JButton copyButton = new JButton(copy = new EventRedirector(action,
+				new ImageIcon(url.getAbsolutePath())));
+		copyButton.setToolTipText("Copy");
+		toolbar.add(copyButton);
 
 		// Paste
 		action = javax.swing.TransferHandler.getPasteAction();
 		url = new File(ToolbarIcons.PASTE);
-		toolbar.add(paste = new EventRedirector(action, new ImageIcon(url
-				.getAbsolutePath())));
+		JButton pasteButton = new JButton(paste = new EventRedirector(action,
+				new ImageIcon(url.getAbsolutePath())));
+		pasteButton.setToolTipText("Paste");
+		toolbar.add(pasteButton);
 
 		// Cut
 		action = javax.swing.TransferHandler.getCutAction();
 		url = new File(ToolbarIcons.CUT);
-		toolbar.add(cut = new EventRedirector(action, new ImageIcon(url
-				.getAbsolutePath())));
+		JButton cutButton = new JButton(cut = new EventRedirector(action,
+				new ImageIcon(url.getAbsolutePath())));
+		cutButton.setToolTipText("Cut");
+		toolbar.add(cutButton);
 
 		// Remove
 		File removeUrl = new File(ToolbarIcons.DELETE);
@@ -1017,7 +1030,9 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		};
 		remove.setEnabled(false);
-		toolbar.add(remove);
+		JButton removeButton = new JButton(remove);
+		removeButton.setToolTipText("Delete");
+		toolbar.add(removeButton);
 
 		// To Front
 		toolbar.addSeparator();
@@ -1030,7 +1045,9 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		};
 		tofront.setEnabled(false);
-		toolbar.add(tofront);
+		JButton tofrontButton = new JButton(tofront);
+		tofrontButton.setToolTipText("Bring to Front");
+		toolbar.add(tofrontButton);
 
 		// To Back
 		File toBackUrl = new File(ToolbarIcons.TOBACK);
@@ -1042,33 +1059,44 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		};
 		toback.setEnabled(false);
-		toolbar.add(toback);
+		JButton tobackButton = new JButton(toback);
+		tobackButton.setToolTipText("Send to Back");
+		toolbar.add(tobackButton);
 
 		// Zoom Std
 		toolbar.addSeparator();
 		File zoomUrl = new File(ToolbarIcons.ZOOM);
 		ImageIcon zoomIcon = new ImageIcon(zoomUrl.getAbsolutePath());
-		toolbar.add(new AbstractAction("", zoomIcon) {
+		JButton zoomstButton = new JButton(new AbstractAction("", zoomIcon) {
 			public void actionPerformed(ActionEvent e) {
 				graph.setScale(1.0);
 			}
 		});
+		zoomstButton.setToolTipText("Zoom 1:1");
+		toolbar.add(zoomstButton);
+
 		// Zoom In
 		File zoomInUrl = new File(ToolbarIcons.ZOOMIN);
 		ImageIcon zoomInIcon = new ImageIcon(zoomInUrl.getAbsolutePath());
-		toolbar.add(new AbstractAction("", zoomInIcon) {
+		JButton zoomInButton = new JButton(new AbstractAction("", zoomInIcon) {
 			public void actionPerformed(ActionEvent e) {
 				graph.setScale(2 * graph.getScale());
 			}
 		});
+		zoomInButton.setToolTipText("Zoom In");
+		toolbar.add(zoomInButton);
+
 		// Zoom Out
 		File zoomOutUrl = new File(ToolbarIcons.ZOOMOUT);
 		ImageIcon zoomOutIcon = new ImageIcon(zoomOutUrl.getAbsolutePath());
-		toolbar.add(new AbstractAction("", zoomOutIcon) {
-			public void actionPerformed(ActionEvent e) {
-				graph.setScale(graph.getScale() / 2);
-			}
-		});
+		JButton zoomOutButton = new JButton(
+				new AbstractAction("", zoomOutIcon) {
+					public void actionPerformed(ActionEvent e) {
+						graph.setScale(graph.getScale() / 2);
+					}
+				});
+		zoomOutButton.setToolTipText("Zoom Out");
+		toolbar.add(zoomOutButton);
 
 		// Group
 		toolbar.addSeparator();
@@ -1080,7 +1108,9 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		};
 		group.setEnabled(false);
-		toolbar.add(group);
+		JButton groupButton = new JButton(group);
+		groupButton.setToolTipText("Group");
+		toolbar.add(groupButton);
 
 		// Ungroup
 		File ungroupUrl = new File(ToolbarIcons.UNGROUP);
@@ -1091,7 +1121,9 @@ public class WorkflowDesigner extends JApplet implements
 			}
 		};
 		ungroup.setEnabled(false);
-		toolbar.add(ungroup);
+		JButton ungroupButton = new JButton(ungroup);
+		ungroupButton.setToolTipText("Ungroup");
+		toolbar.add(ungroupButton);
 
 		return toolbar;
 	}
