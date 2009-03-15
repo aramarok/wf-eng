@@ -132,7 +132,7 @@ public class WorkflowDesigner extends JApplet implements
 			frame.setIconImage(jgraphIcon.getImage());
 		}
 
-		setFiltersfoFileChoosers();
+		setFiltersForFileChoosers();
 		// Set Default Size
 		frame.setSize(800, 600);
 
@@ -146,7 +146,7 @@ public class WorkflowDesigner extends JApplet implements
 		frame.setVisible(true);
 	}
 
-	private static void setFiltersfoFileChoosers() {
+	private static void setFiltersForFileChoosers() {
 		FileFilter wf = new ExtensionFileFilter("Workflow", new String[] { WF });
 		FileFilter xml = new ExtensionFileFilter("XML File",
 				new String[] { XML });
