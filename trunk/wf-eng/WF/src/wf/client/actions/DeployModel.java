@@ -3,16 +3,16 @@ package wf.client.actions;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-
 import wf.client.WorkflowManager;
-import wf.client.auth.User;
-import wf.exceptions.WorkFlowException;
+import wf.client.auth.Utilizator;
+import wf.exceptions.ExceptieWF;
 
 public class DeployModel {
 
 	public static void main(String[] args) throws Exception {
 
-		File xmlInputFile = new File(args[0]);
+		File xmlInputFile = new File(
+				"C:/Documents and Settings/utilizator/workspace1/WF/src/wf/test/testRule.xml");
 		BufferedReader in = new BufferedReader(new FileReader(xmlInputFile));
 		String xml = "";
 		String str;
@@ -21,10 +21,10 @@ public class DeployModel {
 		}
 
 		try {
-			WorkflowManager.deployModel(xml, WorkflowManager.WF, new User(
-					"user", "password"));
+			WorkflowManager.deployModel(xml, WorkflowManager.WF, new Utilizator(
+					"utilizator", "password"));
 			System.out.println("Success");
-		} catch (WorkFlowException xe) {
+		} catch (ExceptieWF xe) {
 			System.out.println(xe);
 		}
 	}

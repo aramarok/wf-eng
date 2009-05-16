@@ -1,6 +1,6 @@
 package wf.client.manager;
 
-import wf.client.Preferences;
+import wf.client.Preferinte;
 import wf.client.Admin;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.event.InternalFrameEvent;
@@ -12,20 +12,20 @@ import java.awt.*;
 public class WinListener implements WindowListener, WindowStateListener,
 		InternalFrameListener {
 
-	Preferences preferences;
+	Preferinte preferences;
 	String windowKey;
 
 	public WinListener(String windowKey) {
 		this(Admin.getInstance().getPreferences(), windowKey);
 	}
 
-	public WinListener(Preferences preferences, String windowKey) {
+	public WinListener(Preferinte preferences, String windowKey) {
 		this.preferences = preferences;
 		this.windowKey = windowKey;
 	}
 
 	public static void restoreComponentState(Component w,
-			Preferences preferences, String windowKey) {
+			Preferinte preferences, String windowKey) {
 		w.setSize(preferences.getInt(windowKey + "_W", w.getWidth()),
 				preferences.getInt(windowKey + "_H", w.getHeight()));
 		w.setLocation(preferences.getInt(windowKey + "_X", w.getX()),

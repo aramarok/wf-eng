@@ -1,220 +1,227 @@
 package wf.client;
 
 import java.util.List;
-
-import wf.client.auth.User;
-import wf.exceptions.WorkFlowException;
+import wf.client.auth.Utilizator;
+import wf.exceptions.ExceptieWF;
 import wf.jms.SynchQueueMessaging;
-import wf.jms.model.AbortWorkflowRequest;
-import wf.jms.model.AbortWorkflowResponse;
-import wf.jms.model.DeployModelRequest;
-import wf.jms.model.DeployModelResponse;
-import wf.jms.model.GetActiveWorkflowsRequest;
-import wf.jms.model.GetActiveWorkflowsResponse;
-import wf.jms.model.GetAllWorkflowsRequest;
-import wf.jms.model.GetAllWorkflowsResponse;
-import wf.jms.model.GetModelsRequest;
-import wf.jms.model.GetModelsResponse;
-import wf.jms.model.GetNodeByNameRequest;
-import wf.jms.model.GetNodeByNameResponse;
-import wf.jms.model.GetProcessNodesRequest;
-import wf.jms.model.GetProcessNodesResponse;
-import wf.jms.model.GetVariableRequest;
-import wf.jms.model.GetVariableResponse;
-import wf.jms.model.GetWorkflowStateRequest;
-import wf.jms.model.GetWorkflowStateResponse;
-import wf.jms.model.GetWorkflowsByNameRequest;
-import wf.jms.model.GetWorkflowsByNameResponse;
-import wf.jms.model.Request;
-import wf.jms.model.Response;
-import wf.jms.model.ResumeWorkflowRequest;
-import wf.jms.model.ResumeWorkflowResponse;
-import wf.jms.model.SetVariableRequest;
-import wf.jms.model.SetVariableResponse;
-import wf.jms.model.StartWorkflowRequest;
-import wf.jms.model.StartWorkflowResponse;
-import wf.jms.model.SuspendWorkflowRequest;
-import wf.jms.model.SuspendWorkflowResponse;
-import wf.model.Node;
-import wf.model.WorkItem;
-import wf.model.WorkflowState;
+import wf.jms.model.Cerere;
+import wf.jms.model.Raspuns;
+import wf.jms.model.ReqAbortWF;
+import wf.jms.model.ReqDeployModel;
+import wf.jms.model.ReqModeleDisponibile;
+import wf.jms.model.ReqNodDupaNume;
+import wf.jms.model.ReqNoduriProces;
+import wf.jms.model.ReqRepornireWF;
+import wf.jms.model.ReqSetareVariabila;
+import wf.jms.model.ReqStareWF;
+import wf.jms.model.ReqStartWF;
+import wf.jms.model.ReqSuspendareWF;
+import wf.jms.model.ReqToateWF;
+import wf.jms.model.ReqVariabila;
+import wf.jms.model.ReqWFActive;
+import wf.jms.model.ReqWFDupaNume;
+import wf.jms.model.ResAbortWF;
+import wf.jms.model.ResDeployModel;
+import wf.jms.model.ResModeleDisponibile;
+import wf.jms.model.ResNodDupaNume;
+import wf.jms.model.ResNoduriProces;
+import wf.jms.model.ResRepornireWF;
+import wf.jms.model.ResSetareVariabila;
+import wf.jms.model.ResStareWF;
+import wf.jms.model.ResStartWF;
+import wf.jms.model.ResSuspendareWF;
+import wf.jms.model.ResToateWF;
+import wf.jms.model.ResVariabila;
+import wf.jms.model.ResWFActive;
+import wf.jms.model.ResWFDupaNume;
+import wf.model.ItemModel;
+import wf.model.Nod;
+import wf.model.StareWF;
 import wf.util.Util;
 
 public class WorkflowManager {
 
-	public static final String WF = "WF";
-	public static final String BPEL = "BPEL";
+    public static final String BPEL = "BPEL";
+    public static final String WF = "WF";
 
-	public static DeployModelResponse deployModel(String xml, String type,
-			User user) throws WorkFlowException {
-		DeployModelRequest req = new DeployModelRequest();
-		req.user = user;
-		req.xml = xml;
-		req.type = type;
-		DeployModelResponse resp = (DeployModelResponse) sendRequest(req);
-		return resp;
+    public static ResAbortWF abortWorkflow(final Integer workflowId,
+	    final Utilizator user) throws ExceptieWF {
+
+	ReqAbortWF req = new ReqAbortWF();
+	req.workflowId = workflowId;
+	req.utilizator = user;
+
+	ResAbortWF resp = (ResAbortWF) sendRequest(req);
+	return resp;
+    }
+
+    public static ResDeployModel deployModel(final String xml,
+	    final String type, final Utilizator user) throws ExceptieWF {
+	ReqDeployModel req = new ReqDeployModel();
+	req.utilizator = user;
+	req.xml = xml;
+	req.type = type;
+	ResDeployModel resp = (ResDeployModel) sendRequest(req);
+	return resp;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List getActiveWorkflows(final Utilizator user)
+	    throws ExceptieWF {
+
+	ReqWFActive req = new ReqWFActive();
+	req.utilizator = user;
+	ResWFActive resp = (ResWFActive) sendRequest(req);
+	return resp.activeWorkflows;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List getAllWorkflows(final Utilizator user) throws ExceptieWF {
+
+	ReqToateWF req = new ReqToateWF();
+	req.utilizator = user;
+	ResToateWF resp = (ResToateWF) sendRequest(req);
+	return resp.workflows;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List getAllWorkflowsByName(final String name,
+	    final Utilizator user) throws ExceptieWF {
+
+	ReqWFDupaNume req = new ReqWFDupaNume();
+	req.utilizator = user;
+	req.name = name;
+	ResWFDupaNume resp = (ResWFDupaNume) sendRequest(req);
+	return resp.workflows;
+    }
+
+    public static Nod getNodeByName(final String workflowName,
+	    final int workflowVersion, final String nodeName,
+	    final Utilizator user) throws ExceptieWF {
+	ReqNodDupaNume req = new ReqNodDupaNume();
+	req.utilizator = user;
+	req.workflowName = workflowName;
+	req.version = workflowVersion;
+	req.nodeName = nodeName;
+	ResNodDupaNume resp = (ResNodDupaNume) sendRequest(req);
+	return resp.node;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List getProcessNodes(final Integer workflowId,
+	    final Utilizator user) throws ExceptieWF {
+	ReqNoduriProces req = new ReqNoduriProces();
+	req.utilizator = user;
+	req.workflowId = workflowId;
+	ResNoduriProces resp = (ResNoduriProces) sendRequest(req);
+	return resp.nodes;
+    }
+
+    public static Object getVariable(final Integer workflowId,
+	    final String variableName, final Utilizator user) throws ExceptieWF {
+
+	ReqVariabila req = new ReqVariabila();
+	req.workflowId = workflowId;
+	req.variableName = variableName;
+	req.utilizator = user;
+	ResVariabila resp = (ResVariabila) sendRequest(req);
+	return resp.variableValue;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List getWorkflowModels(final Utilizator user)
+	    throws ExceptieWF {
+	ReqModeleDisponibile req = new ReqModeleDisponibile();
+	req.utilizator = user;
+	ResModeleDisponibile resp = (ResModeleDisponibile) sendRequest(req);
+	return resp.models;
+    }
+
+    public static StareWF getWorkflowState(final Integer workflowId,
+	    final Utilizator user) throws ExceptieWF {
+
+	ReqStareWF req = new ReqStareWF();
+	req.workflowId = workflowId;
+	req.utilizator = user;
+
+	ResStareWF resp = (ResStareWF) sendRequest(req);
+	return resp.workflowState;
+    }
+
+    public static ResRepornireWF resumeWorkflow(final Integer workflowId,
+	    final Utilizator user) throws ExceptieWF {
+
+	ReqRepornireWF req = new ReqRepornireWF();
+	req.workflowId = workflowId;
+	req.utilizator = user;
+
+	ResRepornireWF resp = (ResRepornireWF) sendRequest(req);
+	return resp;
+    }
+
+    private static Raspuns sendRequest(final Cerere req) throws ExceptieWF {
+
+	req.numeRaspuns = Util.generateUniqueStringId();
+	try {
+	    Raspuns resp = SynchQueueMessaging.sendRequest(req);
+	    if (resp.codRaspuns != Raspuns.SUCCES) {
+		System.out.println("EROARE response from server.");
+		throw new ExceptieWF(resp.mesaj);
+	    }
+	    return resp;
+	} catch (Exception t) {
+	    throw new ExceptieWF(t);
 	}
+    }
 
-	public static Integer startWorkflow(String workflowName, WorkItem workItem,
-			User user) throws WorkFlowException {
+    public static ResSetareVariabila setVariable(final Integer workflowId,
+	    final String variableName, final Object variableValue,
+	    final Utilizator user) throws ExceptieWF {
+	ReqSetareVariabila req = new ReqSetareVariabila();
+	req.workflowId = workflowId;
+	req.variableName = variableName;
+	req.variableValue = variableValue;
+	req.utilizator = user;
 
-		StartWorkflowRequest req = new StartWorkflowRequest();
-		req.workflowName = workflowName;
-		req.workItem = workItem;
-		req.user = user;
+	ResSetareVariabila resp = (ResSetareVariabila) sendRequest(req);
+	return resp;
+    }
 
-		StartWorkflowResponse resp = (StartWorkflowResponse) sendRequest(req);
-		return resp.workflowId;
-	}
+    public static Integer startWorkflow(final String workflowName,
+	    final int workflowVersion, final ItemModel workItem,
+	    final Utilizator user) throws ExceptieWF {
 
-	public static Integer startWorkflow(String workflowName,
-			int workflowVersion, WorkItem workItem, User user)
-			throws WorkFlowException {
+	ReqStartWF req = new ReqStartWF();
+	req.workflowName = workflowName;
+	req.version = workflowVersion;
+	req.workItem = workItem;
+	req.utilizator = user;
 
-		StartWorkflowRequest req = new StartWorkflowRequest();
-		req.workflowName = workflowName;
-		req.version = workflowVersion;
-		req.workItem = workItem;
-		req.user = user;
+	ResStartWF resp = (ResStartWF) sendRequest(req);
+	return resp.workflowId;
+    }
 
-		StartWorkflowResponse resp = (StartWorkflowResponse) sendRequest(req);
-		return resp.workflowId;
-	}
+    public static Integer startWorkflow(final String workflowName,
+	    final ItemModel workItem, final Utilizator user) throws ExceptieWF {
 
-	public static AbortWorkflowResponse abortWorkflow(Integer workflowId,
-			User user) throws WorkFlowException {
+	ReqStartWF req = new ReqStartWF();
+	req.workflowName = workflowName;
+	req.workItem = workItem;
+	req.utilizator = user;
 
-		AbortWorkflowRequest req = new AbortWorkflowRequest();
-		req.workflowId = workflowId;
-		req.user = user;
+	ResStartWF resp = (ResStartWF) sendRequest(req);
+	return resp.workflowId;
+    }
 
-		AbortWorkflowResponse resp = (AbortWorkflowResponse) sendRequest(req);
-		return resp;
-	}
+    public static ResSuspendareWF suspendWorkflow(final Integer workflowId,
+	    final Utilizator user) throws ExceptieWF {
 
-	public static SuspendWorkflowResponse suspendWorkflow(Integer workflowId,
-			User user) throws WorkFlowException {
+	ReqSuspendareWF req = new ReqSuspendareWF();
+	req.workflowId = workflowId;
+	req.utilizator = user;
 
-		SuspendWorkflowRequest req = new SuspendWorkflowRequest();
-		req.workflowId = workflowId;
-		req.user = user;
-
-		SuspendWorkflowResponse resp = (SuspendWorkflowResponse) sendRequest(req);
-		return resp;
-	}
-
-	public static ResumeWorkflowResponse resumeWorkflow(Integer workflowId,
-			User user) throws WorkFlowException {
-
-		ResumeWorkflowRequest req = new ResumeWorkflowRequest();
-		req.workflowId = workflowId;
-		req.user = user;
-
-		ResumeWorkflowResponse resp = (ResumeWorkflowResponse) sendRequest(req);
-		return resp;
-	}
-
-	public static WorkflowState getWorkflowState(Integer workflowId, User user)
-			throws WorkFlowException {
-
-		GetWorkflowStateRequest req = new GetWorkflowStateRequest();
-		req.workflowId = workflowId;
-		req.user = user;
-
-		GetWorkflowStateResponse resp = (GetWorkflowStateResponse) sendRequest(req);
-		return resp.workflowState;
-	}
-
-	public static SetVariableResponse setVariable(Integer workflowId,
-			String variableName, Object variableValue, User user)
-			throws WorkFlowException {
-		SetVariableRequest req = new SetVariableRequest();
-		req.workflowId = workflowId;
-		req.variableName = variableName;
-		req.variableValue = variableValue;
-		req.user = user;
-
-		SetVariableResponse resp = (SetVariableResponse) sendRequest(req);
-		return resp;
-	}
-
-	public static Object getVariable(Integer workflowId, String variableName,
-			User user) throws WorkFlowException {
-
-		GetVariableRequest req = new GetVariableRequest();
-		req.workflowId = workflowId;
-		req.variableName = variableName;
-		req.user = user;
-		GetVariableResponse resp = (GetVariableResponse) sendRequest(req);
-		return resp.variableValue;
-	}
-
-	public static List getActiveWorkflows(User user) throws WorkFlowException {
-
-		GetActiveWorkflowsRequest req = new GetActiveWorkflowsRequest();
-		req.user = user;
-		GetActiveWorkflowsResponse resp = (GetActiveWorkflowsResponse) sendRequest(req);
-		return resp.activeWorkflows;
-	}
-
-	public static List getAllWorkflows(User user) throws WorkFlowException {
-
-		GetAllWorkflowsRequest req = new GetAllWorkflowsRequest();
-		req.user = user;
-		GetAllWorkflowsResponse resp = (GetAllWorkflowsResponse) sendRequest(req);
-		return resp.workflows;
-	}
-
-	public static List getAllWorkflowsByName(String name, User user)
-			throws WorkFlowException {
-
-		GetWorkflowsByNameRequest req = new GetWorkflowsByNameRequest();
-		req.user = user;
-		req.name = name;
-		GetWorkflowsByNameResponse resp = (GetWorkflowsByNameResponse) sendRequest(req);
-		return resp.workflows;
-	}
-
-	public static List getProcessNodes(Integer workflowId, User user)
-			throws WorkFlowException {
-		GetProcessNodesRequest req = new GetProcessNodesRequest();
-		req.user = user;
-		req.workflowId = workflowId;
-		GetProcessNodesResponse resp = (GetProcessNodesResponse) sendRequest(req);
-		return resp.nodes;
-	}
-
-	public static Node getNodeByName(String workflowName, int workflowVersion,
-			String nodeName, User user) throws WorkFlowException {
-		GetNodeByNameRequest req = new GetNodeByNameRequest();
-		req.user = user;
-		req.workflowName = workflowName;
-		req.version = workflowVersion;
-		req.nodeName = nodeName;
-		GetNodeByNameResponse resp = (GetNodeByNameResponse) sendRequest(req);
-		return resp.node;
-	}
-
-	public static List getWorkflowModels(User user) throws WorkFlowException {
-		GetModelsRequest req = new GetModelsRequest();
-		req.user = user;
-		GetModelsResponse resp = (GetModelsResponse) sendRequest(req);
-		return resp.models;
-	}
-
-	private static Response sendRequest(Request req) throws WorkFlowException {
-
-		req.replyName = Util.generateUniqueStringId();
-		try {
-			Response resp = SynchQueueMessaging.sendRequest(req);
-			if (resp.responseCode != Response.SUCCESS) {
-				System.out.println("FAILURE response from server.");
-				throw new WorkFlowException(resp.message);
-			}
-			return resp;
-		} catch (Exception t) {
-			throw new WorkFlowException(t);
-		}
-	}
+	ResSuspendareWF resp = (ResSuspendareWF) sendRequest(req);
+	return resp;
+    }
 
 }
