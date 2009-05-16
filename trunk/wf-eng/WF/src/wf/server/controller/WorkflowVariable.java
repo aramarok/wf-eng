@@ -1,31 +1,31 @@
 package wf.server.controller;
 
 public class WorkflowVariable {
-	String name;
-	String value;
-	int workflowid;
+    String name;
+    String value;
+    int workflowid;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+	return this.name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getValue() {
+	return this.value;
+    }
 
-	public String getValue() {
-		return value;
-	}
+    public int getWorkflowid() {
+	return this.workflowid;
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    public void setName(final String name) {
+	this.name = name;
+    }
 
-	public int getWorkflowid() {
-		return workflowid;
-	}
+    public void setValue(final String value) {
+	this.value = value;
+    }
 
-	public void setWorkflowid(int workflowid) {
-		this.workflowid = workflowid;
-	}
+    public void setWorkflowid(final int workflowid) {
+	this.workflowid = workflowid;
+    }
 }

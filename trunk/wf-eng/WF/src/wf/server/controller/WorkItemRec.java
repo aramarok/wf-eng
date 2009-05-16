@@ -2,32 +2,32 @@ package wf.server.controller;
 
 public class WorkItemRec {
 
-	int workitemId;
-	String payload;
-	String payloadType;
+    String payload;
+    String payloadType;
+    int workitemId;
 
-	public int getWorkitemId() {
-		return workitemId;
-	}
+    public String getPayload() {
+	return this.payload;
+    }
 
-	public void setWorkitemId(int workitemId) {
-		this.workitemId = workitemId;
-	}
+    public String getPayloadType() {
+	return this.payloadType;
+    }
 
-	public String getPayload() {
-		return payload;
-	}
+    public int getWorkitemId() {
+	return this.workitemId;
+    }
 
-	public void setPayload(String payload) {
-		this.payload = payload;
-	}
+    public void setPayload(final String payload) {
+	this.payload = payload;
+    }
 
-	public String getPayloadType() {
-		return payloadType;
-	}
+    public void setPayloadType(final String payloadType) {
+	this.payloadType = payloadType;
+    }
 
-	public void setPayloadType(String payloadType) {
-		this.payloadType = payloadType;
-	}
+    public void setWorkitemId(final int workitemId) {
+	this.workitemId = workitemId;
+    }
 
 }
