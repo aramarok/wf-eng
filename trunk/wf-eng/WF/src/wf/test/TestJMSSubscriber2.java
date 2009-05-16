@@ -5,14 +5,14 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 import wf.exceptions.ExceptieWF;
-import wf.jms.JMSSubscriber;
-import wf.jms.JMSTopicConnection;
+import wf.jms.InregistrareJMS;
+import wf.jms.ConexiuneTopicJMS;
 
 public class TestJMSSubscriber2 implements MessageListener {
 
     public static void main(final String[] args) throws ExceptieWF,
 	    JMSException {
-	JMSTopicConnection.initialize();
+	ConexiuneTopicJMS.initialize();
 	String topic = args[0];
 	new TestJMSSubscriber2().start(topic);
     }
@@ -29,7 +29,7 @@ public class TestJMSSubscriber2 implements MessageListener {
 
     public void start(final String topic) throws ExceptieWF {
 	@SuppressWarnings("unused")
-	JMSSubscriber subs = new JMSSubscriber(this, topic, null);
+	InregistrareJMS subs = new InregistrareJMS(this, topic, null);
     }
 
 }
