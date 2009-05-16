@@ -6,14 +6,14 @@ import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 import wf.cfg.AppConfig;
 import wf.exceptions.ExceptieWF;
-import wf.jms.JMSSubscriber;
-import wf.jms.JMSTopicConnection;
+import wf.jms.InregistrareJMS;
+import wf.jms.ConexiuneTopicJMS;
 
 public class TestJMSSubscriber implements MessageListener {
 
     public static void main(final String[] args) throws ExceptieWF,
 	    JMSException {
-	JMSTopicConnection.initialize();
+	ConexiuneTopicJMS.initialize();
 	new TestJMSSubscriber().start();
     }
 
@@ -29,7 +29,7 @@ public class TestJMSSubscriber implements MessageListener {
 
     public void start() throws ExceptieWF {
 	@SuppressWarnings("unused")
-	JMSSubscriber subs = new JMSSubscriber(this, AppConfig.getInboxTopic(),
+	InregistrareJMS subs = new InregistrareJMS(this, AppConfig.getInboxTopic(),
 		"ProcName din ('ProcA')");
     }
 

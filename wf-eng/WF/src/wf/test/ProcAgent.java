@@ -7,7 +7,7 @@ import wf.client.InboxMessageListener;
 import wf.client.ProcesWF;
 import wf.client.auth.Utilizator;
 import wf.exceptions.ExceptieWF;
-import wf.jms.JMSTopicConnection;
+import wf.jms.ConexiuneTopicJMS;
 import wf.model.ItemModel;
 
 public class ProcAgent implements InboxMessageListener {
@@ -50,7 +50,7 @@ public class ProcAgent implements InboxMessageListener {
 			JMSException {
 		String wfName = args[0];
 		String procName = args[1];
-		JMSTopicConnection.initialize();
+		ConexiuneTopicJMS.initialize();
 		new ProcAgent(wfName, procName).start();
 	}
 }
