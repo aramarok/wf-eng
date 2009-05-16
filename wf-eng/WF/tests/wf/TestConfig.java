@@ -1,13 +1,14 @@
 package wf;
 
-import wf.client.auth.User;
+import wf.client.auth.Utilizator;
 
 public class TestConfig {
 
-	private static User user = new User("test_user", "test_password");
+    private static Utilizator user = new Utilizator("test_user",
+	    "test_password");
 
-	public static User getUser() {
-		return user;
-	}
+    public static Utilizator getUser() {
+	return user;
+    }
 
 }

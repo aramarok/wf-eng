@@ -37,7 +37,7 @@
 			qname="ns3:WorkItemId" xmlns:ns3="urn:WfService" />
 		<beanMapping languageSpecificType="java:wf.model.WorkflowId"
 			qname="ns4:WorkflowId" xmlns:ns4="urn:WfService" />
-		<beanMapping languageSpecificType="java:wf.model.WorkflowState"
+		<beanMapping languageSpecificType="java:wf.model.StareWF"
 			qname="ns5:WorkflowState" xmlns:ns5="urn:WfService" />
 		<beanMapping languageSpecificType="java:wf.model.ProcessState"
 			qname="ns6:ProcessState" xmlns:ns6="urn:WfService" />

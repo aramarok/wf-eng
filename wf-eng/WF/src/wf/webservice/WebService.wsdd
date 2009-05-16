@@ -13,7 +13,7 @@
 			languageSpecificType="java:wf.model.WorkflowId" />
 		<beanMapping qname="myNS:WorkflowState"
 			xmlns:myNS="urn:WfService"
-			languageSpecificType="java:wf.model.WorkflowState" />
+			languageSpecificType="java:wf.model.StareWF" />
 		<beanMapping qname="myNS:ProcessState"
 			xmlns:myNS="urn:WfService"
 			languageSpecificType="java:wf.model.ProcessState" />

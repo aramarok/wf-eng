@@ -4,23 +4,23 @@ import java.io.Serializable;
 
 public class CaseConditionPayload implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public CaseConditionPayload() {
-	}
+    int age;
 
-	public CaseConditionPayload(int age) {
-		this.age = age;
-	}
+    public CaseConditionPayload() {
+    }
 
-	int age;
+    public CaseConditionPayload(final int age) {
+	this.age = age;
+    }
 
-	public int getAge() {
-		return age;
-	}
+    public int getAge() {
+	return this.age;
+    }
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+    public void setAge(final int age) {
+	this.age = age;
+    }
 
 }

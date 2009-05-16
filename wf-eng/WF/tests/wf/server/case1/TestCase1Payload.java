@@ -4,43 +4,43 @@ import java.io.Serializable;
 
 public class TestCase1Payload implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	int id;
-	String name;
-	String descr;
-	double value;
+    private static final long serialVersionUID = 1L;
 
-	public int getId() {
-		return id;
-	}
+    String descr;
+    int id;
+    String name;
+    double value;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public String getDescr() {
+	return this.descr;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public int getId() {
+	return this.id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+	return this.name;
+    }
 
-	public String getDescr() {
-		return descr;
-	}
+    public double getValue() {
+	return this.value;
+    }
 
-	public void setDescr(String descr) {
-		this.descr = descr;
-	}
+    public void setDescr(final String descr) {
+	this.descr = descr;
+    }
 
-	public double getValue() {
-		return value;
-	}
+    public void setId(final int id) {
+	this.id = id;
+    }
 
-	public void setValue(double value) {
-		this.value = value;
-	}
+    public void setName(final String name) {
+	this.name = name;
+    }
+
+    public void setValue(final double value) {
+	this.value = value;
+    }
 
 }

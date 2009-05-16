@@ -4,24 +4,24 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import javax.jms.JMSException;
 import wf.client.InboxMessageListener;
-import wf.client.WorkflowProcess;
-import wf.client.auth.User;
-import wf.exceptions.WorkFlowException;
+import wf.client.ProcesWF;
+import wf.client.auth.Utilizator;
+import wf.exceptions.ExceptieWF;
 import wf.jms.JMSTopicConnection;
-import wf.model.WorkItem;
+import wf.model.ItemModel;
 
 public class ProcAgent implements InboxMessageListener {
 
 	private String workflowName;
 	private String procName;
-	private WorkflowProcess wp;
+	private ProcesWF wp;
 
 	public ProcAgent(String wfName, String pname) {
 		workflowName = wfName;
 		procName = pname;
 	}
 
-	public void onMessage(WorkItem witem) {
+	public void onMessage(ItemModel witem) {
 		System.out.println("Got a work item: " + witem);
 		try {
 			BufferedReader stdin = new BufferedReader(new InputStreamReader(
@@ -36,17 +36,17 @@ public class ProcAgent implements InboxMessageListener {
 		System.out.println("Completing work item");
 		try {
 			wp.completeWorkItem(witem);
-		} catch (WorkFlowException e) {
+		} catch (ExceptieWF e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void start() throws WorkFlowException {
-		wp = new WorkflowProcess(workflowName, -1, procName, this, new User(
-				"user", "password"));
+	public void start() throws ExceptieWF {
+		wp = new ProcesWF(workflowName, -1, procName, this, new Utilizator(
+				"utilizator", "password"));
 	}
 
-	public static void main(String[] args) throws WorkFlowException,
+	public static void main(String[] args) throws ExceptieWF,
 			JMSException {
 		String wfName = args[0];
 		String procName = args[1];

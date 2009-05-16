@@ -14,39 +14,39 @@ import org.apache.log4j.Logger;
 
 public class SoapEnvelope {
 
-	private static Logger log = Logger.getLogger(SoapEnvelope.class);
-	
-	static String nameSpace = "http://example.com/uvtwf";
-	static String wfPrefix = "WF";
+    private static Logger log = Logger.getLogger(SoapEnvelope.class);
 
-	public static void main(String[] args) throws Exception {
-		try {
-			SOAPEnvelope env = new SOAPEnvelope();
+    static String nameSpace = "http://example.com/uvtwf";
+    static String wfPrefix = "WF";
 
-			env.addMapping(new Mapping(nameSpace, wfPrefix));
-			env.addAttribute(Constants.URI_SOAP11_ENV, "actor", "some-uri");
-			env.addAttribute(Constants.URI_SOAP11_ENV, "mustUnderstand", "1");
+    public static void main(final String[] args) throws Exception {
+	try {
+	    SOAPEnvelope env = new SOAPEnvelope();
 
-			SOAPHeaderElement header = new SOAPHeaderElement(XMLUtils
-					.StringToElement(nameSpace, "MyHeaderElement", ""));
-			env.addHeader(header);
+	    env.addMapping(new Mapping(nameSpace, wfPrefix));
+	    env.addAttribute(Constants.URI_SOAP11_ENV, "actor", "some-uri");
+	    env.addAttribute(Constants.URI_SOAP11_ENV, "mustUnderstand", "1");
 
-			SOAPBodyElement sbelem = new SOAPBodyElement(XMLUtils.StringToElement(
-					nameSpace, "MyMethod", "xxx"));
-			env.addBodyElement(sbelem);
+	    SOAPHeaderElement header = new SOAPHeaderElement(XMLUtils
+		    .StringToElement(nameSpace, "MyHeaderElement", ""));
+	    env.addHeader(header);
 
-			AxisClient tmpEngine = new AxisClient(new NullProvider());
-			MessageContext msgContext = new MessageContext(tmpEngine);
-			log.info(msgContext.toString());
-			
-			StringWriter writer = new StringWriter();
-			writer.close();
+	    SOAPBodyElement sbelem = new SOAPBodyElement(XMLUtils
+		    .StringToElement(nameSpace, "MyMethod", "xxx"));
+	    env.addBodyElement(sbelem);
 
-			String s = writer.getBuffer().toString();
-			log.info(s);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	    AxisClient tmpEngine = new AxisClient(new NullProvider());
+	    MessageContext msgContext = new MessageContext(tmpEngine);
+	    log.info(msgContext.toString());
+
+	    StringWriter writer = new StringWriter();
+	    writer.close();
+
+	    String s = writer.getBuffer().toString();
+	    log.info(s);
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+    }
 
 }
