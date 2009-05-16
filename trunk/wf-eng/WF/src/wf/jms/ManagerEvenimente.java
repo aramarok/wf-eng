@@ -28,138 +28,127 @@ public class ManagerEvenimente implements MessageListener {
     public static void main(final String[] args) throws ExceptieWF,
 	    JMSException {
 
-	String propFileName = args[0];
-	if (propFileName == null) {
-	    System.out
-		    .println("Usage: wf.jms.ManagerEvenimente <properties file name>");
+	String fisier = args[0];
+	if (fisier == null) {
 	    System.exit(0);
 	}
 
-	Properties props = new Properties();
+	Properties proprietati = new Properties();
 	try {
-	    FileInputStream fi = new FileInputStream(propFileName);
-	    props.load(fi);
-	    fi.close();
-	} catch (FileNotFoundException fx) {
-	    System.out.print("Property file not found: " + fx.getMessage());
+	    FileInputStream fail = new FileInputStream(fisier);
+	    proprietati.load(fail);
+	    fail.close();
+	} catch (FileNotFoundException ex) {
 	    return;
 	} catch (IOException e) {
-	    System.out.print("Failed to read property file: " + e.getMessage());
 	    return;
 	}
 
-	new ManagerEvenimente(props);
+	new ManagerEvenimente(proprietati);
     }
 
     @SuppressWarnings("unused")
-    private JMSSubscriber subscriber;
+    private InregistrareJMS subs;
 
     public ManagerEvenimente(final Properties props) {
 	try {
-	    JMSTopicConnection.initialize();
+	    ConexiuneTopicJMS.initialize();
 
-	    this.subscriber = new JMSSubscriber(this, AppConfig
-		    .getEventsTopic(), null);
+	    this.subs = new InregistrareJMS(this, AppConfig.getEventsTopic(),
+		    null);
 	} catch (ExceptieWF e) {
 	    e.printStackTrace();
-	    System.out.println("Can't set up JMS Subscription");
 	} catch (JMSException e) {
 	    e.printStackTrace();
 	}
     }
 
-    private void executeQuery(final String query) {
-	System.out.println(query);
-	java.sql.Connection conn = null;
-	try {
+    private void executeQuery(final String interogare) {
 
-	    conn = Db.getConnection();
-	    Statement st = conn.createStatement();
-	    st.execute(query);
-	    st.close();
+	java.sql.Connection conexiune = null;
+	try {
+	    conexiune = Db.getConnection();
+	    Statement stmt = conexiune.createStatement();
+	    stmt.execute(interogare);
+	    stmt.close();
 	} catch (Exception e) {
-	    System.out.println(e.getMessage());
 	} finally {
-	    if (conn != null) {
-		Db.returnConnection(conn);
+	    if (conexiune != null) {
+		Db.returnConnection(conexiune);
 	    }
 	}
     }
 
-    private int executeQuery(final String query, final String columnName,
-	    final String tableName) {
-	System.out.println(query);
-	java.sql.Connection conn = null;
-	String lastMod = null;
+    private int executeQuery(final String interogare, final String coloana,
+	    final String tabela) {
+
+	java.sql.Connection conexiune = null;
+	String ex = null;
 	try {
 
-	    conn = Db.getConnection();
-	    Statement st = conn.createStatement();
-	    st.execute(query);
+	    conexiune = Db.getConnection();
+	    Statement stmt = conexiune.createStatement();
+	    stmt.execute(interogare);
 
-	    ResultSet rs = st.executeQuery("SELECT max(" + columnName + "),"
-		    + columnName + " from " + tableName);
+	    ResultSet rs = stmt.executeQuery("SELECT max(" + coloana + "),"
+		    + coloana + " from " + tabela);
 	    while (rs.next()) {
 		try {
-		    lastMod = rs.getString(columnName).trim();
+		    ex = rs.getString(coloana).trim();
 		} catch (NumberFormatException e) {
 		    System.err.println("bad event ID");
 		}
 	    }
 	    rs.close();
-	    st.close();
+	    stmt.close();
 	} catch (Exception e) {
 	    System.out.println(e.getMessage());
 	} finally {
-	    if (conn != null) {
-		Db.returnConnection(conn);
+	    if (conexiune != null) {
+		Db.returnConnection(conexiune);
 	    }
 	}
-	return Integer.parseInt(lastMod);
+	return Integer.parseInt(ex);
     }
 
-    private void insertAbortedEvent(final Element event) {
-	this.insertEventTable(event);
+    private void insertAbortedEvent(final Element eveniment) {
+	this.insertEventTable(eveniment);
     }
 
-    private void insertCompletedEvent(final Element event) {
-	this.insertEventTable(event);
+    private void insertCompletedEvent(final Element eveniment) {
+	this.insertEventTable(eveniment);
     }
 
-    private void insertDeployedEvent(final Element event) {
-	this.insertEventTable(event);
+    private void insertDeployedEvent(final Element eveniment) {
+	this.insertEventTable(eveniment);
     }
 
-    private int insertEventTable(final Element event) {
-	String eventId = null;
-	String eventType, workflowName, user;
-	String timestamp;
-	int workflowVersion, workflowInstanceId, parentWorkflowInstanceId;
-	String[] info;
+    private int insertEventTable(final Element eveniment) {
+	String idEveniment = null, tipEveniment, numeWF, utilizator, data;
+	int versiuneWF, idInstanta, wfParinte;
+	String[] extra;
 
-	info = this.retriveEventInfo(event);
+	extra = this.retriveEventInfo(eveniment);
 
-	for (String element : info) {
+	for (String element : extra) {
 	    System.out.println("in info " + element);
 	}
-	eventType = info[0];
-	timestamp = info[1];
-	workflowName = info[2];
-	workflowVersion = Integer.parseInt(info[3]);
-	workflowInstanceId = (info[4] == null) ? -1 : Integer.parseInt(info[4]);
-	parentWorkflowInstanceId = (info[5] == null) ? -1 : Integer
-		.parseInt(info[5]);
-	if (info[6] == null) {
-	    user = "system";
+	tipEveniment = extra[0];
+	data = extra[1];
+	numeWF = extra[2];
+	versiuneWF = Integer.parseInt(extra[3]);
+	idInstanta = (extra[4] == null) ? -1 : Integer.parseInt(extra[4]);
+	wfParinte = (extra[5] == null) ? -1 : Integer.parseInt(extra[5]);
+	if (extra[6] == null) {
+	    utilizator = "system";
 	} else {
-	    user = info[6];
+	    utilizator = extra[6];
 	}
 
-	String query = "INSERT INTO evt_event VALUES(null, " + "'" + eventType
-		+ "','" + timestamp + "','" + workflowName + "',"
-		+ workflowVersion + "," + workflowInstanceId + ","
-		+ parentWorkflowInstanceId + ","
-		+ ((user == null) ? "null)" : ("'" + user + "')"));
+	String query = "INSERT INTO evt_event VALUES(null, " + "'"
+		+ tipEveniment + "','" + data + "','" + numeWF + "',"
+		+ versiuneWF + "," + idInstanta + "," + wfParinte + ","
+		+ ((utilizator == null) ? "null)" : ("'" + utilizator + "')"));
 
 	System.out.println(query);
 
@@ -173,11 +162,11 @@ public class ManagerEvenimente implements MessageListener {
 		    .executeQuery("SELECT max(eventId), eventId from evt_event");
 	    while (rs.next()) {
 		try {
-		    eventId = rs.getString("eventId").trim();
-		    System.out.println(eventId);
+		    idEveniment = rs.getString("eventId").trim();
+		    System.out.println(idEveniment);
 		    rs.next();
 		} catch (NumberFormatException e) {
-		    System.err.println("bad event ID");
+		    System.err.println(e.getMessage());
 		}
 	    }
 	    rs.close();
@@ -189,16 +178,14 @@ public class ManagerEvenimente implements MessageListener {
 		Db.returnConnection(conn);
 	    }
 	}
-	System.out.println("eventId is " + eventId);
-	return Integer.parseInt(eventId);
+	System.out.println("evenimentul e " + idEveniment);
+	return Integer.parseInt(idEveniment);
     }
 
-    private void insertEventWorkItemPropertiesTable(
-	    final int workItenInternalId, final String pname,
-	    final String ptype, final String pvalue) {
-	String query = "INSERT INTO evt_EventWorkItemProperties VALUES("
-		+ workItenInternalId + ",'" + pname + "','" + ptype + "','"
-		+ pvalue + "')";
+    private void insertEventWorkItemPropertiesTable(final int idWI,
+	    final String pname, final String ptype, final String pvalue) {
+	String query = "INSERT INTO evt_EventWorkItemProperties VALUES(" + idWI
+		+ ",'" + pname + "','" + ptype + "','" + pvalue + "')";
 	this.executeQuery(query);
     }
 
@@ -344,18 +331,17 @@ public class ManagerEvenimente implements MessageListener {
 
     public void onMessage(final Message evt) {
 	String evtXML = null;
-	System.out.println("Got a mesaj...");
+	System.out.println("am mesaj...");
 	try {
 	    if (evt instanceof TextMessage) {
 		evtXML = ((TextMessage) evt).getText();
 		System.out.println(evtXML);
 	    } else {
-		System.out.println("Message not recognized.");
+		System.out.println("Mesaj aiurea.");
 		return;
 	    }
 	} catch (JMSException e) {
 	    e.printStackTrace();
-	    System.out.println("Cannot get text mesaj from Received mesaj");
 	}
 
 	try {

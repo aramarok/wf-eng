@@ -120,8 +120,8 @@ public class PublisherEvenimente {
 	    return;
 	}
 	try {
-	    JMSTopicConnection.initialize();
-	    JMSPublisher.send(topicName, msg, props);
+	    ConexiuneTopicJMS.initialize();
+	    PublisherJMS.send(topicName, msg, props);
 	} catch (Exception e) {
 	    throw new ExceptieWF(e.getMessage(), e);
 	}

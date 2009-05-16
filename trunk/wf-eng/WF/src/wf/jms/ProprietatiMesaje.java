@@ -1,6 +1,6 @@
 package wf.jms;
 
-public class MessageProperty {
+public class ProprietatiMesaje {
 
     public String name;
     public String value;
