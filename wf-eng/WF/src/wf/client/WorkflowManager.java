@@ -3,7 +3,7 @@ package wf.client;
 import java.util.List;
 import wf.client.auth.Utilizator;
 import wf.exceptions.ExceptieWF;
-import wf.jms.SynchQueueMessaging;
+import wf.jms.Mesagerie;
 import wf.jms.model.Cerere;
 import wf.jms.model.Raspuns;
 import wf.jms.model.ReqAbortWF;
@@ -163,7 +163,7 @@ public class WorkflowManager {
 
 	req.numeRaspuns = Util.generateUniqueStringId();
 	try {
-	    Raspuns resp = SynchQueueMessaging.sendRequest(req);
+	    Raspuns resp = Mesagerie.sendRequest(req);
 	    if (resp.codRaspuns != Raspuns.SUCCES) {
 		System.out.println("EROARE response from server.");
 		throw new ExceptieWF(resp.mesaj);

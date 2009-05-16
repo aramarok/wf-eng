@@ -11,9 +11,9 @@ import org.apache.log4j.Logger;
 import wf.cfg.AppConfig;
 import wf.client.auth.Utilizator;
 import wf.exceptions.ExceptieWF;
-import wf.jms.JMSSubscriber;
-import wf.jms.JMSTopicConnection;
-import wf.jms.SynchQueueMessaging;
+import wf.jms.InregistrareJMS;
+import wf.jms.ConexiuneTopicJMS;
+import wf.jms.Mesagerie;
 import wf.jms.model.ReqCompleteWI;
 import wf.jms.model.ResCompleteWI;
 import wf.jms.model.ReqUrmWI;
@@ -37,7 +37,7 @@ public class ProcesWF implements MessageListener {
 
 	req.numeRaspuns = Util.generateUniqueStringId();
 	try {
-	    Raspuns resp = SynchQueueMessaging.sendRequest(req);
+	    Raspuns resp = Mesagerie.sendRequest(req);
 	    if (resp.codRaspuns != Raspuns.SUCCES) {
 		throw new ExceptieWF(resp.mesaj);
 	    }
@@ -50,7 +50,7 @@ public class ProcesWF implements MessageListener {
     private final InboxMessageListener mlistener;
     private final String procName;
     @SuppressWarnings("unused")
-    private JMSSubscriber subscriber;
+    private InregistrareJMS subscriber;
     private final Utilizator user;
 
     private final String workflowName;
@@ -62,7 +62,7 @@ public class ProcesWF implements MessageListener {
 	    final Utilizator user) throws ExceptieWF {
 
 	try {
-	    JMSTopicConnection.initialize();
+	    ConexiuneTopicJMS.initialize();
 	} catch (JMSException e) {
 	    throw new ExceptieWF(e);
 	}
@@ -84,7 +84,7 @@ public class ProcesWF implements MessageListener {
 		    "Unrecognized process name in specified workflow.");
 	}
 	if (listener != null) {
-	    this.subscriber = new JMSSubscriber(this,
+	    this.subscriber = new InregistrareJMS(this,
 		    AppConfig.getInboxTopic(), "ProcessName in ('"
 			    + this.workflowName + this.procName + "')");
 	}
