@@ -4,19 +4,20 @@ import java.io.Serializable;
 
 public class ABC implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	Integer a;
-	String b;
-	Double c;
+    private static final long serialVersionUID = 1L;
 
-	public ABC(int i, String s, double d) {
-		a = new Integer(i);
-		b = new String(s);
-		c = new Double(d);
-	}
+    Integer a;
+    String b;
+    Double c;
 
-	public String toString() {
-		return "a = " + a + " b = " + b + " c = " + c;
-	}
+    public ABC(final int i, final String s, final double d) {
+	this.a = new Integer(i);
+	this.b = new String(s);
+	this.c = new Double(d);
+    }
+
+    @Override
+    public String toString() {
+	return "a = " + this.a + " b = " + this.b + " c = " + this.c;
+    }
 }

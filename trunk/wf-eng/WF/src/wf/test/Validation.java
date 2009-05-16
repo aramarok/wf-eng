@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import wf.exceptions.WorkFlowException;
+import wf.exceptions.ExceptieWF;
 import wf.model.DirectedGraph;
 import wf.xml.DefinitionParser;
 
@@ -24,7 +24,7 @@ public class Validation {
 			try {
 				DirectedGraph g = DefinitionParser.parse(xml);
 				g.validate();
-			} catch (WorkFlowException e) {
+			} catch (ExceptieWF e) {
 				e.printStackTrace();
 			}
 		} catch (IOException e) {

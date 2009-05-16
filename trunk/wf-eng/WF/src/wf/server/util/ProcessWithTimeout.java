@@ -1,16 +1,17 @@
 package wf.server.util;
 
 public class ProcessWithTimeout {
-	public int workflowId;
-	public String processName;
-	public int timeoutMinutes;
-	public String timeoutHandler;
+    public String processName;
+    public String timeoutHandler;
+    public int timeoutMinutes;
+    public int workflowId;
 
-	public String toString() {
-		String s = "";
-		s += "Integer: " + workflowId + " ProcessName: " + processName
-				+ " Timeout: " + timeoutMinutes + " Timeout Handler: "
-				+ timeoutHandler + "\n";
-		return s;
-	}
+    @Override
+    public String toString() {
+	String s = "";
+	s += "Integer: " + this.workflowId + " ProcessName: "
+		+ this.processName + " Timeout: " + this.timeoutMinutes
+		+ " Timeout Handler: " + this.timeoutHandler + "\n";
+	return s;
+    }
 }

@@ -8,8 +8,8 @@ import org.apache.axis.encoding.XMLType;
 import org.apache.axis.encoding.ser.BeanDeserializerFactory;
 import org.apache.axis.encoding.ser.BeanSerializerFactory;
 
-import wf.client.auth.User;
-import wf.model.WorkItem;
+import wf.client.auth.Utilizator;
+import wf.model.ItemModel;
 
 public class StartWorkflowWS {
 	public static void main(String[] args) throws Exception {
@@ -30,14 +30,14 @@ public class StartWorkflowWS {
 				Integer.class, qn), new BeanDeserializerFactory(Integer.class,
 				qn));
 
-		QName qn1 = new QName("urn:WfService", "WorkItem");
-		call.registerTypeMapping(WorkItem.class, qn1,
-				new BeanSerializerFactory(WorkItem.class, qn1),
-				new BeanDeserializerFactory(WorkItem.class, qn1));
+		QName qn1 = new QName("urn:WfService", "ItemModel");
+		call.registerTypeMapping(ItemModel.class, qn1,
+				new BeanSerializerFactory(ItemModel.class, qn1),
+				new BeanDeserializerFactory(ItemModel.class, qn1));
 
-		QName qn2 = new QName("urn:WfService", "User");
-		call.registerTypeMapping(User.class, qn2, new BeanSerializerFactory(
-				User.class, qn2), new BeanDeserializerFactory(User.class, qn2));
+		QName qn2 = new QName("urn:WfService", "Utilizator");
+		call.registerTypeMapping(Utilizator.class, qn2, new BeanSerializerFactory(
+				Utilizator.class, qn2), new BeanDeserializerFactory(Utilizator.class, qn2));
 
 		call.setTargetEndpointAddress(new java.net.URL(endpoint));
 		call.setOperationName(method);
@@ -55,9 +55,9 @@ public class StartWorkflowWS {
 		}
 		
 		Integer version = new Integer(-1);
-		WorkItem witem = new WorkItem();
+		ItemModel witem = new ItemModel();
 		witem.setPayload(new Integer(1));
-		User user = new User("user", "password");
+		Utilizator user = new Utilizator("utilizator", "password");
 		call.invoke(new Object[] { workflowName, version, witem, user });
 
 		System.out.println("Workflow started.");
