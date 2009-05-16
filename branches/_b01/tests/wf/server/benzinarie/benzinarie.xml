@@ -1,0 +1,30 @@
+<wf name="benzinarie">
+	<nodes>
+		<node id="StartNode" type="Start" />
+		<node id="masina" type="Process" />
+		<node id="umplere" type="Process" />
+		<node id="liber" type="Process" />
+		<node id="bani" type="Process" />
+		<node id="AndNode" type="And" />
+		<node id="gata" type="Process" />
+		<node id="altceva" type="Process" />
+		<node id="OrNode" type="Or" />
+		<node id="plecare" type="Process" />
+		<node id="EndNode" type="End" />
+	</nodes>
+	<transitions>
+		<transition from="StartNode" to="masina" />
+		<transition from="StartNode" to="altceva" />
+		<transition from="altceva" to="OrNode" />
+		<transition from="masina" to="umplere" />
+		<transition from="umplere" to="liber" />
+		<transition from="umplere" to="bani" />
+		<transition from="liber" to="AndNode" />
+		<transition from="bani" to="AndNode" />
+		<transition from="AndNode" to="OrNode" />
+		<transition from="umplere" to="gata" />
+		<transition from="gata" to="OrNode" />
+		<transition from="OrNode" to="plecare" />
+		<transition from="plecare" to="EndNode" />
+	</transitions>
+</wf>
