@@ -17,8 +17,8 @@ import wf.cfg.AppConfig;
 import wf.db.Persistence;
 import wf.exceptions.ExceptieWF;
 import wf.jms.PublisherEvenimente;
-import wf.jms.JMSPublisher;
-import wf.jms.MessageProperty;
+import wf.jms.PublisherJMS;
+import wf.jms.ProprietatiMesaje;
 import wf.model.DirectedGraph;
 import wf.model.ItemModel;
 import wf.model.Nod;
@@ -441,11 +441,11 @@ public class WorkflowProcessor {
 	    byte[] barr = out.toByteArray();
 
 	    List props = new ArrayList();
-	    MessageProperty mp = new MessageProperty();
+	    ProprietatiMesaje mp = new ProprietatiMesaje();
 	    mp.name = "ProcessName";
 	    mp.value = workflowName + procName;
 	    props.add(mp);
-	    JMSPublisher.send(AppConfig.getInboxTopic(), barr, props);
+	    PublisherJMS.send(AppConfig.getInboxTopic(), barr, props);
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
