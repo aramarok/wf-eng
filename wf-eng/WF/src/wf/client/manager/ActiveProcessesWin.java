@@ -1,8 +1,8 @@
 package wf.client.manager;
 
-import wf.cfg.WFConstants;
+import wf.cfg.Constante;
 import wf.client.Admin;
-import wf.model.WorkflowState;
+import wf.model.StareWF;
 
 public class ActiveProcessesWin extends javax.swing.JInternalFrame {
 
@@ -34,7 +34,7 @@ public class ActiveProcessesWin extends javax.swing.JInternalFrame {
 		setTitle("Active Processes");
 		jToolBar1.setFloatable(false);
 		refreshBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource(
-				WFConstants.CLIENT_ICON_LOCATION + "refresh.gif")));
+				Constante.CLIENT_ICON_LOCATION + "refresh.gif")));
 		refreshBtn.setMnemonic('r');
 		refreshBtn.setText("refresh");
 		refreshBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -67,7 +67,7 @@ public class ActiveProcessesWin extends javax.swing.JInternalFrame {
 		if (wfId == -1)
 			return;
 		try {
-			WorkflowState state = wfAdminUI.getWorkflowState(wfId);
+			StareWF state = wfAdminUI.getWorkflowState(wfId);
 			this.setTitle("Workflow::" + state.getWorkflowName() + "::"
 					+ state.getIsActive());
 			activeProcTable.setModel(Utilities.createTableModel(state

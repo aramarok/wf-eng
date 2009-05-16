@@ -18,9 +18,9 @@ import javax.jms.QueueSession;
 import javax.naming.InitialContext;
 
 import wf.cfg.AppConfig;
-import wf.exceptions.WorkFlowException;
-import wf.jms.model.Request;
-import wf.jms.model.Response;
+import wf.exceptions.ExceptieWF;
+import wf.jms.model.Cerere;
+import wf.jms.model.Raspuns;
 
 public class SynchQueueMessaging {
 
@@ -57,15 +57,15 @@ public class SynchQueueMessaging {
 		qconn.close();
 	}
 
-	public static Response sendRequest(Request req) throws JMSException,
-			IOException, ClassNotFoundException, WorkFlowException {
+	public static Raspuns sendRequest(Cerere req) throws JMSException,
+			IOException, ClassNotFoundException, ExceptieWF {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		ObjectOutputStream s = new ObjectOutputStream(out);
 
 		s.writeObject(req);
 		s.flush();
 		byte[] barr = out.toByteArray();
-		String replyName = req.replyName;
+		String replyName = req.numeRaspuns;
 		QueueReceiver receiver = qsession.createReceiver(receiveQueue,
 				"ReplyName in ('" + replyName + "')");
 		QueueSender sender = qsession.createSender(wfQueue);
@@ -81,17 +81,17 @@ public class SynchQueueMessaging {
 		System.out.println("Sender = " + sender);
 
 		Message msg = receiver.receive(5000);
-		Response response = null;
+		Raspuns response = null;
 		if (msg != null) {
 			BytesMessage bytesMessage = (BytesMessage) msg;
 			barr = new byte[10000];
 			bytesMessage.readBytes(barr);
 			ByteArrayInputStream in = new ByteArrayInputStream(barr);
 			ObjectInputStream sin = new ObjectInputStream(in);
-			response = (Response) sin.readObject();
+			response = (Raspuns) sin.readObject();
 		} else {
-			throw new WorkFlowException(
-					"Response not received from server within 5 seconds.");
+			throw new ExceptieWF(
+					"Raspuns not received from server within 5 seconds.");
 		}
 		return response;
 	}

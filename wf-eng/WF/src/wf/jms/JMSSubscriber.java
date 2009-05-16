@@ -7,7 +7,7 @@ import javax.jms.TopicSession;
 import javax.jms.TopicSubscriber;
 import javax.naming.InitialContext;
 import org.apache.log4j.Logger;
-import wf.exceptions.WorkFlowException;
+import wf.exceptions.ExceptieWF;
 
 public class JMSSubscriber {
 
@@ -17,7 +17,7 @@ public class JMSSubscriber {
 	private static Logger log = Logger.getLogger(JMSSubscriber.class);
 
 	public JMSSubscriber(MessageListener lner, String topicName, String selector)
-			throws WorkFlowException {
+			throws ExceptieWF {
 
 		try {
 			InitialContext iniCtx = JMSTopicConnection.getInitialContext();
@@ -35,7 +35,7 @@ public class JMSSubscriber {
 			log.info("Created topic subscription for: " + topicName);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new WorkFlowException("Can't set up JMS Subscription");
+			throw new ExceptieWF("Can't set up JMS Subscription");
 		}
 	}
 }
