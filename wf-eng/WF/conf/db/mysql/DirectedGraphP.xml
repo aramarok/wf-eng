@@ -6,8 +6,8 @@
 
 <sqlMap namespace="DirectedGraphP">
 
-  <typeAlias alias="Node" type="wf.model.Node"/>
-  <resultMap id="nodeMap" class="wf.model.Node">
+  <typeAlias alias="Node" type="wf.model.Nod"/>
+  <resultMap id="nodeMap" class="wf.model.Nod">
      <result property="nodeId"   column="nid"/>
      <result property="nodeType"   column="nodetype"/>
      <result property="name"   column="name"/>
