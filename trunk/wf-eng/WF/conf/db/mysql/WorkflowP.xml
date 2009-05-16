@@ -8,8 +8,8 @@
 
   <typeAlias alias="WorkflowP" type="wf.server.controller.WorkflowP"/>
   <typeAlias alias="WorkflowId" type="wf.model.WorkflowId" />
-  <typeAlias alias="WorkflowModel" type="wf.model.WorkflowModel"/>
-  <typeAlias alias="WorkflowState" type="wf.model.WorkflowState"/>
+  <typeAlias alias="WorkflowModel" type="wf.model.ModelWF"/>
+  <typeAlias alias="WorkflowState" type="wf.model.StareWF"/>
 
   <resultMap id="WorkflowModel-map" class="WorkflowModel">
     <result property="name" column="name"/>
