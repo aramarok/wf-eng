@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+    PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="WaitingwP">
+
+  <insert id="insertWaitingRecord">
+    insert into waiting ( workflowId, destNodeId, fromNodeId ) values (  #workflowId#, #destNodeId# , #fromNodeId# )
+  </insert>
+
+  <delete id="deleteProcFromWaiting">
+    delete from waiting
+      where workflowid = #workflowid#
+           and fromNodeId = #fromNodeId#
+  </delete>
+
+  <delete id="removeProcessesForWorkflow" parameterClass="integer">
+     delete from waiting where workflowid = #value#
+  </delete>
+
+  <select id="countArrived" resultClass="integer" >
+    select count( * )
+    from waiting
+    where workflowId = #workflowId#
+       and  destNodeId = #destNodeId#
+       and fromNodeId 
+       <iterate prepend="IN"  property="fromNodeIDs"  open="("  close=")"
+         conjunction="," > #fromNodeIDs[]#
+       </iterate>
+  </select>
+
+</sqlMap>

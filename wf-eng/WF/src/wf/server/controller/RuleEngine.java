@@ -8,8 +8,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.log4j.Logger;
 import org.jaxen.JaxenException;
 import org.xml.sax.SAXException;
-import wf.exceptions.WorkFlowException;
-import wf.model.WorkItem;
+import wf.exceptions.ExceptieWF;
+import wf.model.ItemModel;
 
 public class RuleEngine {
 
@@ -25,9 +25,9 @@ public class RuleEngine {
 		return r;
 	}
 
-	public static boolean evaluate(WorkItem witem, String r)
+	public static boolean evaluate(ItemModel witem, String r)
 			throws JaxenException, IOException, ParserConfigurationException,
-			WorkFlowException, SAXException {
+			ExceptieWF, SAXException {
 		boolean result = true;
 		String rule = clean(r);
 		rule = rule.substring(1);
@@ -49,7 +49,7 @@ public class RuleEngine {
 			log.info("propValue = " + propValue);
 			Object prop = witem.getProperty(propName);
 			if (prop == null) {
-				throw new WorkFlowException("Property does not exist: "
+				throw new ExceptieWF("Property does not exist: "
 						+ propName);
 			}
 			result = new ExpressionEval().applyRule(prop, oper, propValue);
@@ -57,13 +57,13 @@ public class RuleEngine {
 		} else {
 			String payloadType = witem.getPayloadType();
 			if (payloadType == null) {
-				throw new WorkFlowException(
+				throw new ExceptieWF(
 						"Payload type not defined in work item");
 			}
-			if (payloadType.equals(WorkItem.XML)) {
+			if (payloadType.equals(ItemModel.XML)) {
 				result = evaluateRuleOnXmlPayload((String) witem.getPayload(),
 						r);
-			} else if (payloadType.equals(WorkItem.JAVA_OBJECT)) {
+			} else if (payloadType.equals(ItemModel.JAVA_OBJECT)) {
 				result = new ExpressionEval().evaluateRule(witem.getPayload(),
 						rule);
 			}

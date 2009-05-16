@@ -1,6 +1,6 @@
 package wf.server.controller;
 
-import wf.model.ProcessState;
+import wf.model.StareProces;
 import java.lang.Integer;
 import java.util.Date;
 
@@ -43,8 +43,8 @@ public class ProcessStateRec {
 		this.workItemId = workItemId;
 	}
 
-	public ProcessState makeProcessState() {
-		ProcessState res = new ProcessState();
+	public StareProces makeProcessState() {
+		StareProces res = new StareProces();
 		res.setProcessName(processName);
 		res.setTimeStarted(timeStarted);
 		res.setWorkflowId(new Integer(workflowId));

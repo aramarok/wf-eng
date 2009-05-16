@@ -1,22 +1,22 @@
 package wf.server.controller;
 
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 public abstract class JDBCWork {
 
-	protected Object result;
+    public static class JDBCEnv {
+	public Connection connection;
+	public ResultSet resultSet;
+	public Statement statement;
+    }
 
-	public Object getResult() {
-		return result;
-	}
+    protected Object result;
 
-	public abstract void execute(JDBCEnv env) throws Exception;
+    public abstract void execute(JDBCEnv env) throws Exception;
 
-	public static class JDBCEnv {
-		public Connection connection;
-		public Statement statement;
-		public ResultSet resultSet;
-	}
+    public Object getResult() {
+	return this.result;
+    }
 }

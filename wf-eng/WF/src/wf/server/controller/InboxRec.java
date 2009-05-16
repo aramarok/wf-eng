@@ -4,68 +4,68 @@ import java.util.Date;
 
 public class InboxRec {
 
-	int workflowId;
-	int gid;
-	String workflowName;
-	String procName;
-	Integer workitemId;
-	Date timeStarted;
-	boolean timeout;
+    int gid;
+    String procName;
+    boolean timeout;
+    Date timeStarted;
+    int workflowId;
+    String workflowName;
+    Integer workitemId;
 
-	public int getWorkflowId() {
-		return workflowId;
-	}
+    public int getGid() {
+	return this.gid;
+    }
 
-	public void setWorkflowId(int workflowId) {
-		this.workflowId = workflowId;
-	}
+    public String getProcName() {
+	return this.procName;
+    }
 
-	public int getGid() {
-		return gid;
-	}
+    public Date getTimeStarted() {
+	return this.timeStarted;
+    }
 
-	public void setGid(int gid) {
-		this.gid = gid;
-	}
+    public int getWorkflowId() {
+	return this.workflowId;
+    }
 
-	public String getWorkflowName() {
-		return workflowName;
-	}
+    public String getWorkflowName() {
+	return this.workflowName;
+    }
 
-	public void setWorkflowName(String workflowName) {
-		this.workflowName = workflowName;
-	}
+    public Integer getWorkitemId() {
+	return this.workitemId;
+    }
 
-	public String getProcName() {
-		return procName;
-	}
+    public boolean isTimeout() {
+	return this.timeout;
+    }
 
-	public void setProcName(String procName) {
-		this.procName = procName;
-	}
+    public void setGid(final int gid) {
+	this.gid = gid;
+    }
 
-	public Integer getWorkitemId() {
-		return workitemId;
-	}
+    public void setProcName(final String procName) {
+	this.procName = procName;
+    }
 
-	public void setWorkitemId(Integer workitemId) {
-		this.workitemId = workitemId;
-	}
+    public void setTimeout(final boolean timeout) {
+	this.timeout = timeout;
+    }
 
-	public Date getTimeStarted() {
-		return timeStarted;
-	}
+    public void setTimeStarted(final Date timeStarted) {
+	this.timeStarted = timeStarted;
+    }
 
-	public void setTimeStarted(Date timeStarted) {
-		this.timeStarted = timeStarted;
-	}
+    public void setWorkflowId(final int workflowId) {
+	this.workflowId = workflowId;
+    }
 
-	public boolean isTimeout() {
-		return timeout;
-	}
+    public void setWorkflowName(final String workflowName) {
+	this.workflowName = workflowName;
+    }
 
-	public void setTimeout(boolean timeout) {
-		this.timeout = timeout;
-	}
+    public void setWorkitemId(final Integer workitemId) {
+	this.workitemId = workitemId;
+    }
 
 }

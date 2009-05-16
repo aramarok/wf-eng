@@ -4,12 +4,12 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 
 public abstract class IBatisWork {
 
-	protected Object result;
+    protected Object result;
 
-	public Object getResult() {
-		return result;
-	}
+    public abstract void execute(SqlMapClient sqlMap) throws Exception;
 
-	public abstract void execute(SqlMapClient sqlMap) throws Exception;
+    public Object getResult() {
+	return this.result;
+    }
 
 }

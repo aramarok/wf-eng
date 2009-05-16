@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+    PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="InboxP">
+
+
+  <insert id="insertInboxRecord">
+    insert into inbox ( workflowId , gid , workflowName , procName , workitemId , timeStarted , timeout )
+    values ( #workflowId# , #gid# , #workflowName# , #procName# , #workitemId# , #timeStarted# , #timeout# )
+  </insert>
+
+  <delete id="deleteInboxRecords">
+    delete from inbox where workflowId = #workflowId#
+           and gid = #gid#
+           and procname = #procName#
+           and workitemid = #workitemId#
+  </delete>
+
+  <delete id="deleteInboxRecordsForWorkflow">
+    delete from inbox where workflowId = #value#
+  </delete>
+
+  <select id="selectInboxRecords" resultClass="int" >
+    select workflowId
+    from inbox
+     where workflowId = #workflowId#
+           and gid = #gid#
+           and procname = #procName#
+           and workitemid = #workitemId#
+
+  </select>
+
+  <select id="selectDateStarted" resultClass="java.util.Date" >
+    select timeStarted
+    from inbox where
+    workflowId = #workflowId#
+         and procname = #procName#
+         and (timeout = #timeout# or timeout is null)
+  </select>
+
+  <update id="setInboxTimeoutFlag">
+    update inbox set timeout = #timeout#
+    where workflowId = #workflowId#
+           and procname = #procName#
+  </update>
+
+  <select id="workitemsExist" resultClass="int" >
+    select workflowid from inbox where workflowid = #value#
+  </select>
+
+</sqlMap>
