@@ -1,7 +1,7 @@
 package wf.client.actions;
 
 import java.util.List;
-import wf.client.WorkflowManager;
+import wf.client.ManagerWorkflow;
 import wf.client.auth.Utilizator;
 import wf.model.StareWF;
 
@@ -14,10 +14,10 @@ public class GetToateInstaneWorkflow {
 	List v;
 	if (args.length > 0) {
 	    wfName = args[0];
-	    v = WorkflowManager.getToateInstanteWorkflowDupaNume(wfName, new Utilizator(
+	    v = ManagerWorkflow.getToateInstanteWorkflowDupaNume(wfName, new Utilizator(
 		    "utilizator", "password"));
 	} else {
-	    v = WorkflowManager.getToateInstanteWorkflow(new Utilizator("utilizator",
+	    v = ManagerWorkflow.getToateInstanteWorkflow(new Utilizator("utilizator",
 		    "password"));
 	}
 

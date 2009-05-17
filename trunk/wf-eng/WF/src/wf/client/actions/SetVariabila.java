@@ -1,6 +1,6 @@
 package wf.client.actions;
 
-import wf.client.WorkflowManager;
+import wf.client.ManagerWorkflow;
 import wf.client.auth.Utilizator;
 import wf.exceptions.ExceptieWF;
 
@@ -14,7 +14,7 @@ public class SetVariabila {
 	Utilizator user = new Utilizator("utilizator", "password");
 
 	Integer workflowId = new Integer(wfId.intValue());
-	WorkflowManager.setVariabila(workflowId, varName, varValue, user);
+	ManagerWorkflow.setVariabila(workflowId, varName, varValue, user);
 	System.out.println("Success");
     }
 }

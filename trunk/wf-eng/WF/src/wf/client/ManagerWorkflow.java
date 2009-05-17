@@ -39,7 +39,7 @@ import wf.model.Nod;
 import wf.model.StareWF;
 import wf.util.Util;
 
-public class WorkflowManager {
+public class ManagerWorkflow {
 
     public static final String BPEL = "BPEL";
     public static final String WF = "WF";

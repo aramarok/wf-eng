@@ -1,6 +1,6 @@
 package wf.test;
 
-import wf.client.WorkflowManager;
+import wf.client.ManagerWorkflow;
 import wf.client.auth.Utilizator;
 import wf.exceptions.ExceptieWF;
 
@@ -15,11 +15,11 @@ public class TestSetVar {
 		Utilizator user = new Utilizator("utilizator", "password");
 
 		Integer workflowId = new Integer(wfi.intValue());
-		WorkflowManager.setVariabila(workflowId, name, value, user);
+		ManagerWorkflow.setVariabila(workflowId, name, value, user);
 
 		ABC abc = new ABC(345, value, 23.23);
-		WorkflowManager.setVariabila(workflowId, name, abc, user);
+		ManagerWorkflow.setVariabila(workflowId, name, abc, user);
 
-		System.out.println(WorkflowManager.getVariabila(workflowId, name, user));
+		System.out.println(ManagerWorkflow.getVariabila(workflowId, name, user));
 	}
 }

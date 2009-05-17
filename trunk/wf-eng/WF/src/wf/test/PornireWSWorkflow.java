@@ -11,7 +11,7 @@ import org.apache.axis.encoding.ser.BeanSerializerFactory;
 import wf.client.auth.Utilizator;
 import wf.model.ItemModel;
 
-public class StartWorkflowWS {
+public class PornireWSWorkflow {
 	public static void main(String[] args) throws Exception {
 
 		String endpoint = "http://localhost:8080/axis/services/WfService";
