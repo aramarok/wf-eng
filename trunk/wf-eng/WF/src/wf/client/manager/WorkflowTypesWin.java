@@ -173,7 +173,7 @@ public class WorkflowTypesWin extends javax.swing.JInternalFrame {
 				while ((str = in.readLine()) != null) {
 					xml.append(str);
 				}
-				WorkflowManager.deployModel(xml.toString(), "WF", Admin
+				WorkflowManager.incarcaModel(xml.toString(), "WF", Admin
 						.getInstance().getUSER());
 				refreshList();
 			} catch (Exception e) {

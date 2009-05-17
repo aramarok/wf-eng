@@ -65,13 +65,13 @@ public class Admin {
 
     @SuppressWarnings("unchecked")
     public List getActiveWorkflows() throws ExceptieWF {
-	List v = WorkflowManager.getActiveWorkflows(this.getUSER());
+	List v = WorkflowManager.getInstanteActiveWorkflow(this.getUSER());
 	return v;
     }
 
     @SuppressWarnings("unchecked")
     public List getKnownWorkflows() throws ExceptieWF {
-	List v = WorkflowManager.getWorkflowModels(this.getUSER());
+	List v = WorkflowManager.getModeleWorkflow(this.getUSER());
 	return v;
     }
 
@@ -85,7 +85,7 @@ public class Admin {
     }
 
     public StareWF getWorkflowState(final int wfid) throws ExceptieWF {
-	StareWF state = WorkflowManager.getWorkflowState(new Integer(wfid),
+	StareWF state = WorkflowManager.getStareWorkflow(new Integer(wfid),
 		this.getUSER());
 	return state;
     }

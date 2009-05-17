@@ -4,15 +4,16 @@ import wf.client.WorkflowManager;
 import wf.client.auth.Utilizator;
 import wf.exceptions.ExceptieWF;
 
-public class SuspendWorkflow {
+public class GetVariabila {
 
     public static void main(final String[] args) throws ExceptieWF {
 
 	Integer wfId = new Integer(args[0]);
+	String varName = args[1];
 	Integer workflowId = new Integer(wfId.intValue());
-	WorkflowManager.suspendWorkflow(workflowId, new Utilizator("utilizator",
-		"password"));
-	System.out.println("Success");
+	Object val = WorkflowManager.getVariabila(workflowId, varName,
+		new Utilizator("utilizator", "password"));
+	System.out.println("Var value: " + val);
     }
 
 }

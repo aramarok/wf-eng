@@ -23,7 +23,7 @@ public class StartWorkflow {
 		witem.setProperty("PropC", new Integer(12));
 		String xml = "<a><b>100</b></a>";
 		witem.setPayloadXML(xml);
-		Integer wfId = WorkflowManager.startWorkflow(wfName, witem, new Utilizator(
+		Integer wfId = WorkflowManager.pornesteWorkflow(wfName, witem, new Utilizator(
 				"utilizator", "password"));
 		System.out.println("Started. Workflow ID: " + wfId);
 	}

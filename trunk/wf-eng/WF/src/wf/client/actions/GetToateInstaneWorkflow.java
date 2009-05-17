@@ -5,7 +5,7 @@ import wf.client.WorkflowManager;
 import wf.client.auth.Utilizator;
 import wf.model.StareWF;
 
-public class GetAllWorkflowInstances {
+public class GetToateInstaneWorkflow {
 
     @SuppressWarnings("unchecked")
     public static void main(final String[] args) throws Exception {
@@ -14,10 +14,10 @@ public class GetAllWorkflowInstances {
 	List v;
 	if (args.length > 0) {
 	    wfName = args[0];
-	    v = WorkflowManager.getAllWorkflowsByName(wfName, new Utilizator(
+	    v = WorkflowManager.getToateInstanteWorkflowDupaNume(wfName, new Utilizator(
 		    "utilizator", "password"));
 	} else {
-	    v = WorkflowManager.getAllWorkflows(new Utilizator("utilizator",
+	    v = WorkflowManager.getToateInstanteWorkflow(new Utilizator("utilizator",
 		    "password"));
 	}
 

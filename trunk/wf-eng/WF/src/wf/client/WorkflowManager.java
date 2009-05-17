@@ -44,7 +44,7 @@ public class WorkflowManager {
     public static final String BPEL = "BPEL";
     public static final String WF = "WF";
 
-    public static ResAbortWF abortWorkflow(final Integer workflowId,
+    public static ResAbortWF anuleazaWorkflow(final Integer workflowId,
 	    final Utilizator user) throws ExceptieWF {
 
 	ReqAbortWF req = new ReqAbortWF();
@@ -55,7 +55,7 @@ public class WorkflowManager {
 	return resp;
     }
 
-    public static ResDeployModel deployModel(final String xml,
+    public static ResDeployModel incarcaModel(final String xml,
 	    final String type, final Utilizator user) throws ExceptieWF {
 	ReqDeployModel req = new ReqDeployModel();
 	req.utilizator = user;
@@ -66,7 +66,7 @@ public class WorkflowManager {
     }
 
     @SuppressWarnings("unchecked")
-    public static List getActiveWorkflows(final Utilizator user)
+    public static List getInstanteActiveWorkflow(final Utilizator user)
 	    throws ExceptieWF {
 
 	ReqWFActive req = new ReqWFActive();
@@ -76,7 +76,7 @@ public class WorkflowManager {
     }
 
     @SuppressWarnings("unchecked")
-    public static List getAllWorkflows(final Utilizator user) throws ExceptieWF {
+    public static List getToateInstanteWorkflow(final Utilizator user) throws ExceptieWF {
 
 	ReqToateWF req = new ReqToateWF();
 	req.utilizator = user;
@@ -85,7 +85,7 @@ public class WorkflowManager {
     }
 
     @SuppressWarnings("unchecked")
-    public static List getAllWorkflowsByName(final String name,
+    public static List getToateInstanteWorkflowDupaNume(final String name,
 	    final Utilizator user) throws ExceptieWF {
 
 	ReqWFDupaNume req = new ReqWFDupaNume();
@@ -95,7 +95,7 @@ public class WorkflowManager {
 	return resp.workflows;
     }
 
-    public static Nod getNodeByName(final String workflowName,
+    public static Nod getNodDupaNume(final String workflowName,
 	    final int workflowVersion, final String nodeName,
 	    final Utilizator user) throws ExceptieWF {
 	ReqNodDupaNume req = new ReqNodDupaNume();
@@ -108,7 +108,7 @@ public class WorkflowManager {
     }
 
     @SuppressWarnings("unchecked")
-    public static List getProcessNodes(final Integer workflowId,
+    public static List getNoduriProces(final Integer workflowId,
 	    final Utilizator user) throws ExceptieWF {
 	ReqNoduriProces req = new ReqNoduriProces();
 	req.utilizator = user;
@@ -117,7 +117,7 @@ public class WorkflowManager {
 	return resp.nodes;
     }
 
-    public static Object getVariable(final Integer workflowId,
+    public static Object getVariabila(final Integer workflowId,
 	    final String variableName, final Utilizator user) throws ExceptieWF {
 
 	ReqVariabila req = new ReqVariabila();
@@ -129,7 +129,7 @@ public class WorkflowManager {
     }
 
     @SuppressWarnings("unchecked")
-    public static List getWorkflowModels(final Utilizator user)
+    public static List getModeleWorkflow(final Utilizator user)
 	    throws ExceptieWF {
 	ReqModeleDisponibile req = new ReqModeleDisponibile();
 	req.utilizator = user;
@@ -137,7 +137,7 @@ public class WorkflowManager {
 	return resp.models;
     }
 
-    public static StareWF getWorkflowState(final Integer workflowId,
+    public static StareWF getStareWorkflow(final Integer workflowId,
 	    final Utilizator user) throws ExceptieWF {
 
 	ReqStareWF req = new ReqStareWF();
@@ -148,7 +148,7 @@ public class WorkflowManager {
 	return resp.workflowState;
     }
 
-    public static ResRepornireWF resumeWorkflow(final Integer workflowId,
+    public static ResRepornireWF continuaWorkflow(final Integer workflowId,
 	    final Utilizator user) throws ExceptieWF {
 
 	ReqRepornireWF req = new ReqRepornireWF();
@@ -174,7 +174,7 @@ public class WorkflowManager {
 	}
     }
 
-    public static ResSetareVariabila setVariable(final Integer workflowId,
+    public static ResSetareVariabila setVariabila(final Integer workflowId,
 	    final String variableName, final Object variableValue,
 	    final Utilizator user) throws ExceptieWF {
 	ReqSetareVariabila req = new ReqSetareVariabila();
@@ -187,7 +187,7 @@ public class WorkflowManager {
 	return resp;
     }
 
-    public static Integer startWorkflow(final String workflowName,
+    public static Integer pornesteWorkflow(final String workflowName,
 	    final int workflowVersion, final ItemModel workItem,
 	    final Utilizator user) throws ExceptieWF {
 
@@ -201,7 +201,7 @@ public class WorkflowManager {
 	return resp.workflowId;
     }
 
-    public static Integer startWorkflow(final String workflowName,
+    public static Integer pornesteWorkflow(final String workflowName,
 	    final ItemModel workItem, final Utilizator user) throws ExceptieWF {
 
 	ReqStartWF req = new ReqStartWF();
@@ -213,7 +213,7 @@ public class WorkflowManager {
 	return resp.workflowId;
     }
 
-    public static ResSuspendareWF suspendWorkflow(final Integer workflowId,
+    public static ResSuspendareWF suspendaWorkflow(final Integer workflowId,
 	    final Utilizator user) throws ExceptieWF {
 
 	ReqSuspendareWF req = new ReqSuspendareWF();

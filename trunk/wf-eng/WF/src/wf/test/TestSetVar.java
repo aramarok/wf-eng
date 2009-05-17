@@ -15,11 +15,11 @@ public class TestSetVar {
 		Utilizator user = new Utilizator("utilizator", "password");
 
 		Integer workflowId = new Integer(wfi.intValue());
-		WorkflowManager.setVariable(workflowId, name, value, user);
+		WorkflowManager.setVariabila(workflowId, name, value, user);
 
 		ABC abc = new ABC(345, value, 23.23);
-		WorkflowManager.setVariable(workflowId, name, abc, user);
+		WorkflowManager.setVariabila(workflowId, name, abc, user);
 
-		System.out.println(WorkflowManager.getVariable(workflowId, name, user));
+		System.out.println(WorkflowManager.getVariabila(workflowId, name, user));
 	}
 }

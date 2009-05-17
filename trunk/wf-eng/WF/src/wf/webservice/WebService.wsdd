@@ -6,7 +6,7 @@
 		<beanMapping qname="myNS:User" xmlns:myNS="urn:WfService"
 			languageSpecificType="java:wf.client.User" />
 		<beanMapping qname="myNS:WorkItem" xmlns:myNS="urn:WfService"
-			languageSpecificType="java:wf.model.WorkItem" />
+			languageSpecificType="java:wf.model.ItemModel" />
 		<beanMapping qname="myNS:WorkItemId" xmlns:myNS="urn:WfService"
 			languageSpecificType="java:wf.model.WorkItemId" />
 		<beanMapping qname="myNS:WorkFlowId" xmlns:myNS="urn:WfService"
@@ -16,7 +16,7 @@
 			languageSpecificType="java:wf.model.StareWF" />
 		<beanMapping qname="myNS:ProcessState"
 			xmlns:myNS="urn:WfService"
-			languageSpecificType="java:wf.model.ProcessState" />
+			languageSpecificType="java:wf.model.StareProces" />
 		<beanMapping qname="myNS:AAA" xmlns:myNS="urn:WfService"
 			languageSpecificType="java:wf.model.AAA" />
 	</service>
