@@ -29,13 +29,13 @@
 	<service name="WfService" provider="java:RPC">
 		<parameter name="allowedMethods" value="*" />
 		<parameter name="className" value="wf.webservice.WfService" />
-		<beanMapping languageSpecificType="java:wf.client.auth.User"
+		<beanMapping languageSpecificType="java:wf.client.auth.Utilizator"
 			qname="ns1:User" xmlns:ns1="urn:WfService" />
-		<beanMapping languageSpecificType="java:wf.model.WorkItem"
+		<beanMapping languageSpecificType="java:wf.model.ItemModel"
 			qname="ns2:WorkItem" xmlns:ns2="urn:WfService" />
 		<beanMapping languageSpecificType="java:wf.model.StareWF"
 			qname="ns5:WorkflowState" xmlns:ns5="urn:WfService" />
-		<beanMapping languageSpecificType="java:wf.model.ProcessState"
+		<beanMapping languageSpecificType="java:wf.model.StareProces"
 			qname="ns6:ProcessState" xmlns:ns6="urn:WfService" />
 	</service>
 	<service name="Version" provider="java:RPC">

@@ -4,7 +4,7 @@ import wf.client.WorkflowManager;
 import wf.client.auth.Utilizator;
 import wf.exceptions.ExceptieWF;
 
-public class SetVar {
+public class SetVariabila {
 
     public static void main(final String[] args) throws ExceptieWF {
 
@@ -14,7 +14,7 @@ public class SetVar {
 	Utilizator user = new Utilizator("utilizator", "password");
 
 	Integer workflowId = new Integer(wfId.intValue());
-	WorkflowManager.setVariable(workflowId, varName, varValue, user);
+	WorkflowManager.setVariabila(workflowId, varName, varValue, user);
 	System.out.println("Success");
     }
 }
