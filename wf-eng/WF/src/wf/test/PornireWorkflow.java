@@ -1,11 +1,11 @@
 package wf.test;
 
-import wf.client.WorkflowManager;
+import wf.client.ManagerWorkflow;
 import wf.client.auth.Utilizator;
 import wf.exceptions.ExceptieWF;
 import wf.model.ItemModel;
 
-public class StartWorkflow {
+public class PornireWorkflow {
 
 	public static void main(String[] args) throws ExceptieWF {
 
@@ -23,7 +23,7 @@ public class StartWorkflow {
 		witem.setProperty("PropC", new Integer(12));
 		String xml = "<a><b>100</b></a>";
 		witem.setPayloadXML(xml);
-		Integer wfId = WorkflowManager.pornesteWorkflow(wfName, witem, new Utilizator(
+		Integer wfId = ManagerWorkflow.pornesteWorkflow(wfName, witem, new Utilizator(
 				"utilizator", "password"));
 		System.out.println("Started. Workflow ID: " + wfId);
 	}

@@ -3,14 +3,14 @@ package wf.test;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import javax.jms.JMSException;
-import wf.client.InboxMessageListener;
+import wf.client.ListenerMesajInbox;
 import wf.client.ProcesWF;
 import wf.client.auth.Utilizator;
 import wf.exceptions.ExceptieWF;
 import wf.jms.ConexiuneTopicJMS;
 import wf.model.ItemModel;
 
-public class ProcAgent implements InboxMessageListener {
+public class ProcAgent implements ListenerMesajInbox {
 
 	private String workflowName;
 	private String procName;

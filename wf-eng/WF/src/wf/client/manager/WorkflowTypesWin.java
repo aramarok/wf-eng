@@ -1,7 +1,7 @@
 package wf.client.manager;
 
 import wf.cfg.Constante;
-import wf.client.WorkflowManager;
+import wf.client.ManagerWorkflow;
 import wf.client.Admin;
 import wf.client.manager.Utilities;
 import javax.swing.*;
@@ -173,7 +173,7 @@ public class WorkflowTypesWin extends javax.swing.JInternalFrame {
 				while ((str = in.readLine()) != null) {
 					xml.append(str);
 				}
-				WorkflowManager.incarcaModel(xml.toString(), "WF", Admin
+				ManagerWorkflow.incarcaModel(xml.toString(), "WF", Admin
 						.getInstance().getUSER());
 				refreshList();
 			} catch (Exception e) {

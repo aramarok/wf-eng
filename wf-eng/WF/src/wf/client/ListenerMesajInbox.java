@@ -2,7 +2,7 @@ package wf.client;
 
 import wf.model.ItemModel;
 
-public interface InboxMessageListener {
+public interface ListenerMesajInbox {
 
     public void onMessage(ItemModel workItem);
 }

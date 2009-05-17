@@ -47,7 +47,7 @@ public class ProcesWF implements MessageListener {
 	}
     }
 
-    private final InboxMessageListener mlistener;
+    private final ListenerMesajInbox mlistener;
     private final String procName;
     @SuppressWarnings("unused")
     private InregistrareJMS subscriber;
@@ -58,7 +58,7 @@ public class ProcesWF implements MessageListener {
     private final int workflowVersion;
 
     public ProcesWF(final String wfName, final int wfVersion,
-	    final String processName, final InboxMessageListener listener,
+	    final String processName, final ListenerMesajInbox listener,
 	    final Utilizator user) throws ExceptieWF {
 
 	try {
