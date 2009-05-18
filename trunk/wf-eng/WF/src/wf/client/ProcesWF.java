@@ -8,7 +8,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import org.apache.log4j.Logger;
-import wf.cfg.AppConfig;
+import wf.cfg.Configuratii;
 import wf.client.auth.Utilizator;
 import wf.exceptions.ExceptieWF;
 import wf.jms.JMSSubscriber;
@@ -85,7 +85,7 @@ public class ProcesWF implements MessageListener {
 	}
 	if (listener != null) {
 	    this.subscriber = new JMSSubscriber(this,
-		    AppConfig.getInboxTopic(), "ProcessName in ('"
+		    Configuratii.getInboxTopic(), "ProcessName in ('"
 			    + this.workflowName + this.procName + "')");
 	}
     }

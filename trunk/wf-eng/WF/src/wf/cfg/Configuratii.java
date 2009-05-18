@@ -5,13 +5,13 @@ import java.net.URL;
 import java.util.Properties;
 import org.apache.log4j.Logger;
 
-public class AppConfig {
+public class Configuratii {
 
-    private static AppConfig appConfig;
+    private static Configuratii appConfig;
 
     public static final String configFile = Constante.APP_PROPERTIES_FILE_NAME;
 
-    private static Logger log = Logger.getLogger(AppConfig.class);
+    private static Logger log = Logger.getLogger(Configuratii.class);
 
     public static String DB_CREATE_SCRIPT() {
 	return getInstance().get("CREATEDB-SQL", "conf/db/create_db.sql");
@@ -36,9 +36,9 @@ public class AppConfig {
 		Constante.WF_TOPIC_INBOX_VALUE);
     }
 
-    public synchronized static AppConfig getInstance() {
+    public synchronized static Configuratii getInstance() {
 	if (appConfig == null) {
-	    appConfig = new AppConfig();
+	    appConfig = new Configuratii();
 	}
 	return appConfig;
     }
@@ -55,7 +55,7 @@ public class AppConfig {
 
     private final Properties config = new Properties();
 
-    private AppConfig() {
+    private Configuratii() {
 	try {
 	    URL url = this.getClass().getClassLoader().getResource(configFile);
 	    if (url == null) {

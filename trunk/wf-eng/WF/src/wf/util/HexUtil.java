@@ -22,7 +22,7 @@ public class HexUtil {
 	    }
 	}
 	throw new IllegalArgumentException("\"" + c + "\""
-		+ " does not represent a nibble.");
+		+ " nu reprezinta un nibble.");
     }
 
     public static byte[] hexDecode(final String s) {
@@ -136,9 +136,9 @@ public class HexUtil {
 	    s = in.readLine();
 	    if (s != null) {
 		String bytes = hexEncodeObject(s);
-		System.out.print("Hex encoded (object): ");
+		System.out.print("Codat Hex (obiect): ");
 		System.out.println(bytes);
-		System.out.print("Re-decoded (object):  ");
+		System.out.print("Re-decodat (obiect):  ");
 		System.out.println(hexDecodeObject(bytes));
 
 	    }

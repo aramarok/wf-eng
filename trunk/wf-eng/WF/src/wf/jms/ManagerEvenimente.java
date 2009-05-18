@@ -18,7 +18,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-import wf.cfg.AppConfig;
+import wf.cfg.Configuratii;
 import wf.db.Db;
 import wf.exceptions.ExceptieWF;
 import wf.xml.WFXMLTagAndAttributeConstants;
@@ -58,7 +58,7 @@ public class ManagerEvenimente implements MessageListener {
 	try {
 	    JMSTopicConnection.initialize();
 
-	    this.subscriber = new JMSSubscriber(this, AppConfig
+	    this.subscriber = new JMSSubscriber(this, Configuratii
 		    .getEventsTopic(), null);
 	} catch (ExceptieWF e) {
 	    e.printStackTrace();

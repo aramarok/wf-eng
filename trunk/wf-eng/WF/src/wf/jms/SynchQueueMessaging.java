@@ -17,7 +17,7 @@ import javax.jms.QueueSender;
 import javax.jms.QueueSession;
 import javax.naming.InitialContext;
 
-import wf.cfg.AppConfig;
+import wf.cfg.Configuratii;
 import wf.exceptions.ExceptieWF;
 import wf.jms.model.Cerere;
 import wf.jms.model.Raspuns;
@@ -35,17 +35,17 @@ public class SynchQueueMessaging {
 
 			InitialContext iniCtx = new InitialContext();
 
-			Object tmp = iniCtx.lookup(AppConfig.getConnectionFactory());
+			Object tmp = iniCtx.lookup(Configuratii.getConnectionFactory());
 			QueueConnectionFactory qcf = (QueueConnectionFactory) tmp;
 			qconn = qcf.createQueueConnection();
 
 			qsession = qconn.createQueueSession(false,
 					QueueSession.AUTO_ACKNOWLEDGE);
-			receiveQueue = (Queue) iniCtx.lookup(AppConfig.getOutboxQueue());
+			receiveQueue = (Queue) iniCtx.lookup(Configuratii.getOutboxQueue());
 
 			qconn.start();
 
-			wfQueue = (Queue) iniCtx.lookup(AppConfig.getWfQueue());
+			wfQueue = (Queue) iniCtx.lookup(Configuratii.getWfQueue());
 			JMSShutdownHook shook = new JMSShutdownHook();
 			Runtime.getRuntime().addShutdownHook(shook);
 		} catch (Exception e) {

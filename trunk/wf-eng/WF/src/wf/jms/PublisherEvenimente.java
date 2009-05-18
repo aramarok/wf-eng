@@ -7,7 +7,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import wf.cfg.AppConfig;
+import wf.cfg.Configuratii;
 import wf.exceptions.ExceptieWF;
 import wf.model.ItemModel;
 import wf.xml.GraphSerializer;
@@ -172,7 +172,7 @@ public class PublisherEvenimente {
 	version.appendChild(n);
 	event.appendChild(version);
 	String xmlString = GraphSerializer.serialize(doc.getDocumentElement());
-	this.publish(xmlString, AppConfig.getEventsTopic(), null);
+	this.publish(xmlString, Configuratii.getEventsTopic(), null);
 
     }
 
@@ -237,7 +237,7 @@ public class PublisherEvenimente {
 	    event.appendChild(wkItem);
 	    String xmlString = GraphSerializer.serialize(doc
 		    .getDocumentElement());
-	    this.publish(xmlString, AppConfig.getEventsTopic(), null);
+	    this.publish(xmlString, Configuratii.getEventsTopic(), null);
 	} catch (Exception ex) {
 	    throw new ExceptieWF(ex);
 	}
@@ -291,7 +291,7 @@ public class PublisherEvenimente {
 	    event.appendChild(pname);
 	    String xmlString = GraphSerializer.serialize(doc
 		    .getDocumentElement());
-	    this.publish(xmlString, AppConfig.getEventsTopic(), null);
+	    this.publish(xmlString, Configuratii.getEventsTopic(), null);
 	} catch (Exception ex) {
 	    throw new ExceptieWF(ex);
 	}
@@ -352,7 +352,7 @@ public class PublisherEvenimente {
 	    event.appendChild(var);
 	    String xmlString = GraphSerializer.serialize(doc
 		    .getDocumentElement());
-	    this.publish(xmlString, AppConfig.getEventsTopic(), null);
+	    this.publish(xmlString, Configuratii.getEventsTopic(), null);
 	} catch (Exception ex) {
 	    throw new ExceptieWF(ex);
 	}
@@ -409,7 +409,7 @@ public class PublisherEvenimente {
 	    event.appendChild(wkfId);
 	    String xmlString = GraphSerializer.serialize(doc
 		    .getDocumentElement());
-	    this.publish(xmlString, AppConfig.getEventsTopic(), null);
+	    this.publish(xmlString, Configuratii.getEventsTopic(), null);
 	} catch (Exception ex) {
 	    throw new ExceptieWF(ex);
 	}
@@ -468,7 +468,7 @@ public class PublisherEvenimente {
 	    event.appendChild(wkfId);
 	    String xmlString = GraphSerializer.serialize(doc
 		    .getDocumentElement());
-	    this.publish(xmlString, AppConfig.getEventsTopic(), null);
+	    this.publish(xmlString, Configuratii.getEventsTopic(), null);
 	} catch (Exception ex) {
 	    throw new ExceptieWF(ex);
 	}
@@ -525,7 +525,7 @@ public class PublisherEvenimente {
 	    event.appendChild(wkfId);
 	    String xmlString = GraphSerializer.serialize(doc
 		    .getDocumentElement());
-	    this.publish(xmlString, AppConfig.getEventsTopic(), null);
+	    this.publish(xmlString, Configuratii.getEventsTopic(), null);
 	} catch (Exception ex) {
 	    throw new ExceptieWF(ex);
 	}
@@ -599,7 +599,7 @@ public class PublisherEvenimente {
 	    event.appendChild(wkItem);
 	    String xmlString = GraphSerializer.serialize(doc
 		    .getDocumentElement());
-	    this.publish(xmlString, AppConfig.getEventsTopic(), null);
+	    this.publish(xmlString, Configuratii.getEventsTopic(), null);
 	} catch (Exception ex) {
 	    throw new ExceptieWF(ex);
 	}
@@ -658,7 +658,7 @@ public class PublisherEvenimente {
 	    event.appendChild(wkfId);
 	    String xmlString = GraphSerializer.serialize(doc
 		    .getDocumentElement());
-	    this.publish(xmlString, AppConfig.getEventsTopic(), null);
+	    this.publish(xmlString, Configuratii.getEventsTopic(), null);
 	} catch (Exception ex) {
 	    throw new ExceptieWF(ex);
 	}
