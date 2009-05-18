@@ -3,7 +3,7 @@ package wf.webservice;
 import java.util.ArrayList;
 import java.util.List;
 import wf.client.ProcesWF;
-import wf.client.WorkflowManager;
+import wf.client.ManagerWorkflow;
 import wf.client.auth.Utilizator;
 import wf.exceptions.ExceptieWF;
 import wf.model.ItemModel;
@@ -15,7 +15,7 @@ public class WfService {
 
 	System.out.println("Aborting workflow");
 	try {
-	    WorkflowManager.abortWorkflow(new Integer(workflowId), user);
+	    ManagerWorkflow.anuleazaWorkflow(new Integer(workflowId), user);
 	    System.out.println("Workflow Aborted");
 	} catch (ExceptieWF e) {
 	    e.printStackTrace();
@@ -35,7 +35,7 @@ public class WfService {
     public void deployModel(final String xml, final String type,
 	    final Utilizator user) {
 	try {
-	    WorkflowManager.deployModel(xml, type, user);
+	    ManagerWorkflow.incarcaModel(xml, type, user);
 	} catch (ExceptieWF e) {
 	    e.printStackTrace();
 	}
@@ -44,7 +44,7 @@ public class WfService {
     @SuppressWarnings("unchecked")
     public List getActiveWorkflows(final Utilizator user) {
 	try {
-	    return WorkflowManager.getActiveWorkflows(user);
+	    return ManagerWorkflow.getInstanteActiveWorkflow(user);
 	} catch (ExceptieWF e) {
 	    e.printStackTrace();
 	    return null;
@@ -66,7 +66,7 @@ public class WfService {
     public Object getVariable(final int workflowId, final String variableName,
 	    final Utilizator user) {
 	try {
-	    return WorkflowManager.getVariable(new Integer(workflowId),
+	    return ManagerWorkflow.getVariabla(new Integer(workflowId),
 		    variableName, user);
 	} catch (ExceptieWF e) {
 	    e.printStackTrace();
@@ -76,7 +76,7 @@ public class WfService {
 
     public StareWF getWorkflowState(final int workflowId, final Utilizator user) {
 	try {
-	    return WorkflowManager.getWorkflowState(new Integer(workflowId),
+	    return ManagerWorkflow.getStareWorkflow(new Integer(workflowId),
 		    user);
 	} catch (ExceptieWF e) {
 	    e.printStackTrace();
@@ -112,7 +112,7 @@ public class WfService {
     public void setVariable(final int workflowId, final String variableName,
 	    final Object variableValue, final Utilizator user) {
 	try {
-	    WorkflowManager.setVariable(new Integer(workflowId), variableName,
+	    ManagerWorkflow.setVariabla(new Integer(workflowId), variableName,
 		    variableValue, user);
 	} catch (ExceptieWF e) {
 	    e.printStackTrace();
@@ -128,9 +128,9 @@ public class WfService {
 	    System.out.println("**** workitem: " + witem);
 	    System.out.println("**** utilizator: " + user);
 	    if (version == -1) {
-		wfId = WorkflowManager.startWorkflow(workflowName, witem, user);
+		wfId = ManagerWorkflow.startWorkflow(workflowName, witem, user);
 	    } else {
-		wfId = WorkflowManager.startWorkflow(workflowName, version,
+		wfId = ManagerWorkflow.startWorkflow(workflowName, version,
 			witem, user);
 	    }
 	    System.out.println("Workflow Started");

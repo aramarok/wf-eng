@@ -1,12 +1,12 @@
 package wf.client.actions;
 
 import java.util.List;
-import wf.client.WorkflowManager;
+import wf.client.ManagerWorkflow;
 import wf.client.auth.Utilizator;
 import wf.model.Destinatie;
 import wf.model.Nod;
 
-public class GetNodeByNodeName {
+public class GetNoduriDupaNume {
 
     @SuppressWarnings("unchecked")
     public static void main(final String[] args) throws Exception {
@@ -16,7 +16,7 @@ public class GetNodeByNodeName {
 	int version = new Integer(sVersion).intValue();
 	String nodeName = args[2];
 
-	Nod node = WorkflowManager.getNodeByName(workFlowName, version,
+	Nod node = ManagerWorkflow.getNodDupaNume(workFlowName, version,
 		nodeName, new Utilizator("utilizator", "password"));
 	node.print();
 	System.out.println("");
