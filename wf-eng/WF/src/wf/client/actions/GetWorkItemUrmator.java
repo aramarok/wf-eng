@@ -8,13 +8,13 @@ import wf.client.auth.Utilizator;
 import wf.exceptions.ExceptieWF;
 import wf.model.ItemModel;
 
-public class GetNextWorkItem {
+public class GetWorkItemUrmator {
 
     public static void main(final String[] args) throws ExceptieWF,
 	    JMSException {
 	String wfName = args[0];
 	String procName = args[1];
-	new GetNextWorkItem(wfName, procName).start();
+	new GetWorkItemUrmator(wfName, procName).start();
     }
 
     private final String procName;
@@ -22,7 +22,7 @@ public class GetNextWorkItem {
 
     private ProcesWF wp;
 
-    public GetNextWorkItem(final String wfName, final String pname) {
+    public GetWorkItemUrmator(final String wfName, final String pname) {
 	this.workflowName = wfName;
 	this.procName = pname;
     }

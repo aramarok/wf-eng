@@ -3,11 +3,11 @@ package wf.client.actions;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import wf.client.WorkflowManager;
+import wf.client.ManagerWorkflow;
 import wf.client.auth.Utilizator;
 import wf.exceptions.ExceptieWF;
 
-public class DeployModel {
+public class IncarcaModel {
 
 	public static void main(String[] args) throws Exception {
 
@@ -21,7 +21,7 @@ public class DeployModel {
 		}
 
 		try {
-			WorkflowManager.deployModel(xml, WorkflowManager.WF, new Utilizator(
+			ManagerWorkflow.incarcaModel(xml, ManagerWorkflow.WF, new Utilizator(
 					"utilizator", "password"));
 			System.out.println("Success");
 		} catch (ExceptieWF xe) {
