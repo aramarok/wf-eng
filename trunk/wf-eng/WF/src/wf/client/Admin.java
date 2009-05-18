@@ -2,10 +2,8 @@ package wf.client;
 
 import java.io.IOException;
 import java.util.List;
-import javax.swing.JFrame;
+
 import wf.client.auth.Utilizator;
-import wf.client.manager.DesktopPane;
-import wf.client.manager.WinListener;
 import wf.exceptions.ExceptieWF;
 import wf.model.StareWF;
 
@@ -43,22 +41,12 @@ public class Admin {
 	}
     }
 
-    DesktopPane desk = null;
 
     Preferinte preferences;
 
     private Admin(final Preferinte pref) throws IOException {
 	_instance = this;
 	this.preferences = pref;
-	this.desk = new DesktopPane(this);
-	this.desk.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	this.desk.setSize(this.preferences.getInt("MAIN_SCREEN_W", 800),
-		this.preferences.getInt("MAIN_SCREEN_H", 600));
-	this.desk.setTitle("WF Manager UI");
-	this.desk.addWindowListener(new WinListener(this.preferences,
-		"MAIN_SCREEN"));
-	this.desk.setVisible(true);
-
 	this.preferences.flush();
 
     }
