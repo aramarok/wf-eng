@@ -1,16 +1,16 @@
 package wf.client.actions;
 
 import java.util.List;
-import wf.client.ManagerWorkflow;
+import wf.client.WorkflowManager;
 import wf.client.auth.Utilizator;
 import wf.model.StareWF;
 
-public class GetInstanteActiveWorkflow {
+public class GetActiveWorkflowInstances {
 
     @SuppressWarnings("unchecked")
     public static void main(final String[] args) throws Exception {
 
-	List activeWFs = ManagerWorkflow.getInstanteActiveWorkflow(new Utilizator(
+	List activeWFs = WorkflowManager.getActiveWorkflows(new Utilizator(
 		"utilizator", "password"));
 	for (int i = 0; i < activeWFs.size(); i++) {
 

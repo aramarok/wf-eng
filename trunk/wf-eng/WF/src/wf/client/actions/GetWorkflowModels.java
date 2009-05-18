@@ -1,16 +1,16 @@
 package wf.client.actions;
 
 import java.util.List;
-import wf.client.ManagerWorkflow;
+import wf.client.WorkflowManager;
 import wf.client.auth.Utilizator;
 import wf.model.ModelWF;
 
-public class GetModeleWorkflow {
+public class GetWorkflowModels {
 
     @SuppressWarnings("unchecked")
     public static void main(final String[] args) throws Exception {
 
-	List wfModels = ManagerWorkflow.getModeleWorkflow(new Utilizator(
+	List wfModels = WorkflowManager.getWorkflowModels(new Utilizator(
 		"utilizator", "password"));
 	for (int i = 0; i < wfModels.size(); i++) {
 	    ModelWF m = (ModelWF) wfModels.get(i);

@@ -8,7 +8,7 @@ import wf.exceptions.ExceptieWF;
 import wf.model.DirectedGraph;
 import wf.xml.DefinitionParser;
 
-public class Validare {
+public class Validation {
 
 	public static void main(String[] args) {
 		try {

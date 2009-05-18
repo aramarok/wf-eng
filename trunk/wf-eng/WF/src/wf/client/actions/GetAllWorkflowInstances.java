@@ -1,11 +1,11 @@
 package wf.client.actions;
 
 import java.util.List;
-import wf.client.ManagerWorkflow;
+import wf.client.WorkflowManager;
 import wf.client.auth.Utilizator;
 import wf.model.StareWF;
 
-public class GetToateInstaneWorkflow {
+public class GetAllWorkflowInstances {
 
     @SuppressWarnings("unchecked")
     public static void main(final String[] args) throws Exception {
@@ -14,10 +14,10 @@ public class GetToateInstaneWorkflow {
 	List v;
 	if (args.length > 0) {
 	    wfName = args[0];
-	    v = ManagerWorkflow.getToateInstanteWorkflowDupaNume(wfName, new Utilizator(
+	    v = WorkflowManager.getAllWorkflowsByName(wfName, new Utilizator(
 		    "utilizator", "password"));
 	} else {
-	    v = ManagerWorkflow.getToateInstanteWorkflow(new Utilizator("utilizator",
+	    v = WorkflowManager.getAllWorkflows(new Utilizator("utilizator",
 		    "password"));
 	}
 
