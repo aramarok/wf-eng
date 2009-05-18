@@ -30,7 +30,7 @@ public class InboxP {
 		    workflowName, procName);
 
 	} catch (Exception e) {
-	    throw new ExceptieWF("Failed to save row in inbox in database", e);
+	    throw new ExceptieWF("Nu am putut salva un rand in baza de date", e);
 	}
     }
 
@@ -75,7 +75,7 @@ public class InboxP {
 	    Persistence.getThreadSqlMapSession().delete("deleteInboxRecords",
 		    inboxRec);
 	} catch (Exception e) {
-	    throw new ExceptieWF("Failed to delete row in inbox from database",
+	    throw new ExceptieWF("NU am putut sterge un rand din bd",
 		    e);
 	}
     }

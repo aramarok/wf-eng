@@ -13,7 +13,7 @@ public class ExpressionEval {
 	Class oClass = o.getClass();
 	String className = oClass.getName();
 	boolean result = false;
-	log.info("Applying rule: " + o + " " + op + " " + lit);
+	log.info("Se aplica regula: " + o + " " + op + " " + lit);
 
 	if (className.equals("java.lang.Integer")) {
 	    Integer iobj = (Integer) o;
@@ -89,7 +89,7 @@ public class ExpressionEval {
 	    }
 	}
 
-	log.info("apply Rule returning: " + result);
+	log.info("rezultat: " + result);
 	return result;
     }
 
@@ -97,7 +97,7 @@ public class ExpressionEval {
     public boolean evaluateRule(final Object object, final String rule) {
 	boolean result = true;
 
-	log.info("Evaluating rule on Java object: " + rule);
+	log.info("Evaluarea regulii pe obiectul java: " + rule);
 	StringTokenizer strTok = new StringTokenizer(rule, " ");
 	String lhsTok = null;
 	String opTok = null;
@@ -119,7 +119,7 @@ public class ExpressionEval {
 	    }
 	}
 	if ((lhsTok == null) || (opTok == null) || (litTok == null)) {
-	    log.error("No rule or malformed rule");
+	    log.error("Nicio regula sau regula incorecta");
 	    return false;
 	}
 	try {
