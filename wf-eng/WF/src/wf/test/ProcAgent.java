@@ -3,14 +3,14 @@ package wf.test;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import javax.jms.JMSException;
-import wf.client.ListenerMesajInbox;
+import wf.client.InboxMessageListener;
 import wf.client.ProcesWF;
 import wf.client.auth.Utilizator;
 import wf.exceptions.ExceptieWF;
-import wf.jms.ConexiuneTopicJMS;
+import wf.jms.JMSTopicConnection;
 import wf.model.ItemModel;
 
-public class ProcAgent implements ListenerMesajInbox {
+public class ProcAgent implements InboxMessageListener {
 
 	private String workflowName;
 	private String procName;
@@ -50,7 +50,7 @@ public class ProcAgent implements ListenerMesajInbox {
 			JMSException {
 		String wfName = args[0];
 		String procName = args[1];
-		ConexiuneTopicJMS.initialize();
+		JMSTopicConnection.initialize();
 		new ProcAgent(wfName, procName).start();
 	}
 }

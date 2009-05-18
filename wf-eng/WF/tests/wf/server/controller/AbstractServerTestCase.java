@@ -9,8 +9,8 @@ import wf.TestConfig;
 import wf.TestUtilities;
 import wf.client.auth.Utilizator;
 import wf.exceptions.ExceptieWF;
-import wf.jms.PublisherJMS;
-import wf.jms.Mesagerie;
+import wf.jms.JMSPublisher;
+import wf.jms.SynchQueueMessaging;
 import wf.jms.model.Cerere;
 import wf.jms.model.Raspuns;
 import wf.jms.model.ReqCompleteWI;
@@ -125,7 +125,7 @@ public class AbstractServerTestCase extends TestCase {
 		    e.printStackTrace();
 		    throw new RuntimeException(e);
 		}
-		PublisherJMS.setSendingEnabled(false);
+		JMSPublisher.setSendingEnabled(false);
 	    }
 	    return _workflowEngine;
 	}
@@ -157,7 +157,7 @@ public class AbstractServerTestCase extends TestCase {
 	try {
 	    req.numeRaspuns = Util.generateUniqueStringId();
 	    req.utilizator = new Utilizator("kosta", "kosta");
-	    Raspuns resp = Mesagerie.sendRequest(req);
+	    Raspuns resp = SynchQueueMessaging.sendRequest(req);
 	    if (resp.codRaspuns != Raspuns.SUCCES) {
 		System.out.println("EROARE response from server.");
 		throw new ExceptieWF(resp.mesaj);

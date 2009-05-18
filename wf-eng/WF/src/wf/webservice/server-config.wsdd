@@ -31,7 +31,7 @@
 		<parameter name="className" value="wf.webservice.WfService" />
 		<beanMapping languageSpecificType="java:wf.client.User"
 			qname="ns1:User" xmlns:ns1="urn:WfService" />
-		<beanMapping languageSpecificType="java:wf.model.ItemModel"
+		<beanMapping languageSpecificType="java:wf.model.WorkItem"
 			qname="ns2:WorkItem" xmlns:ns2="urn:WfService" />
 		<beanMapping languageSpecificType="java:wf.model.WorkItemId"
 			qname="ns3:WorkItemId" xmlns:ns3="urn:WfService" />
@@ -39,7 +39,7 @@
 			qname="ns4:WorkflowId" xmlns:ns4="urn:WfService" />
 		<beanMapping languageSpecificType="java:wf.model.StareWF"
 			qname="ns5:WorkflowState" xmlns:ns5="urn:WfService" />
-		<beanMapping languageSpecificType="java:wf.model.StareProces"
+		<beanMapping languageSpecificType="java:wf.model.ProcessState"
 			qname="ns6:ProcessState" xmlns:ns6="urn:WfService" />
 	</service>
 	<service name="Version" provider="java:RPC">
