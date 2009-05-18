@@ -50,8 +50,8 @@ public class RequestHandlerFactory {
 
 	rh = (ControlCereri) this.registeredHandlers.get(r.getClass());
 	if (rh == null) {
-	    log.info("Handler for " + r.getClass().getName()
-		    + " should be defined at this point!!");
+	    log.info("Mangerul pentru " + r.getClass().getName()
+		    + " trebuia sa fi fost definit pana acum!!!");
 	}
 	return rh;
     }
