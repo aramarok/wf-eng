@@ -4,7 +4,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
-import wf.cfg.AppConfig;
+import wf.cfg.Configuratii;
 import wf.exceptions.ExceptieWF;
 import wf.jms.JMSSubscriber;
 import wf.jms.JMSTopicConnection;
@@ -29,7 +29,7 @@ public class TestJMSSubscriber implements MessageListener {
 
     public void start() throws ExceptieWF {
 	@SuppressWarnings("unused")
-	JMSSubscriber subs = new JMSSubscriber(this, AppConfig.getInboxTopic(),
+	JMSSubscriber subs = new JMSSubscriber(this, Configuratii.getInboxTopic(),
 		"ProcName din ('ProcA')");
     }
 

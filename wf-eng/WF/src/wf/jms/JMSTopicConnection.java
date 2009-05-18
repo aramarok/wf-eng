@@ -11,7 +11,7 @@ import javax.jms.TopicConnection;
 import javax.jms.TopicConnectionFactory;
 import javax.naming.InitialContext;
 import org.apache.log4j.Logger;
-import wf.cfg.AppConfig;
+import wf.cfg.Configuratii;
 
 @SuppressWarnings("unchecked")
 public class JMSTopicConnection {
@@ -53,7 +53,7 @@ public class JMSTopicConnection {
 		iniCtx = new InitialContext();
 	    }
 
-	    Object tmp = iniCtx.lookup(AppConfig.getConnectionFactory());
+	    Object tmp = iniCtx.lookup(Configuratii.getConnectionFactory());
 	    TopicConnectionFactory tcf = (TopicConnectionFactory) tmp;
 	    conn = tcf.createTopicConnection();
 	} catch (Exception e) {

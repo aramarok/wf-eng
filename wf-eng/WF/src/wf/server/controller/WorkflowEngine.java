@@ -20,7 +20,7 @@ import javax.jms.QueueSession;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import org.apache.log4j.Logger;
-import wf.cfg.AppConfig;
+import wf.cfg.Configuratii;
 import wf.client.auth.AutentificareUtilizator;
 import wf.client.auth.Autentificator;
 import wf.db.Persistence;
@@ -150,7 +150,7 @@ public class WorkflowEngine implements MessageDrivenBean, MessageListener {
 	    IllegalAccessException {
 
 	InitialContext iniCtx = new InitialContext();
-	Object tmp = iniCtx.lookup(AppConfig.getConnectionFactory());
+	Object tmp = iniCtx.lookup(Configuratii.getConnectionFactory());
 	QueueConnectionFactory qcf = (QueueConnectionFactory) tmp;
 	this.conn = qcf.createQueueConnection();
 	this.session = this.conn.createQueueSession(false,

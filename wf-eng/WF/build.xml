@@ -168,22 +168,6 @@
 		</copy>
 	</target>
 
-
-	<target name="start_ui">
-		<java classname="wf.client.Admin" fork="true">
-			<classpath>
-				<pathelement location="${conf.dir}" />
-				<pathelement location="${build.dir}" />
-				<path refid="wf.classpath" />
-				<fileset dir="${jboss.home}">
-					<include name="lib/*.jar" />
-					<include name="server/all/lib/jbo*.jar" />
-				</fileset>
-			</classpath>
-		</java>
-	</target>
-
-
 	<target name="arc" description="Make source code archive">
 		<tstamp>
 			<format pattern="yyyy-MM-dd" property="day" />

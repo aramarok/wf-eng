@@ -13,7 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.log4j.Logger;
 import org.jaxen.JaxenException;
 import org.xml.sax.SAXException;
-import wf.cfg.AppConfig;
+import wf.cfg.Configuratii;
 import wf.db.Persistence;
 import wf.exceptions.ExceptieWF;
 import wf.jms.PublisherEvenimente;
@@ -445,7 +445,7 @@ public class WorkflowProcessor {
 	    mp.name = "ProcessName";
 	    mp.value = workflowName + procName;
 	    props.add(mp);
-	    JMSPublisher.send(AppConfig.getInboxTopic(), barr, props);
+	    JMSPublisher.send(Configuratii.getInboxTopic(), barr, props);
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
